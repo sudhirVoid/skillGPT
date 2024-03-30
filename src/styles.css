@@ -1,3 +1,60 @@
 @tailwind base;
+@layer
+base {   h1 {    
+font-size
+:
+2rem
+;
+/* Set your desired font size */
+font-weight
+: bold;
+/* Set your desired font weight */
+  }   h2 {    
+font-size
+:
+1.5rem
+;
+/* Set your desired font size */
+font-weight
+: bold;
+/* Set your desired font weight */
+  }   h3 {    
+font-size
+:
+1.25rem
+;
+/* Set your desired font size */
+font-weight
+: bold;
+/* Set your desired font weight */
+  }   h4 {    
+font-size
+:
+1rem
+;
+/* Set your desired font size */
+font-weight
+: bold;
+/* Set your desired font weight */
+  }   h5 {    
+font-size
+:
+0.875rem
+;
+/* Set your desired font size */
+font-weight
+: bold;
+/* Set your desired font weight */
+  }   h6 {    
+font-size
+:
+0.75rem
+;
+/* Set your desired font size */
+font-weight
+: bold;
+/* Set your desired font weight */
+  } }
 @tailwind components;
 @tailwind utilities;
+
