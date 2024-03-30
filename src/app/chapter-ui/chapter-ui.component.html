@@ -1,0 +1,45 @@
+<div class="flex">
+    <!-- Sidebar -->
+    <aside class="h-screen w-1/5  bg-gray-800 text-white top-0 left-0 z-10">
+        <div class="p-4">
+            <div class="flex justify-start items-center">
+                <h2 class="text-4xl font-extrabold dark:text-white text-center">Skill</h2>
+                <h2 class="text-4xl font-extrabold dark:text-emerald-700 text-center">&nbsp;GPT</h2>
+            </div>
+            <div class=" mt-2">
+                <button class="rounded-md bg-emerald-700 w-full p-2 text-xl"><b >+</b> New Topic</button>
+            </div>
+            <div>
+                <div class="w-full p-1 mt-2 flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400" 
+                *ngFor="let item of bookChapters"
+                >
+                    <p class="px-1 py-2 text-base "> {{item}}</p>
+                    <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
+                </div>
+            </div>
+            
+            
+        </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <div class="h-screen w-4/5 relative">
+        
+    
+        <div class="h-10 bg-emerald-700">Breadcrumbs</div>
+        <div class="h-4/5 overflow-y-auto" >
+         
+            <div class="typing-animation">
+                {{ typedText }}
+              </div> 
+
+
+        </div>
+        <div class="h-auto">
+            <div class="flex">
+              <input class="w-full p-3 m-2 mr-0 border-emerald-700 border-2 rounded-tl-xl rounded-bl-xl rounded-e-none focus:outline-none" type="text" placeholder="Ask a question..">
+              <div class="p-3 m-2 ml-0 bg-emerald-600 cursor-pointer text-center rounded-s-none rounded-e-xl"><img src="../../assets/send-message.png" alt=""></div>
+            </div>
+        </div>
+    </div>
+</div>
