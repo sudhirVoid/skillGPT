@@ -15,20 +15,6 @@ export class ChapterUiComponent  implements OnInit{
   bookChapters: string[] = []
   constructor(private syllabusService: SyllabusService, private route:ActivatedRoute) { }
 
-  generateSyllabus() {
-    this.syllabusService.generateSyllabus('C++', 'English').subscribe(
-      response => {
-        // Handle the response from the API here
-        console.log(response);
-        this.bookChapters = response.msg
-        console.log(this.bookChapters);
-      },
-      error => {
-        // Handle errors here
-        console.error('Error:', error);
-      }
-    );
-  }
 
   ngOnInit(): void {
     // Retrieve the query parameters
