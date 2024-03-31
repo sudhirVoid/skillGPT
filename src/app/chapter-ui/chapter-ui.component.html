@@ -6,15 +6,45 @@
                 <h2 class="text-4xl font-extrabold dark:text-white text-center">Skill</h2>
                 <h2 class="text-4xl font-extrabold dark:text-emerald-700 text-center">&nbsp;GPT</h2>
             </div>
-            <div class=" mt-2">
-                <button class="rounded-md bg-emerald-700 w-full p-2 text-xl"><b >+</b> New Topic</button>
+            <div class="flex  mt-2">
+                <div  *ngIf="isChapterMode" class="cursor-pointer gap-4 flex justify-start items-center rounded-md bg-emerald-700 w-full p-2 text-xl">
+                    <img (click)="addNewTopic()" width="25" height="25" src="../../assets/back.png" alt="back-btn">
+                    <p class="">{{currentSubject}}</p>
+
+                </div>
+                <div *ngIf="!isChapterMode" class="cursor-pointer gap-4  flex justify-start items-center rounded-md bg-emerald-700 w-full p-2 text-xl">
+                    <img  width="25" height="25" src="../../assets/plus.png" alt="plus-btn">
+                    <p>New Topic</p>
+
+                </div>
+                
             </div>
-            <div class="topic overflow-y-auto ">
-                <div class="w-full px-3  py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400" *ngFor="let item of itemsArray;let i=index" >
-                    <p class="px-1 py-2 text-base "> Physics</p>
+            <!-- <div class="topic overflow-y-auto ">
+                <div class="w-full px-3  py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400" *ngFor="let item of (isChapter ?chapters: itemsArray  ); let i=index"  (click)="fetchChapter(item)">
+                    <p class="px-1 py-2 text-base "> {{item}}</p>
                     <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
                 </div>
-            </div>
+            </div> -->
+            <div class="topic overflow-y-auto" *ngIf="!isChapterMode">
+                <div  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+                     *ngFor="let item of itemsArray; let i=index"
+                     (click)="selectSubject(item)">
+                  <p class="px-1 py-2 text-base">{{ item }}</p>
+                  <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
+                </div>
+              </div>
+              
+              
+
+              <div class="topic overflow-y-auto" *ngIf="isChapterMode">
+                <div (click)="selectTopic(chapter)"  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+                *ngFor="let chapter of filteredChapters"
+                    >
+                  <p class="px-1 py-2 text-base">{{ chapter }}</p>
+                  <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
+                </div>
+              </div>
+              
             
             
         </div>
@@ -27,6 +57,7 @@
         <div class="height-1 p-4 bg-emerald-700">
             <ul class="breadcrumb flex text-white font-bold">
                 <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}">
+                    
                   <a *ngIf="!last" [href]="'#'">{{ item }}</a>
                   <span *ngIf="last">{{ item }}</span>
                   <span *ngIf="!last">&nbsp;/&nbsp;</span>
