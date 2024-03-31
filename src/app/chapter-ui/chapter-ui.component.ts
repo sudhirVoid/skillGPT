@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { SyllabusService } from '../gpt-service.service';
+import { ActivatedRoute } from '@angular/router';
 SyllabusService
 @Component({
   selector: 'app-chapter-ui',
@@ -12,7 +13,7 @@ export class ChapterUiComponent  implements OnInit{
   textToType: string = "Hello, I am ChatGPT!";
   typedText: string = "";
   bookChapters: string[] = []
-  constructor(private syllabusService: SyllabusService) { }
+  constructor(private syllabusService: SyllabusService, private route:ActivatedRoute) { }
 
   generateSyllabus() {
     this.syllabusService.generateSyllabus('C++', 'English').subscribe(
@@ -28,9 +29,20 @@ export class ChapterUiComponent  implements OnInit{
       }
     );
   }
+
   ngOnInit(): void {
-    this.generateSyllabus();
+    // Retrieve the query parameters
+    this.route.queryParams.subscribe(params => {
+      // Check if the 'chapters' query parameter exists
+      if (params['chapters']) {
+        // Parse the JSON string to get the data
+        this.bookChapters= JSON.parse(params['chapters']);
+        console.log('Chapters:', this.bookChapters);
+        // Now you can use the chapters data as needed in your component
+      }
+    });
   }
+  
 
   
 }
