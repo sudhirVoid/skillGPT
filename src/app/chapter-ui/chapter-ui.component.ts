@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { DomSanitizer,SafeHtml } from "@angular/platform-browser";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-chapter-ui',
@@ -10,7 +11,43 @@ export class ChapterUiComponent  implements OnInit{
   textToType: string = "Hello, I am ChatGPT!";
   typedText: string = "";
   safeHtml:SafeHtml="";
-  breadcrumbs: string[] = ['Home', 'Topics', 'Physics', 'Electricity'];
+  breadcrumbs: string[] = [];
+  isChapterMode: boolean = false;
+  itemsArray: string[] = [];
+  chapters: { subject: string, chapter: string }[] = [];
+  selectedSubject: string | null = null;
+  filteredChapters: string[] = [];
+  currentSubject: string | null = null;
+
+  
+  selectSubject(subject: string): void {
+    this.breadcrumbs.push(subject);
+    this.isChapterMode=true;
+    this.currentSubject = subject;
+    this.selectedSubject = subject;
+    this.filteredChapters = this.chapters.filter(chapter => chapter.subject === subject)
+      .map(chapter => chapter.chapter);
+  }
+  addNewTopic(): void {
+    this.isChapterMode =! this.isChapterMode;
+    this.breadcrumbs=[]
+  }
+
+  
+  selectTopic(chapter: string): void {
+   
+    
+    if (!this.breadcrumbs.includes(chapter)) {
+      // If the chapter doesn't exist, pop the last chapter (if exists) and push the new chapter
+      if (this.breadcrumbs.length >= 2) {
+        this.breadcrumbs.pop();
+      }
+      this.breadcrumbs.push(chapter);
+    }
+    
+    
+    
+  }
   
   htmlCode: string=`<h1>Variables</h1>
   <p>In programming, variables are used to store and represent data in memory. They act as containers that hold a value, which can be changed and manipulated throughout the program&#39;s execution. Variables are essential in programming as they provide flexibility and allow us to work with different types of data.</p>
@@ -56,12 +93,27 @@ export class ChapterUiComponent  implements OnInit{
   <p>Variables are fundamental building blocks in programming, allowing us to store and manipulate data efficiently. Understanding how to declare, assign, and scope variables is crucial for becoming proficient in JavaScript programming.</p>`;
   
 
-  itemsArray = new Array(20);
-  constructor(private sanitizer: DomSanitizer) { }
+ 
+  constructor(private sanitizer: DomSanitizer,private http: HttpClient) { }
   ngOnInit(): void {
     this.renderingHtmlRes()
+    this.fetchSubjectsAndChapters();
     
    
+  }
+
+
+  fetchSubjectsAndChapters(): void {
+    this.http.get<any>('https://mocki.io/v1/b11ed810-6e60-470f-ac6b-1e8dd7b034f2').subscribe(data => {
+      this.itemsArray = data.subjects;
+      
+      // Insert chapters into the chapters array
+      data.chapters.forEach((chapter: any) => {
+        const subject = chapter.subject;
+        const chapterName = chapter.chapter;
+        this.chapters.push({ subject, chapter: chapterName });
+      });
+    });
   }
 
   renderingHtmlRes() {
@@ -70,6 +122,8 @@ export class ChapterUiComponent  implements OnInit{
           this.htmlCode
         );
   }
+
+
 
   
 }
