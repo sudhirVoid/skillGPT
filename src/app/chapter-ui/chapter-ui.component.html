@@ -1,22 +1,45 @@
 <div class="flex">
     <!-- Sidebar -->
     <aside class="h-screen w-1/5  bg-gray-800 text-white top-0 left-0 z-10">
-        <div class="p-4">
-            <div class="flex justify-start items-center">
+        <div class="padding-all">
+            <div class="flex justify-center items-center">
                 <h2 class="text-4xl font-extrabold dark:text-white text-center">Skill</h2>
                 <h2 class="text-4xl font-extrabold dark:text-emerald-700 text-center">&nbsp;GPT</h2>
             </div>
-            <div class=" mt-2">
-                <button class="rounded-md bg-emerald-700 w-full p-2 text-xl"><b >+</b> New Topic</button>
-            </div>
-            <div>
-                <div class="w-full p-1 mt-2 flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400" 
-                *ngFor="let item of bookChapters"
-                >
-                    <p class="px-1 py-2 text-base "> {{item}}</p>
-                    <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
+            <div class="flex  mt-2">
+                <div  *ngIf="isCurrentSubject" class="cursor-pointer gap-4 flex justify-start items-center rounded-md bg-emerald-700 w-full p-2 text-xl">
+                    <img (click)="addNewTopic()" width="25" height="25" src="../../assets/back.png" alt="back-btn">
+                    <p >{{currentSubject}}</p>
+
                 </div>
+                <div *ngIf="!isCurrentSubject" class="cursor-pointer gap-4   flex justify-start items-center rounded-md bg-emerald-700 w-full p-2 text-xl" (click)="redirectTo('/landingPage')">
+                    <img  width="25" height="25" src="../../assets/plus.png" alt="plus-btn">
+                    <p>New Topic</p>
+
+                </div>
+                
             </div>
+            
+            <div class="topic overflow-y-auto" *ngIf="!isCurrentSubject">
+                <div  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+                     *ngFor="let item of itemsArray; let i=index"
+                     (click)="selectSubject(item)">
+                  <p class="px-1 py-2 text-base">{{ item }}</p>
+                  <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
+                </div>
+              </div>
+              
+              
+
+              <div class="topic overflow-y-auto" *ngIf="isCurrentSubject">
+                <div (click)="selectTopic(chapter)"  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+                *ngFor="let chapter of bookChapters"
+                    >
+                  <p class="px-1 py-2 ">{{ chapter }}</p>
+                  <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
+                </div>
+              </div>
+              
             
             
         </div>
@@ -26,19 +49,24 @@
     <div class="h-screen w-4/5 relative">
         
     
-        <div class="h-10 bg-emerald-700">Breadcrumbs</div>
-        <div class="h-4/5 overflow-y-auto" >
-         
-            <div class="typing-animation">
-                {{ typedText }}
-              </div> 
-
-
+        <div class="height-1 p-4 bg-emerald-700">
+            <ul class="breadcrumb flex text-white font-bold">
+                <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}">
+                    
+                  <a *ngIf="!last" [href]="'#'">{{ item }}</a>
+                  <span *ngIf="last">{{ item }}</span>
+                  <span *ngIf="!last">&nbsp;/&nbsp;</span>
+                </li>
+              </ul>
         </div>
-        <div class="h-auto">
-            <div class="flex">
-              <input class="w-full p-3 m-2 mr-0 border-emerald-700 border-2 rounded-tl-xl rounded-bl-xl rounded-e-none focus:outline-none" type="text" placeholder="Ask a question..">
-              <div class="p-3 m-2 ml-0 bg-emerald-600 cursor-pointer text-center rounded-s-none rounded-e-xl"><img src="../../assets/send-message.png" alt=""></div>
+        <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="safeHtml " >
+
+   
+        </div>
+        <div class="height-2">
+            <div class="flex bg-slate-200">
+              <input class="w-full p-3 ml-2 mr-0 border-emerald-700 border-2 rounded-tl-xl rounded-bl-xl rounded-e-none focus:outline-none" type="text" placeholder="Ask a question..">
+              <div class="p-3 mr-2 ml-0 bg-emerald-600 cursor-pointer text-center rounded-s-none rounded-e-xl"><img src="../../assets/send-message(1).png" alt=""></div>
             </div>
         </div>
     </div>
