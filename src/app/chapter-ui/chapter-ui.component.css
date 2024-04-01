@@ -20,6 +20,9 @@ height: 78dvh;
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
 }
+.padding-all{
+    padding: 1rem;
+}
 
 .topic::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Edge */

@@ -20,7 +20,7 @@ export class LandingPageComponent {
       response => {
         // Handle the response from the API here
         console.log(response);
-        this.bookChapters = response.msg
+        this.bookChapters = response;
         console.log(this.bookChapters);
 
         this.router.navigate(['/results'], { 

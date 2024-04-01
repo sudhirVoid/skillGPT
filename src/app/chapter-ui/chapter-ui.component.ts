@@ -3,6 +3,7 @@ import { SyllabusService } from '../gpt-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer,SafeHtml } from "@angular/platform-browser";
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chapter-ui',
@@ -22,11 +23,13 @@ export class ChapterUiComponent  implements OnInit{
   selectedSubject: string | null = null;
   filteredChapters: string[] = [];
   currentSubject: string | null = null;
+  isCurrentSubject:boolean=false;
+  currentSubjects: string[] = [];
 
   
   selectSubject(subject: string): void {
     this.breadcrumbs.push(subject);
-    this.isChapterMode=true;
+    this.isCurrentSubject=true;
     this.currentSubject = subject;
     this.selectedSubject = subject;
     this.filteredChapters = this.chapters.filter(chapter => chapter.subject === subject)
@@ -34,9 +37,13 @@ export class ChapterUiComponent  implements OnInit{
   }
   addNewTopic(): void {
     this.isChapterMode =! this.isChapterMode;
+    this.isCurrentSubject=!this.isCurrentSubject;
     this.breadcrumbs=[]
   }
 
+  redirectTo(route: string): void {
+    this.router.navigate([route]);
+  }
   
   selectTopic(chapter: string): void {
    
@@ -100,39 +107,60 @@ export class ChapterUiComponent  implements OnInit{
  
  
   bookChapters: string[] = []
-  constructor(private syllabusService: SyllabusService, private route:ActivatedRoute,private sanitizer: DomSanitizer,private http: HttpClient) { }
+  constructor(private syllabusService: SyllabusService, private route:ActivatedRoute,private sanitizer: DomSanitizer,private http: HttpClient,private router: Router) { }
 
 
   ngOnInit(): void {
     // Retrieve the query parameters
+    // this.route.queryParams.subscribe(params => {
+    //   // Check if the 'chapters' query parameter exists
+    //   if (params['chapters']) {
+    //     // Parse the JSON string to get the data
+    //     this.bookChapters= JSON.parse(params['chapters']);
+    //     console.log('Chapters:', this.bookChapters);
+    //     this.isCurrentSubject = true;
+        
+    //     // Now you can use the chapters data as needed in your component
+    //   }
+    // });
     this.route.queryParams.subscribe(params => {
       // Check if the 'chapters' query parameter exists
       if (params['chapters']) {
         // Parse the JSON string to get the data
-        this.bookChapters= JSON.parse(params['chapters']);
+        const queryParams = JSON.parse(decodeURIComponent(params['chapters']));
+        this.bookChapters = queryParams.chapters;
+        this.currentSubject = queryParams.topic;
+        this.itemsArray.push(queryParams.topic)
+        
+        
         console.log('Chapters:', this.bookChapters);
-        // Now you can use the chapters data as needed in your component
+        console.log("All subjects:", this.itemsArray);
+       
+        
+        this.isCurrentSubject = true;
       }
     });
+    
+    
     this.renderingHtmlRes()
-    this.fetchSubjectsAndChapters();
+    // this.fetchSubjectsAndChapters();
     
    
   }
 
 
-  fetchSubjectsAndChapters(): void {
-    this.http.get<any>('https://mocki.io/v1/b11ed810-6e60-470f-ac6b-1e8dd7b034f2').subscribe(data => {
-      this.itemsArray = data.subjects;
+  // fetchSubjectsAndChapters(): void {
+  //   this.http.get<any>('https://mocki.io/v1/b11ed810-6e60-470f-ac6b-1e8dd7b034f2').subscribe(data => {
+  //     this.itemsArray = data.subjects;
       
-      // Insert chapters into the chapters array
-      data.chapters.forEach((chapter: any) => {
-        const subject = chapter.subject;
-        const chapterName = chapter.chapter;
-        this.chapters.push({ subject, chapter: chapterName });
-      });
-    });
-  }
+  //     // Insert chapters into the chapters array
+  //     data.chapters.forEach((chapter: any) => {
+  //       const subject = chapter.subject;
+  //       const chapterName = chapter.chapter;
+  //       this.chapters.push({ subject, chapter: chapterName });
+  //     });
+  //   });
+  // }
 
   renderingHtmlRes() {
     this.safeHtml = "";
