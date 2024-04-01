@@ -1,6 +1,8 @@
 import { Component,OnInit } from '@angular/core';
 import { SyllabusService } from '../gpt-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { DataTransferService } from '../data-transfer.service';
+
 import { DomSanitizer,SafeHtml } from "@angular/platform-browser";
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -10,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './chapter-ui.component.html',
   styleUrls: ['./chapter-ui.component.css']
 })
-export class ChapterUiComponent  implements OnInit{
+export class ChapterUiComponent {
 
 
   textToType: string = "Hello, I am ChatGPT!";
@@ -107,60 +109,24 @@ export class ChapterUiComponent  implements OnInit{
  
  
   bookChapters: string[] = []
-  constructor(private syllabusService: SyllabusService, private route:ActivatedRoute,private sanitizer: DomSanitizer,private http: HttpClient,private router: Router) { }
+  constructor(private syllabusService: SyllabusService, private route:ActivatedRoute, private dataTransferService: DataTransferService,private sanitizer: DomSanitizer,private http: HttpClient,private router: Router) { }
 
 
   ngOnInit(): void {
-    // Retrieve the query parameters
-    // this.route.queryParams.subscribe(params => {
-    //   // Check if the 'chapters' query parameter exists
-    //   if (params['chapters']) {
-    //     // Parse the JSON string to get the data
-    //     this.bookChapters= JSON.parse(params['chapters']);
-    //     console.log('Chapters:', this.bookChapters);
-    //     this.isCurrentSubject = true;
-        
-    //     // Now you can use the chapters data as needed in your component
-    //   }
-    // });
-    this.route.queryParams.subscribe(params => {
-      // Check if the 'chapters' query parameter exists
-      if (params['chapters']) {
-        // Parse the JSON string to get the data
-        const queryParams = JSON.parse(decodeURIComponent(params['chapters']));
-        this.bookChapters = queryParams.chapters;
-        this.currentSubject = queryParams.topic;
-        this.itemsArray.push(queryParams.topic)
-        
-        
-        console.log('Chapters:', this.bookChapters);
-        console.log("All subjects:", this.itemsArray);
-       
-        
-        this.isCurrentSubject = true;
-      }
-    });
-    
-    
-    this.renderingHtmlRes()
-    // this.fetchSubjectsAndChapters();
-    
-   
-  }
 
+    // Retrieve the data using the service
+    this.dataTransferService.getChaptersData().subscribe(chapters => {
+      this.bookChapters = chapters.chapters;
+      this.currentSubject = chapters.topic;
+      this.itemsArray.push(chapters.topic)
+      console.log('Received chapters:', this.bookChapters);
 
-  // fetchSubjectsAndChapters(): void {
-  //   this.http.get<any>('https://mocki.io/v1/b11ed810-6e60-470f-ac6b-1e8dd7b034f2').subscribe(data => {
-  //     this.itemsArray = data.subjects;
       
-  //     // Insert chapters into the chapters array
-  //     data.chapters.forEach((chapter: any) => {
-  //       const subject = chapter.subject;
-  //       const chapterName = chapter.chapter;
-  //       this.chapters.push({ subject, chapter: chapterName });
-  //     });
-  //   });
-  // }
+      this.isCurrentSubject = true;
+    });
+
+    this.renderingHtmlRes()
+  }
 
   renderingHtmlRes() {
     this.safeHtml = "";
@@ -168,7 +134,5 @@ export class ChapterUiComponent  implements OnInit{
           this.htmlCode
         );
   }
-
-
   
 }
