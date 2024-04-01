@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SyllabusService } from '../gpt-service.service';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router'; 
+import { DataTransferService } from '../data-transfer.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -12,7 +13,7 @@ export class LandingPageComponent {
   topic: string = '';
   results:any;
   bookChapters: any;
-  constructor(private syllabusService: SyllabusService, private router: Router) { }
+  constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService) { }
 
   postInputTopic(topic:any){
     console.log(topic)
@@ -22,10 +23,11 @@ export class LandingPageComponent {
         console.log(response);
         this.bookChapters = response;
         console.log(this.bookChapters);
+        
+        // Set the data using the service
+        this.dataTransferService.setChaptersData(this.bookChapters);
 
-        this.router.navigate(['/results'], { 
-          queryParams: { chapters: JSON.stringify(this.bookChapters) } 
-        });
+        this.router.navigate(['/results']);
       },
       error => {
         // Handle errors here
