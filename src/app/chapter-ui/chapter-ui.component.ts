@@ -22,14 +22,24 @@ export class ChapterUiComponent {
   isChapterMode: boolean = false;
   itemsArray: string[] = [];
   chapters: { subject: string, chapter: string }[] = [];
-  selectedSubject: string | null = null;
+  selectedSubject: string = "";
   filteredChapters: string[] = [];
   currentSubject: string | null = null;
   isCurrentSubject:boolean=false;
   currentSubjects: string[] = [];
+  activeItem: string | null = null;
+
+  isActiveItem(item: string): boolean {
+    console.log(this.activeItem,item)
+    return this.activeItem === item;
+    
+  }
 
   
   selectSubject(subject: string): void {
+    this.activeItem = subject;
+    console.log("active item: ",this.activeItem)
+    
     this.breadcrumbs.push(subject);
     this.isCurrentSubject=true;
     this.currentSubject = subject;
@@ -48,6 +58,11 @@ export class ChapterUiComponent {
   }
   
   selectTopic(chapter: string): void {
+    this.safeHtml = "";
+    console.log(chapter)
+    this.activeItem = chapter;
+    console.log("active item: ",this.activeItem)
+    // this.isActiveItem(chapter);
    
     
     if (!this.breadcrumbs.includes(chapter)) {
@@ -57,6 +72,17 @@ export class ChapterUiComponent {
       }
       this.breadcrumbs.push(chapter);
     }
+    this.syllabusService.getChapterContents(this.selectedSubject,chapter,'English').subscribe(
+      response => {
+        // Handle the response from the API here
+        console.log(response);
+        // this.safeHtml = response.msg;
+        this.renderingHtmlRes(response.msg)
+        
+        
+        
+      }
+    )
     
     
     
@@ -113,25 +139,44 @@ export class ChapterUiComponent {
 
 
   ngOnInit(): void {
+    let firstChapter=""
+    let firstTopic=""
 
     // Retrieve the data using the service
     this.dataTransferService.getChaptersData().subscribe(chapters => {
       this.bookChapters = chapters.chapters;
+      firstChapter = chapters.chapters[0];
+      firstTopic = chapters.topic;
+      this.activeItem = firstChapter;
       this.currentSubject = chapters.topic;
       this.itemsArray.push(chapters.topic)
-      console.log('Received chapters:', this.bookChapters);
+      console.log('Received chapters:',chapters);
+      // this.isActiveItem(firstChapter);
 
       
       this.isCurrentSubject = true;
     });
+    this.syllabusService.getChapterContents(firstTopic,firstChapter,'English').subscribe(
+      response => {
+        // Handle the response from the API here
+        console.log(response);
+        // this.safeHtml = response.msg;
+        this.renderingHtmlRes(response.msg)
+        
+        
+        
+      }
+    )
 
-    this.renderingHtmlRes()
+
+
+   
   }
 
-  renderingHtmlRes() {
+  renderingHtmlRes(htmlRes:any) {
     this.safeHtml = "";
         this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(
-          this.htmlCode
+          htmlRes
         );
   }
   
