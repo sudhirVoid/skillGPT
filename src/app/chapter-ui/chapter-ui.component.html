@@ -38,7 +38,7 @@
 
               <div class="topic overflow-y-auto" *ngIf="isChapterMode">
                 <div (click)="selectTopic(chapter)"  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
-                *ngFor="let chapter of filteredChapters"
+                *ngFor="let chapter of bookChapters"
                     >
                   <p class="px-1 py-2 text-base">{{ chapter }}</p>
                   <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
