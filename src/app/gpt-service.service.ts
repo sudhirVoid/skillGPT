@@ -18,4 +18,14 @@ export class SyllabusService {
   }
 
 
+  getChapterContents(bookTopic: string, bookChapter:string,language: string): Observable<any> {
+    const body = {
+      bookTopic: bookTopic,
+      bookChapter:bookChapter,
+      language: language
+    };
+    return this.http.post<any>('https://956e-2405-201-4032-142-c5fd-829d-4b89-33cf.ngrok-free.app/generate/chapter', body);
+  }
+
+
 }

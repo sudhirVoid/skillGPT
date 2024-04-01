@@ -3,7 +3,7 @@
 }
 
 .height-1{
-    height: 10dvh;
+    height: 5dvh;
 }
 .height-2{
     height: 10dvh;
@@ -12,7 +12,7 @@
     height: 78vh;
 }
 .height-3{
-height: 78dvh;
+height: 81dvh;
 }
 .topic{
    
@@ -28,3 +28,7 @@ height: 78dvh;
     display: none; /* Chrome, Safari, Edge */
 }
 
+a{
+    color: white;
+    text-decoration: none;
+}
