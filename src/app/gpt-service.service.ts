@@ -14,7 +14,17 @@ export class SyllabusService {
       bookTopic: bookTopic,
       language: language
     };
-    return this.http.post<any>('https://956e-2405-201-4032-142-c5fd-829d-4b89-33cf.ngrok-free.app/generate/syllabus', body);
+    return this.http.post<any>('https://72f4-49-249-20-122.ngrok-free.app/generate/syllabus', body);
+  }
+
+
+  getChapterContents(bookTopic: string, bookChapter:string,language: string): Observable<any> {
+    const body = {
+      bookTopic: bookTopic,
+      bookChapter:bookChapter,
+      language: language
+    };
+    return this.http.post<any>('https://72f4-49-249-20-122.ngrok-free.app/generate/chapter', body);
   }
 
 
