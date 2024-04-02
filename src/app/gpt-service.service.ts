@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ChapterConfig } from './chapter-ui/chapter-ui.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,18 @@ export class SyllabusService {
       bookTopic: bookTopic,
       language: language
     };
-    return this.http.post<any>('https://956e-2405-201-4032-142-c5fd-829d-4b89-33cf.ngrok-free.app/generate/syllabus', body);
+    return this.http.post<any>('https://8d93-49-249-20-122.ngrok-free.app/generate/syllabus', body);
+  }
+
+
+  getChapterContents(bookTopic: string, chapterConfig:ChapterConfig,language: string): Observable<any> {
+    const body = {
+      bookTopic: bookTopic,
+      bookChapter:chapterConfig.chaptertitle,
+      chapterId:chapterConfig.chapterid,
+      bookLanguage: language
+    };
+    return this.http.post<any>('https://8d93-49-249-20-122.ngrok-free.app/generate/chapter', body);
   }
 
 

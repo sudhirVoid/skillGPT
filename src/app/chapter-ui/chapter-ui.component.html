@@ -22,9 +22,10 @@
             
             <div class="topic overflow-y-auto" *ngIf="!isCurrentSubject">
                 <div  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
-                     *ngFor="let item of itemsArray; let i=index"
-                     (click)="selectSubject(item)">
-                  <p class="px-1 py-2 text-base">{{ item }}</p>
+                *ngFor="let item of booksArray"
+               
+                     (click)="selectBook(item)">
+                  <p class="px-1 py-2 text-base">{{ item.title }}</p>
                   <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
                 </div>
               </div>
@@ -32,10 +33,11 @@
               
 
               <div class="topic overflow-y-auto" *ngIf="isCurrentSubject">
-                <div (click)="selectTopic(chapter)"  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+                <div (click)="selectChapter(chapter)"  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
                 *ngFor="let chapter of bookChapters"
+                [ngClass]="{ 'activeStatus': isActiveItem(chapter.chaptertitle) }"
                     >
-                  <p class="px-1 py-2 ">{{ chapter }}</p>
+                  <p class="px-1 py-2 ">{{ chapter.chaptertitle }}</p>
                   <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
                 </div>
               </div>
@@ -59,11 +61,30 @@
                 </li>
               </ul>
         </div>
-        <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="safeHtml " >
+        
+        <!-- <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="safeHtml " >
 
    
+        </div> -->
+        <div class="height-3 overflow-y-auto px-12 bg-slate-200">
+          <ng-container *ngIf="!chapterConversation;">
+            <!-- Circular progress component -->
+            <div class="loader">
+              <svg class="circular">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
+              </svg>
+            </div>
+          </ng-container>
+          
+          <div *ngFor="let chat of chapterConversation">
+            <!-- Your div with safe HTML content -->
+            
+            <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="chat?.gpt"></div>
+            <div class="height-3 overflow-y-auto px-12 bg-slate-200">{{chat?.user}}</div>
+          </div>
+
         </div>
-        <div class="height-2">
+        <div class="height-2  bg-slate-200">
             <div class="flex bg-slate-200">
               <input class="w-full p-3 ml-2 mr-0 border-emerald-700 border-2 rounded-tl-xl rounded-bl-xl rounded-e-none focus:outline-none" type="text" placeholder="Ask a question..">
               <div class="p-3 mr-2 ml-0 bg-emerald-600 cursor-pointer text-center rounded-s-none rounded-e-xl"><img src="../../assets/send-message(1).png" alt=""></div>

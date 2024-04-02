@@ -8,6 +8,13 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../auth-service.service';
 
+interface BookConfig{
+  book_id: string, title: string
+}
+export interface ChapterConfig{
+  chapterid: number,
+  chaptertitle: string
+}
 @Component({
   selector: 'app-chapter-ui',
   templateUrl: './chapter-ui.component.html',
@@ -21,22 +28,37 @@ export class ChapterUiComponent {
   safeHtml:SafeHtml="";
   breadcrumbs: string[] = [];
   isChapterMode: boolean = false;
-  itemsArray: string[] = [];
+  booksArray: BookConfig[] = [];
   chapters: { subject: string, chapter: string }[] = [];
-  selectedSubject: string | null = null;
+  selectedSubject: string = "";
   filteredChapters: string[] = [];
   currentSubject: string | null = null;
   isCurrentSubject:boolean=false;
   currentSubjects: string[] = [];
+  activeItem: string | null = null;
+  //we have whole conversation of a chapter between user and gpt here.
+  chapterConversation: {
+    gpt: SafeHtml;
+    user?: string;
+  }[] = []; 
+
+  isActiveItem(item: string): boolean {
+
+    return this.activeItem === item;
+    
+  }
 
   
-  selectSubject(subject: string): void {
-    this.breadcrumbs.push(subject);
+  selectBook(subject: BookConfig): void {
+    // this.activeItem = subject;
+    // console.log("active item: ",this.activeItem)
+    
+    this.breadcrumbs.push(subject.title);
     this.isCurrentSubject=true;
-    this.currentSubject = subject;
-    this.selectedSubject = subject;
-    this.filteredChapters = this.chapters.filter(chapter => chapter.subject === subject)
-      .map(chapter => chapter.chapter);
+    this.currentSubject = subject.title;
+    // this.selectedSubject = subject;
+    // this.filteredChapters = this.chapters.filter(chapter => chapter.subject === subject)
+      // .map(chapter => chapter.chapter);
   }
   addNewTopic(): void {
     this.isChapterMode =! this.isChapterMode;
@@ -48,16 +70,33 @@ export class ChapterUiComponent {
     this.router.navigate([route]);
   }
   
-  selectTopic(chapter: string): void {
+  selectChapter(chapter: ChapterConfig): void {
+    this.safeHtml = "";
+    console.log(chapter)
+    this.activeItem = chapter.chaptertitle;
+    console.log("active item: ",this.activeItem)
+    // this.isActiveItem(chapter);
    
     
-    if (!this.breadcrumbs.includes(chapter)) {
+    if (!this.breadcrumbs.includes(chapter.chaptertitle)) {
       // If the chapter doesn't exist, pop the last chapter (if exists) and push the new chapter
       if (this.breadcrumbs.length >= 2) {
         this.breadcrumbs.pop();
       }
-      this.breadcrumbs.push(chapter);
+      this.breadcrumbs.push(chapter.chaptertitle);
     }
+    this.syllabusService.getChapterContents(this.selectedSubject,chapter,'English').subscribe(
+      response => {
+        // Handle the response from the API here
+        this.chapterConversation = (response.msg[0].content_text)
+        console.log(response);
+        // this.safeHtml = response.msg;
+        this.renderingHtmlRes(response.msg[0].content_text)
+        
+        
+        
+      }
+    )
     
     
     
@@ -109,11 +148,13 @@ export class ChapterUiComponent {
 
  
  
-  bookChapters: string[] = []
+  bookChapters: ChapterConfig[] = []
   constructor(private syllabusService: SyllabusService, private route:ActivatedRoute, private dataTransferService: DataTransferService,private sanitizer: DomSanitizer,private http: HttpClient,private router: Router,private authService: AuthServiceService) { }
 
 
   async ngOnInit(): Promise<void> {
+    let firstChapter=""
+    let bookName=""
 
     let res = this.authService.isAuthenticated();
     console.log("isLoggedIn : ",res);
@@ -124,25 +165,58 @@ export class ChapterUiComponent {
         this.router.navigate(["landingPage"]);
         // this.loginUser.sessionTimeOut();
       }
-      this.bookChapters = chapters.chapters;
-      this.currentSubject = chapters.topic;
-      this.itemsArray.push(chapters.topic)
-      console.log('Received chapters:', this.bookChapters);
+      this.bookChapters = chapters.chaptersData;
+      /*
+      structure of each chapter.
+        {
+            "chapterid": 46,
+            "chaptertitle": "Introduction to Astronomy"
+        }
+      */
+      firstChapter = chapters.chaptersData[0];
+      bookName = chapters.topic;
+      this.activeItem = firstChapter;
+      this.currentSubject = chapters["topicData"]["title"];
+      this.booksArray.push(chapters.topicData)
+      console.log('Received chapters:',chapters);
+      // this.isActiveItem(firstChapter);
 
       
       this.isCurrentSubject = true;
     });
+    this.syllabusService.getChapterContents(bookName,this.bookChapters[0],'English').subscribe(
+      response => {
+        // Handle the response from the API here
+        console.log(response);
+response.msg[0].content_text.map((singleChat:{gpt:string, user?:string})=>{
+          return this.chapterConversation.push({
+            gpt:this.renderingHtmlRes(singleChat?.gpt),
+            user:singleChat?.user ?? ''
+          })
+        })
+        
+        console.log(this.chapterConversation)
+
+        // this.safeHtml = response.msg;
+        // this.renderingHtmlRes(response.msg)
+        
+        
+        
+      }
+    )
 
 
 
-    this.renderingHtmlRes()
+   
   }
 
-  renderingHtmlRes() {
+  renderingHtmlRes(htmlRes:string) {
     this.safeHtml = "";
         this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(
-          this.htmlCode
+          htmlRes
         );
+        console.log(this.safeHtml)
+      return this.safeHtml
   }
   
 }
