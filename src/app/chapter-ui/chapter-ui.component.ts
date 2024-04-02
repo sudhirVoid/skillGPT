@@ -6,6 +6,7 @@ import { DataTransferService } from '../data-transfer.service';
 import { DomSanitizer,SafeHtml } from "@angular/platform-browser";
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthServiceService } from '../auth-service.service';
 
 @Component({
   selector: 'app-chapter-ui',
@@ -109,13 +110,20 @@ export class ChapterUiComponent {
  
  
   bookChapters: string[] = []
-  constructor(private syllabusService: SyllabusService, private route:ActivatedRoute, private dataTransferService: DataTransferService,private sanitizer: DomSanitizer,private http: HttpClient,private router: Router) { }
+  constructor(private syllabusService: SyllabusService, private route:ActivatedRoute, private dataTransferService: DataTransferService,private sanitizer: DomSanitizer,private http: HttpClient,private router: Router,private authService: AuthServiceService) { }
 
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
+    let res = this.authService.isAuthenticated();
+    console.log("isLoggedIn : ",res);
     // Retrieve the data using the service
     this.dataTransferService.getChaptersData().subscribe(chapters => {
+      if (!chapters.chaptersData[0] ) {
+        console.log("no Topic present");
+        this.router.navigate(["landingPage"]);
+        // this.loginUser.sessionTimeOut();
+      }
       this.bookChapters = chapters.chapters;
       this.currentSubject = chapters.topic;
       this.itemsArray.push(chapters.topic)
@@ -124,6 +132,8 @@ export class ChapterUiComponent {
       
       this.isCurrentSubject = true;
     });
+
+
 
     this.renderingHtmlRes()
   }
