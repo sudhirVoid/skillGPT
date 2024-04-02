@@ -1,12 +1,23 @@
 <div class="container">
     <div class="logo">
-        <span class="logo-text">SkillGPT</span>
+        <span class="logo-text">Skill&nbsp;GPT</span>
     </div>
-    <div class="content">
+    <div class="content gap-2">
         <p class="message">Hello! Learners! On which topic are you excited to skill up today?</p>
         <div class="topic-input-container">
-            <input type="text" class="topic-input" [(ngModel)]="topic" placeholder="Enter your topic here...">
+            <input type="text" class="topic-input" [(ngModel)]="topic" placeholder="Enter your topic here..." (keyup.enter)="postInputTopic(topic)">
             <button class="btn btn-outline-secondary" type="submit" [disabled]="!topic" (click)="postInputTopic(topic)"><i class="fa-solid fa-arrow-right"></i></button>
         </div>
+        <div>
+            <p *ngIf="isGenerating" class="text-white text-xl">Generating Chapters...</p>
+            <p *ngIf="!isGenerating" class="text-white text-xl">&nbsp;</p>
+        </div>
     </div>
+    <div class="suggestedTopics flex flex-wrap px-12">
+        <div *ngFor="let item of suggestedTopics" class="p-2 m-2 bg-emerald-500 rounded-lg cursor-pointer" (click)="setSuggestedTopics($event)">
+            <p class="text-white text-md">{{item}}</p>
+        </div>
+
+    </div>
+   
 </div>
