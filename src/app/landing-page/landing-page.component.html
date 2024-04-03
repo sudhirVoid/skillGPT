@@ -17,7 +17,7 @@
             <p *ngIf="!isGenerating" class="text-white text-xl">&nbsp;</p>
         </div>
     </div>
-    <div class="suggestedTopics grid  gap-2  md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-5 mb-4">
+    <div class="suggestedTopics grid  gap-2 mt-5  md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-5 mb-4">
         <div *ngFor="let item of suggestedTopics" class="p-2  m-2 bg-emerald-500 rounded-lg cursor-pointer flex content-center justify-center" (click)="setSuggestedTopics($event)">
             <p class="text-white text-md">{{item}}</p>
         </div>
