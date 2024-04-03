@@ -66,26 +66,37 @@
 
    
         </div> -->
-        <div class="height-3 overflow-y-auto px-12 bg-slate-200">
-          <ng-container *ngIf="!chapterConversation;">
+        <div class="height-3 overflow-y-auto px-12 bg-white">
+          <div *ngIf="!safeHtml">
             <!-- Circular progress component -->
             <div class="loader">
               <svg class="circular">
                 <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
               </svg>
+              <p class="w-32">Loading content...</p>
             </div>
-          </ng-container>
-          
-          <div *ngFor="let chat of chapterConversation">
-            <!-- Your div with safe HTML content -->
-            
-            <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="chat?.gpt"></div>
-            <div class="height-3 overflow-y-auto px-12 bg-slate-200">{{chat?.user}}</div>
           </div>
 
+          <div *ngIf="safeHtml">
+            <div  *ngFor="let chat of chapterConversation">
+              <!-- Your div with safe HTML content -->
+              
+              <!-- <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="chat?.gpt"></div> -->
+              <div 
+              style="h1 { font-size: 2em; font-weight: bold; color: #333; margin-bottom: 10px; }
+            h2 { font-size: 1.5em; font-weight: bold; color: #555; margin-top: 20px; margin-bottom: 5px; }
+            h3 { font-size: 1.2em; font-weight: bold; color: #777; margin-top: 15px; margin-bottom: 5px; }
+            p { font-size: 1em; line-height: 1.5; color: #444; margin-bottom: 15px; }"
+              class="height-3 overflow-y-auto px-12 " [innerHTML]="chat?.gpt"></div>
+            </div>
+
+          </div>
+          
+          
+
         </div>
-        <div class="height-2  bg-slate-200">
-            <div class="flex bg-slate-200">
+        <div class="height-2  bg-white">
+            <div class="flex bg-white">
               <input class="w-full p-3 ml-2 mr-0 border-emerald-700 border-2 rounded-tl-xl rounded-bl-xl rounded-e-none focus:outline-none" type="text" placeholder="Ask a question..">
               <div class="p-3 mr-2 ml-0 bg-emerald-600 cursor-pointer text-center rounded-s-none rounded-e-xl"><img src="../../assets/send-message(1).png" alt=""></div>
             </div>

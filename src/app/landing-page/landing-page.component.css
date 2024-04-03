@@ -31,12 +31,13 @@
 }
 
 .content {
-    justify-content: center;
+    justify-content: end;
     text-align: center;
     display: flex;
     flex-direction: column; 
     align-items: center;
     height: 60vh;
+    
 }
 
 .message {

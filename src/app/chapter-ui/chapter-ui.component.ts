@@ -21,7 +21,7 @@ export interface ChapterConfig{
 })
 export class ChapterUiComponent {
 
-
+  
   textToType: string = "Hello, I am ChatGPT!";
   typedText: string = "";
   safeHtml:SafeHtml="";
@@ -31,7 +31,7 @@ export class ChapterUiComponent {
   chapters: { subject: string, chapter: string }[] = [];
   selectedSubject: string = "";
   filteredChapters: string[] = [];
-  currentSubject: string | null = null;
+  currentSubject: string  = '';
   isCurrentSubject:boolean=false;
   currentSubjects: string[] = [];
   activeItem: string | null = null;
@@ -70,6 +70,7 @@ export class ChapterUiComponent {
   }
   
   selectChapter(chapter: ChapterConfig): void {
+   
     this.safeHtml = "";
     console.log(chapter)
     this.activeItem = chapter.chaptertitle;
@@ -96,6 +97,7 @@ export class ChapterUiComponent {
         
       }
     )
+   
     
     
     
@@ -171,7 +173,8 @@ export class ChapterUiComponent {
       this.currentSubject = chapters["topicData"]["title"];
       this.booksArray.push(chapters.topicData)
       console.log('Received chapters:',chapters);
-      // this.isActiveItem(firstChapter);
+      this.isActiveItem(firstChapter);
+      this.breadcrumbs.push(this.currentSubject);
 
       
       this.isCurrentSubject = true;
@@ -186,6 +189,7 @@ response.msg[0].content_text.map((singleChat:{gpt:string, user?:string})=>{
             user:singleChat?.user ?? ''
           })
         })
+       
         
         console.log(this.chapterConversation)
 
