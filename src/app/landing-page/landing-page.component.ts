@@ -5,11 +5,14 @@ import { Router } from '@angular/router';
 import { DataTransferService } from '../data-transfer.service';
 import { AuthServiceService } from '../auth-service.service';
 
+
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
+
+
 
 
 export class LandingPageComponent {
