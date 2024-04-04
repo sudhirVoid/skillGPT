@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DataTransferService } from '../data-transfer.service';
 import { AuthServiceService } from '../auth-service.service';
 
+
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
@@ -12,10 +13,47 @@ import { AuthServiceService } from '../auth-service.service';
 })
 
 
+
+
 export class LandingPageComponent {
   topic: string = '';
   results:any;
   bookChapters: any;
+  isGenerating: boolean = false;
+  suggestedTopics: string[] = [
+    "Computer Science",
+    "Data Analysis",
+    "Artificial Intelligence",
+    "Robotics",
+    "Cybersecurity",
+    "Web Development",
+    "Mobile App Development",
+    "Cloud Computing",
+    "Data Science",
+    "Machine Learning",
+    "Software Engineering",
+    "Game Development",
+    "Virtual Reality",
+    "Augmented Reality",
+    "Internet of Things (IoT)",
+    "Blockchain Technology",
+    "Cryptocurrency",
+    "Big Data Analytics",
+    "Digital Marketing",
+    "E-commerce",
+    "User Interface (UI) Design",
+    "Content Writing",
+    "Copywriting",
+    "Social Media Marketing",
+    "Search Engine Optimization",
+    "Data Visualization",
+    "Network Administration",
+    "Database Management",
+    "System Administration",
+    "DevOps Engineering"
+  ];
+  
+  
   constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService) { }
 
 
@@ -27,6 +65,7 @@ export class LandingPageComponent {
 
 
   postInputTopic(topic:any){
+    this.isGenerating = true;
     console.log(topic)
     this.syllabusService.generateSyllabus(topic, 'English').subscribe(
       response => {
@@ -37,7 +76,7 @@ export class LandingPageComponent {
         
         // Set the data using the service
         this.dataTransferService.setChaptersData(this.bookChapters);
-
+        console.log(this.bookChapters);
         this.router.navigate(['/results']);
       },
       error => {
@@ -47,6 +86,11 @@ export class LandingPageComponent {
     );
   }
 
+  setSuggestedTopics(event: any) {
+    this.topic = event.target.innerText;
+    this.postInputTopic(this.topic)
+    
+  }
 
 }
 

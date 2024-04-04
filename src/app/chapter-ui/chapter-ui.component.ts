@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit, ElementRef, ViewChild } from '@angular/core';
 import { SyllabusService } from '../gpt-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../data-transfer.service';
@@ -21,8 +21,9 @@ export interface ChapterConfig{
   styleUrls: ['./chapter-ui.component.css']
 })
 export class ChapterUiComponent {
+  @ViewChild('htmlContent') htmlContent!: ElementRef<HTMLDivElement>;
 
-
+  
   textToType: string = "Hello, I am ChatGPT!";
   typedText: string = "";
   safeHtml:SafeHtml="";
@@ -32,15 +33,32 @@ export class ChapterUiComponent {
   chapters: { subject: string, chapter: string }[] = [];
   selectedSubject: string = "";
   filteredChapters: string[] = [];
-  currentSubject: string | null = null;
+  currentSubject: string  = '';
   isCurrentSubject:boolean=false;
   currentSubjects: string[] = [];
   activeItem: string | null = null;
+  
   //we have whole conversation of a chapter between user and gpt here.
   chapterConversation: {
     gpt: SafeHtml;
     user?: string;
   }[] = []; 
+
+
+  copyCode() {
+    const codeElement = this.htmlContent?.nativeElement.querySelector('code');
+    if (codeElement) {
+      const codeText = codeElement.textContent!;
+      navigator.clipboard.writeText(codeText).then(() => {
+        alert('Code copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy code: ', err);
+      });
+    } else {
+      console.error('Code element not found.');
+    }
+  }
+  
 
   isActiveItem(item: string): boolean {
 
@@ -71,6 +89,7 @@ export class ChapterUiComponent {
   }
   
   selectChapter(chapter: ChapterConfig): void {
+   
     this.safeHtml = "";
     console.log(chapter)
     this.activeItem = chapter.chaptertitle;
@@ -100,9 +119,11 @@ export class ChapterUiComponent {
     
     
     
+    
+    
   }
   
-
+  
  
  
   bookChapters: ChapterConfig[] = []
@@ -128,11 +149,14 @@ export class ChapterUiComponent {
         */
         firstChapter = chapters.chaptersData[0];
         bookName = chapters.topic;
-        this.activeItem = firstChapter;
+        this.activeItem = this.bookChapters[0].chaptertitle;
         this.currentSubject = chapters["topicData"]["title"];
         this.booksArray.push(chapters.topicData)
         console.log('Received chapters:',chapters);
         // this.isActiveItem(firstChapter);
+        this.isActiveItem(firstChapter);
+        this.breadcrumbs.push(this.currentSubject);
+        this.breadcrumbs.push(this.bookChapters[0].chaptertitle)
   
         
         this.isCurrentSubject = true;

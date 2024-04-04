@@ -51,8 +51,8 @@
     <div class="h-screen w-4/5 relative">
         
     
-        <div class="height-1 p-4 bg-emerald-700">
-            <ul class="breadcrumb flex text-white font-bold">
+        <div class="height-1 p-4 bg-emerald-700 flex content-center flex-wrap">
+            <ul class="breadcrumb flex text-white font-bold m-0">
                 <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}">
                     
                   <a *ngIf="!last" [href]="'#'">{{ item }}</a>
@@ -66,26 +66,37 @@
 
    
         </div> -->
-        <div class="height-3 overflow-y-auto px-12 bg-slate-200">
-          <ng-container *ngIf="!chapterConversation;">
+        <div class="height-3 overflow-y-auto pl-12 bg-white">
+          <div *ngIf="!safeHtml">
             <!-- Circular progress component -->
             <div class="loader">
               <svg class="circular">
                 <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
               </svg>
+              <p class="w-32">Loading content...</p>
             </div>
-          </ng-container>
-          
-          <div *ngFor="let chat of chapterConversation">
-            <!-- Your div with safe HTML content -->
-            
-            <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="chat?.gpt"></div>
-            <div class="height-3 overflow-y-auto px-12 bg-slate-200">{{chat?.user}}</div>
           </div>
 
+          <div *ngIf="safeHtml">
+            <div  *ngFor="let chat of chapterConversation">
+              <!-- Your div with safe HTML content -->
+              
+              <!-- <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="chat?.gpt"></div> -->
+              <div 
+              #htmlContent 
+              class="htmlRes flex flex-col gap-2"
+               [innerHTML]="chat?.gpt">
+               <span class="copy-icon" (click)="copyCode()">Copy</span>
+              </div>
+            </div>
+
+          </div>
+          
+          
+
         </div>
-        <div class="height-2  bg-slate-200">
-            <div class="flex bg-slate-200">
+        <div class="height-2  bg-white">
+            <div class="flex bg-white">
               <input class="w-full p-3 ml-2 mr-0 border-emerald-700 border-2 rounded-tl-xl rounded-bl-xl rounded-e-none focus:outline-none" type="text" placeholder="Ask a question..">
               <div class="p-3 mr-2 ml-0 bg-emerald-600 cursor-pointer text-center rounded-s-none rounded-e-xl"><img src="../../assets/send-message(1).png" alt=""></div>
             </div>
