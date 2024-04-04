@@ -51,8 +51,8 @@
     <div class="h-screen w-4/5 relative">
         
     
-        <div class="height-1 p-4 bg-emerald-700">
-            <ul class="breadcrumb flex text-white font-bold">
+        <div class="height-1 p-4 bg-emerald-700 flex content-center flex-wrap">
+            <ul class="breadcrumb flex text-white font-bold m-0">
                 <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}">
                     
                   <a *ngIf="!last" [href]="'#'">{{ item }}</a>
@@ -66,7 +66,7 @@
 
    
         </div> -->
-        <div class="height-3 overflow-y-auto px-12 bg-white">
+        <div class="height-3 overflow-y-auto pl-12 bg-white">
           <div *ngIf="!safeHtml">
             <!-- Circular progress component -->
             <div class="loader">
@@ -83,11 +83,11 @@
               
               <!-- <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="chat?.gpt"></div> -->
               <div 
-              style="h1 { font-size: 2em; font-weight: bold; color: #333; margin-bottom: 10px; }
-            h2 { font-size: 1.5em; font-weight: bold; color: #555; margin-top: 20px; margin-bottom: 5px; }
-            h3 { font-size: 1.2em; font-weight: bold; color: #777; margin-top: 15px; margin-bottom: 5px; }
-            p { font-size: 1em; line-height: 1.5; color: #444; margin-bottom: 15px; }"
-              class="height-3 overflow-y-auto px-12 " [innerHTML]="chat?.gpt"></div>
+              #htmlContent 
+              class="htmlRes flex flex-col gap-2"
+               [innerHTML]="chat?.gpt">
+               <span class="copy-icon" (click)="copyCode()">Copy</span>
+              </div>
             </div>
 
           </div>

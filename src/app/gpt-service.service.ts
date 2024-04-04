@@ -15,7 +15,7 @@ export class SyllabusService {
       bookTopic: bookTopic,
       language: language
     };
-    return this.http.post<any>('https://8d93-49-249-20-122.ngrok-free.app/generate/syllabus', body);
+    return this.http.post<any>('https://skillgpt-be.onrender.com/generate/syllabus', body);
   }
 
 
@@ -26,7 +26,7 @@ export class SyllabusService {
       chapterId:chapterConfig.chapterid,
       bookLanguage: language
     };
-    return this.http.post<any>('https://8d93-49-249-20-122.ngrok-free.app/generate/chapter', body);
+    return this.http.post<any>('https://skillgpt-be.onrender.com/generate/chapter', body);
   }
 
 

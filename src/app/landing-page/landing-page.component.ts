@@ -73,7 +73,7 @@ export class LandingPageComponent {
         
         // Set the data using the service
         this.dataTransferService.setChaptersData(this.bookChapters);
-
+        console.log(this.bookChapters);
         this.router.navigate(['/results']);
       },
       error => {
