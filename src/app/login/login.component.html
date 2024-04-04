@@ -1,0 +1,41 @@
+<div class="h-screen w-screen bg-gray-800">
+    <h1 class="absolute top-0 left-0 ml-6 mt-6 text-3xl text-white dark:text-white font-bold z-50">SkillGPT</h1>
+
+    <!-- modal -->
+    <div class="fixed grid place-items-center top-0 right-0 left-0 z-50 w-full inset-0 h-modal h-full justify-center items-center">
+        <div class="relative container m-auto px-6">
+            <div class="m-auto md:w-7/12">
+                <div class="rounded-xl bg-emerald-700 dark:bg-emerald-700 shadow-xl">
+                    <div class="p-8">
+                        <div class="space-y-4">
+                            <h2 class="mb-8 text-2xl text-white dark:text-white font-bold">Log in to unlock the <br>
+                                best of SkillGPT.
+                            </h2>
+                        </div>
+                        <div class="mt-10 grid space-y-4">
+                            <button
+                                class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100 " (click)="signInWithGoogle()">
+                                <div class="relative flex items-center space-x-4 justify-center">
+                                    <img src="https://www.svgrepo.com/show/475656/google-color.svg"
+                                        class="absolute left-0 w-5" alt="google logo">
+                                    <span
+                                        class="block w-max font-semibold tracking-wide text-white dark:text-emerald-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">Continue
+                                        with Google
+                                    </span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="mt-14 space-y-4 py-3 text-gray-600 dark:text-gray-400 text-center">
+                            <p class="text-xs">By proceeding, you agree to our Terms of Use
+                                <!-- <a href="/privacy-policy/" class="underline">Terms of Use</a> -->
+                                and confirm you have read our Privacy and Cookie Statement
+                                <!-- <a href="/privacy-policy/" class="underline">Privacy and Cookie Statement</a>. -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
