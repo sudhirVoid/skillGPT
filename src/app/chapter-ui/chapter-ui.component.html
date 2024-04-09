@@ -39,7 +39,7 @@
                 [ngClass]="{ 'activeStatus': isActiveItem(chapter.chaptertitle) }"
                     >
                   <p class="px-1 py-2 ">{{ chapter.chaptertitle }}</p>
-                  <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
+                  <img *ngIf="!bookChapters" width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
                 </div>
               </div>
               

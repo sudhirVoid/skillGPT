@@ -13,8 +13,10 @@ import { SharedService } from '../shared.service';
 })
 export class UserPanelComponent {
   isHovered: boolean=false;
+  userImageUrl:string=''
+  username:string=''
 
-  constructor(private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService, private sharedService: SharedService) { }
+  constructor(private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService, private sharedService: SharedService,private auth: AuthServiceService) { }
   @Output() buttonClick = new EventEmitter<void>();
 
 
@@ -23,6 +25,16 @@ export class UserPanelComponent {
     this.buttonClick.emit();
   }
 
+   ngOnInit(){
+    this.auth.getUserInfo().then((user) => {
+      console.log(user.photoURL)
+      if (user) {
+        
+        this.userImageUrl =user.photoURL;
+        this.username = user.displayName;
+      }
+    })
+  }
   toggleHover() {
     this.isHovered = !this.isHovered;
    

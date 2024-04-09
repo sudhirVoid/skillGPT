@@ -15,6 +15,7 @@ export class SharedService {
   logout(){
 
     const auth = getAuth();
+   
     signOut(auth).then(() => {
       // Sign-out successful.
       console.log("User Logged Out");

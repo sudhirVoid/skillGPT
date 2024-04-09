@@ -70,6 +70,7 @@ export class AuthServiceService {
       this.user = await this.afAuth.authState.pipe(first()).toPromise();
       if (this.user) {
         console.log('User is logged in:', this.user.email);
+        console.log("user object:",this.user)
         return true;
       } else {
         console.log('User is logged out');
@@ -79,6 +80,16 @@ export class AuthServiceService {
       // return this.afAuth.authState.pipe(
       //   map((user) => !!user) // Convert user to boolean (true if user exists, false if not)
       // );
+    }
+    async getUserInfo() {
+      this.user = await this.afAuth.authState.pipe(first()).toPromise();
+      if (this.user) {
+        
+        return this.user;
+      } else {
+        
+        return null;
+      }
     }
 
 

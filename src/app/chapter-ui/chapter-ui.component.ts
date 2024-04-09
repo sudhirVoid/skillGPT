@@ -44,6 +44,7 @@ export class ChapterUiComponent {
     gpt: SafeHtml;
     user?: string;
   }[] = []; 
+  currentChapterId: any;
 
 
   copyCode() {
@@ -139,6 +140,24 @@ export class ChapterUiComponent {
     console.log("isLoggedIn : ",res);
     // Retrieve the data using the service
     try {
+
+    const storedData = localStorage.getItem('storedData');
+    if (storedData) {
+      // Data exists in local storage, parse and use it directly
+      const parsedData = JSON.parse(storedData);
+      this.bookChapters = parsedData.bookChapters;
+      firstChapter = parsedData.firstChapter;
+      bookName = parsedData.bookName;
+      this.activeItem = parsedData.activeItem;
+      this.currentChapterId = parsedData.currentChapterId;
+      this.currentSubject = parsedData.currentSubject;
+      this.booksArray = parsedData.booksArray;
+      this.breadcrumbs = parsedData.breadcrumbs;
+      this.isCurrentSubject = parsedData.isCurrentSubject;
+      console.log('Retrieved data from local storage:', parsedData);
+      
+    }
+    else{
       this.dataTransferService.getChaptersData().subscribe(chapters => {
         this.bookChapters = chapters.chaptersData;
         /*
@@ -161,7 +180,23 @@ export class ChapterUiComponent {
   
         
         this.isCurrentSubject = true;
+        const dataToStore = {
+          bookChapters: this.bookChapters,
+          firstChapter: firstChapter,
+          bookName: bookName,
+          activeItem: this.activeItem,
+          currentChapterId: this.currentChapterId,
+          currentSubject: this.currentSubject,
+          booksArray: this.booksArray,
+          breadcrumbs: this.breadcrumbs,
+          isCurrentSubject: this.isCurrentSubject,
+          chapterContent: chapters.chapterContent,
+        };
+        localStorage.setItem('storedData', JSON.stringify(dataToStore));
       });
+
+    }
+     
     } catch (error) {
       console.log("no Topic present");
       this.router.navigate(["landingPage"]);
