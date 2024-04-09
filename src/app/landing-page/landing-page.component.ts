@@ -4,6 +4,9 @@ import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router'; 
 import { DataTransferService } from '../data-transfer.service';
 import { AuthServiceService } from '../auth-service.service';
+import * as firebase from 'firebase/compat';
+import { getAuth, signOut } from "firebase/auth";
+import { SharedService } from '../shared.service';
 
 
 @Component({
@@ -54,13 +57,17 @@ export class LandingPageComponent {
   ];
   
   
-  constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService) { }
+  constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService, private sharedService: SharedService) { }
 
 
   ngOnInit(): void {
     let res = this.authService.isAuthenticated();
     console.log("isLoggedIn : ",res);
     
+  }
+
+  onClickLogout(): void{
+    this.sharedService.logout();
   }
 
 
@@ -92,6 +99,5 @@ export class LandingPageComponent {
     
   }
 
+
 }
-
-

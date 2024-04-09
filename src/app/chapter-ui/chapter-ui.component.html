@@ -1,5 +1,6 @@
 <div class="flex">
     <!-- Sidebar -->
+    <!-- <app-user-panel (buttonClick)="onClickLogout()"></app-user-panel> -->
     <aside class="h-screen w-1/5  bg-gray-800 text-white top-0 left-0 z-10">
         <div class="padding-all">
             <div class="flex justify-center items-center">
@@ -51,7 +52,7 @@
     <div class="h-screen w-4/5 relative">
         
     
-        <div class="height-1 p-4 bg-emerald-700 flex content-center flex-wrap">
+        <div class="height-1 p-4 bg-emerald-700 flex content-center  flex-wrap">
             <ul class="breadcrumb flex text-white font-bold m-0">
                 <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}">
                     
@@ -60,6 +61,9 @@
                   <span *ngIf="!last">&nbsp;/&nbsp;</span>
                 </li>
               </ul>
+              <div class="flex">
+                <app-user-panel (buttonClick)="onClickLogout()"></app-user-panel>
+              </div>
         </div>
         
         <!-- <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="safeHtml " >

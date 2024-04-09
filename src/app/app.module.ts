@@ -14,6 +14,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { UserPanelComponent } from './user-panel/user-panel.component';
 
 
 
@@ -22,7 +23,8 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     AppComponent,
     ChapterUiComponent,
     LandingPageComponent,
-    LoginComponent
+    LoginComponent,
+    UserPanelComponent
   ],
   imports: [
     BrowserModule,
