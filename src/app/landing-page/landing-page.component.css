@@ -8,6 +8,7 @@
     justify-content: center;
     min-width: 100% !important;
     overflow: hidden;
+    position: relative; /* Added for positioning of the logout button */
 }
 
 .logo {
@@ -30,6 +31,11 @@
     color: #50C878;
 }
 
+
+.btn-logout:hover {
+    background-color: #42a763;;
+}
+
 .content {
     justify-content: end;
     text-align: center;
@@ -37,7 +43,6 @@
     flex-direction: column; 
     align-items: center;
     height: 60vh;
-    
 }
 
 .message {
@@ -65,15 +70,23 @@
     border: none;
     border-radius: 0 5px 5px 0;
     font-size: 16px;
-    background-color: #6c757d;
+    background-color: #787d81;
     color: white;
 }
 
 .btn-outline-secondary:hover {
     padding: 10px;
-    border: 1px solid #6c757d;
+    /* border: 1px solid #6c757d; */
     border-radius: 0 5px 5px 0;
-    font-size: 15px;
-    background-color: rgb(31, 41, 55, 1);
+    font-size: 16px;
+    background-color: #4a4d50;
     color: white;
 }
+
+/* .suggestedTopics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.suggestedTopics .p-2 {
+    flex-basis: calc(50% - 2rem);
+} */
