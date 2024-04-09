@@ -1,0 +1,75 @@
+.logout-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+.btn-logout {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #50C878;;
+    color: white;
+}
+
+/* CSS for profile  */
+
+.avatar-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right:20%;
+    display: none;
+    min-width: 110px;
+    padding: 0.2rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem;
+    
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-menu:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li {
+    list-style-type: none;
+    margin-bottom: 5px;
+}
+
+.dropdown-menu li a {
+    padding: 0.5rem;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    &:hover{
+        color: #50C878;
+        
+    }
+}
+
+.dropdown-menu li a:hover {
+    color: #50C878;
+}
+
+  
+  

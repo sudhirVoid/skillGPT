@@ -7,6 +7,7 @@ import { DomSanitizer,SafeHtml } from "@angular/platform-browser";
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../auth-service.service';
+import { SharedService } from '../shared.service';
 
 interface BookConfig{
   book_id: string, title: string
@@ -127,7 +128,7 @@ export class ChapterUiComponent {
  
  
   bookChapters: ChapterConfig[] = []
-  constructor(private syllabusService: SyllabusService, private route:ActivatedRoute, private dataTransferService: DataTransferService,private sanitizer: DomSanitizer,private http: HttpClient,private router: Router,private authService: AuthServiceService) { }
+  constructor(private syllabusService: SyllabusService, private route:ActivatedRoute, private dataTransferService: DataTransferService,private sanitizer: DomSanitizer,private http: HttpClient,private router: Router,private authService: AuthServiceService, private sharedService: SharedService) { }
 
 
   async ngOnInit(): Promise<void> {
@@ -203,6 +204,10 @@ export class ChapterUiComponent {
         );
         console.log(this.safeHtml)
       return this.safeHtml
+  }
+
+  onClickLogout(): void{
+    this.sharedService.logout();
   }
   
 }
