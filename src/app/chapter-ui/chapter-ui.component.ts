@@ -90,7 +90,8 @@ export class ChapterUiComponent {
   }
   
   selectChapter(chapter: ChapterConfig): void {
-   
+
+
     this.safeHtml = "";
     console.log(chapter)
     this.activeItem = chapter.chaptertitle;
@@ -105,18 +106,44 @@ export class ChapterUiComponent {
       }
       this.breadcrumbs.push(chapter.chaptertitle);
     }
-    this.syllabusService.getChapterContents(this.selectedSubject,chapter,'English').subscribe(
-      response => {
-        // Handle the response from the API here
-        this.chapterConversation = (response.msg[0].content_text)
-        console.log(response);
-        // this.safeHtml = response.msg;
-        this.renderingHtmlRes(response.msg[0].content_text)
-        
-        
-        
-      }
-    )
+    //check if content is already present or not
+    if(localStorage.getItem(`${chapter.chapterid}`)){
+      let chapterData = JSON.parse(localStorage.getItem(`${chapter.chapterid}`)!)
+      this.chapterConversation = [];
+      console.log('IN LOCAL STORAGE: ', chapterData);
+      chapterData.map((singleChat:{gpt:any, user?:string})=>{
+        return this.chapterConversation.push({
+          gpt:this.renderingHtmlRes(singleChat?.gpt.changingThisBreaksApplicationSecurity),
+          user:singleChat?.user ?? ''
+        })
+      })
+      
+      //this.renderingHtmlRes(chapterData[0].gpt.changingThisBreaksApplicationSecurity)
+    }
+    else{
+      this.chapterConversation = [];
+      this.syllabusService.getChapterContents(this.selectedSubject,chapter,'English').subscribe(
+        response => {
+          // Handle the response from the API here
+          response.msg[0].content_text.map((singleChat:{gpt:string, user?:string})=>{
+            return this.chapterConversation.push({
+              gpt:this.renderingHtmlRes(singleChat?.gpt),
+              user:singleChat?.user ?? ''
+            })
+          })
+          localStorage.setItem(`${chapter.chapterid}`, JSON.stringify(this.chapterConversation))
+          console.log(response);
+          // this.safeHtml = response.msg;
+          //this.renderingHtmlRes(response.msg[0].content_text)
+          
+          
+          
+        }
+      )
+
+    }
+   
+
     
     
     
@@ -171,15 +198,18 @@ export class ChapterUiComponent {
         response => {
           // Handle the response from the API here
           console.log(response);
+          
+          
   response.msg[0].content_text.map((singleChat:{gpt:string, user?:string})=>{
             return this.chapterConversation.push({
               gpt:this.renderingHtmlRes(singleChat?.gpt),
               user:singleChat?.user ?? ''
             })
           })
+          localStorage.setItem(`${firstChapter.chapterid}`,JSON.stringify(this.chapterConversation))
           
-          console.log(this.chapterConversation)
-  
+          console.log('AT FIRST CHAPTER DATA : ',this.chapterConversation)
+          
           // this.safeHtml = response.msg;
           // this.renderingHtmlRes(response.msg)
           
