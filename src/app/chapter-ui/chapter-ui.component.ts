@@ -37,7 +37,7 @@ export class ChapterUiComponent {
   currentSubject: string  = '';
   isCurrentSubject:boolean=false;
   currentSubjects: string[] = [];
-  activeItem: string | null = null;
+  activeItem!: string;
   
   //we have whole conversation of a chapter between user and gpt here.
   chapterConversation: {
@@ -61,9 +61,9 @@ export class ChapterUiComponent {
   }
   
 
-  isActiveItem(item: string): boolean {
+  isActiveItem(item: ChapterConfig): boolean {
 
-    return this.activeItem === item;
+    return this.activeItem === item.chaptertitle;
     
   }
 
@@ -132,7 +132,7 @@ export class ChapterUiComponent {
 
 
   async ngOnInit(): Promise<void> {
-    let firstChapter=""
+    let firstChapter:ChapterConfig;
     let bookName=""
 
     let res = this.authService.isAuthenticated();
