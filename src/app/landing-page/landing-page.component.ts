@@ -61,6 +61,7 @@ export class LandingPageComponent {
 
 
   ngOnInit(): void {
+    this.suggestedTopics.sort( ()=>Math.random()-0.5 );
     let res = this.authService.isAuthenticated();
     console.log("isLoggedIn : ",res);
     
