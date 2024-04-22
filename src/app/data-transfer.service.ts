@@ -8,13 +8,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class DataTransferService {
 
   private chaptersDataSubject = new BehaviorSubject<any>(null);
-
   constructor() { }
-
   setChaptersData(data: any) {
     this.chaptersDataSubject.next(data);
   }
-
   getChaptersData(): Observable<any> {
     return this.chaptersDataSubject.asObservable();
   }

@@ -1,20 +1,18 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router'; 
-import { DataTransferService } from '../data-transfer.service';
 import { AuthServiceService } from '../auth-service.service';
-import * as firebase from 'firebase/compat';
-import { getAuth, signOut } from "firebase/auth";
 import { SharedService } from '../shared.service';
+import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.service';
 
 @Component({
   selector: 'app-user-panel',
   templateUrl: './user-panel.component.html',
   styleUrls: ['./user-panel.component.css']
 })
-export class UserPanelComponent {
+export class UserPanelComponent{
   isHovered: boolean=false;
+  remainingCredits!: number;
 
-  constructor(private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService, private sharedService: SharedService) { }
+  constructor(private sharedService: SharedService, private firestoreDB: FirebaseRealtimeDBService, private authService: AuthServiceService) { }
   @Output() buttonClick = new EventEmitter<void>();
 
 
@@ -28,16 +26,9 @@ export class UserPanelComponent {
    
   }
 
-  // logout(){
-
-  //   const auth = getAuth();
-  //   signOut(auth).then(() => {
-  //     // Sign-out successful.
-  //     console.log("User Logged Out");
-  //     this.router.navigate(['/']);
-  //   }).catch((error) => {
-  //     // An error happened.
-  //   });
-  // }
+  async ngOnInit() {
+  this.remainingCredits = await this.firestoreDB.getCreditOfUser();
+  console.log(this.remainingCredits)
+}
 
 }

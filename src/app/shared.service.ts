@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { DataTransferService } from './data-transfer.service';
 import { AuthServiceService } from './auth-service.service';
-import * as firebase from 'firebase/compat';
 import { getAuth, signOut } from "firebase/auth";
 
 @Injectable({

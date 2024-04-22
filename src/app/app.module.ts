@@ -5,7 +5,9 @@ import { AppComponent } from './app.component';
 import { ChapterUiComponent } from './chapter-ui/chapter-ui.component';
 import { LoginComponent } from './login/login.component';
 
-
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule} from '@angular/router';
@@ -33,7 +35,10 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
     HttpClientModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule
   ],
   providers: [
     // { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }

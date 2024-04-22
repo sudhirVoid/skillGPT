@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireList, AngularFireDatabase } from '@angular/fire/compat/database';
 import firebase from 'firebase/compat';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
+import { getDatabase } from 'firebase/database';
 
 
 @Injectable({
@@ -42,7 +44,7 @@ export class AuthServiceService {
     }
 
       // Auth logic to run auth providers
-    AuthLogin(provider:any) {
+    AuthLogin(provider:GoogleAuthProvider) {
       return this.afAuth
         .signInWithPopup(provider)
         .then((result) => {
@@ -81,5 +83,14 @@ export class AuthServiceService {
       // );
     }
 
+    // async initializeCreditForNewUser(): Promise<void> {
+    //   const user = firebase.auth().currentUser;
+    //   const database = getDatabase(AngularFireModule.)
+    //   if (user) {
+    //     await firebase.firestore().collection('users').doc(user.uid).set({
+    //       credits: 3
+    //     });
+    //   }
+    // }
 
 }
