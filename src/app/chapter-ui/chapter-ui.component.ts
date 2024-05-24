@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { AuthServiceService } from '../auth-service.service';
 import { SharedService } from '../shared.service';
 
-interface BookConfig {
+export  interface BookConfig {
   book_id: string;
   title: string;
 }
@@ -38,7 +38,7 @@ export class ChapterUiComponent {
   isCurrentSubject: boolean = false;
   currentSubjects: string[] = [];
   activeItem!: string;
-
+  userId!: string;
   //we have whole conversation of a chapter between user and gpt here.
   chapterConversation: {
     gpt: SafeHtml;
@@ -67,6 +67,8 @@ export class ChapterUiComponent {
   }
 
   selectBook(subject: BookConfig): void {
+    let firstChapter: ChapterConfig;
+    let bookName = '';
     // this.activeItem = subject;
     // console.log("active item: ",this.activeItem)
 
@@ -76,11 +78,48 @@ export class ChapterUiComponent {
     // this.selectedSubject = subject;
     // this.filteredChapters = this.chapters.filter(chapter => chapter.subject === subject)
     // .map(chapter => chapter.chapter);
+    //TODO: populate book chapters here: this.bookChapters // check in db if not generate it
+
+    try {
+      this.dataTransferService.getChaptersData().subscribe((chapters) => {
+        this.bookChapters = chapters.chaptersData;
+        /*
+        structure of each chapter.
+          {
+              "chapterid": 46,
+              "chaptertitle": "Introduction to Astronomy"
+          }
+        */
+        firstChapter = chapters.chaptersData[0];
+        bookName = chapters.topic;
+        this.activeItem = this.bookChapters[0].chaptertitle;
+        this.currentSubject = chapters['topicData']['title'];
+        
+        console.log('Received chapters:', chapters);
+        // this.isActiveItem(firstChapter);
+        this.isActiveItem(firstChapter);
+        this.breadcrumbs.push(this.currentSubject);
+        this.breadcrumbs.push(this.bookChapters[0].chaptertitle);
+
+        this.isCurrentSubject = true;
+      });
+    } catch (error) {
+      console.log('no Topic present');
+      this.router.navigate(['landingPage']);
+    }
   }
-  addNewTopic(): void {
+  async addNewTopic() {
+
     this.isChapterMode = !this.isChapterMode;
     this.isCurrentSubject = !this.isCurrentSubject;
     this.breadcrumbs = [];
+    
+    //get all the books of the user here. BookConfig Interface.
+
+
+
+
+    
   }
 
   redirectTo(route: string): void {
@@ -152,7 +191,7 @@ export class ChapterUiComponent {
     private http: HttpClient,
     private router: Router,
     private authService: AuthServiceService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -176,7 +215,7 @@ export class ChapterUiComponent {
         bookName = chapters.topic;
         this.activeItem = this.bookChapters[0].chaptertitle;
         this.currentSubject = chapters['topicData']['title'];
-        this.booksArray.push(chapters.topicData);
+        
         console.log('Received chapters:', chapters);
         // this.isActiveItem(firstChapter);
         this.isActiveItem(firstChapter);
@@ -217,6 +256,13 @@ export class ChapterUiComponent {
     } catch (error) {
       this.router.navigate(['landingPage']);
     }
+    this.userId = await this.authService.getCurrentUserId();
+    console.log(`MY USER: ${this.userId}`);
+
+    if(this.userId != null){
+      this.booksArray = await this.syllabusService.getUserBooks(this.userId)
+    }
+    console.log('MYBOOKS:', this.booksArray)
   }
 
   renderingHtmlRes(htmlRes: string) {

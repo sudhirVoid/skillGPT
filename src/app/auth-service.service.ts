@@ -28,6 +28,10 @@ export class AuthServiceService {
       }
     });
    }
+    async getCurrentUserId(): Promise<string> {
+      return  await this.afAuth.currentUser.then(user => user ? user.uid : '');
+    }
+
 
    async checkInitialAuthState() {
     this.user = await this.afAuth.authState.pipe(first()).toPromise();

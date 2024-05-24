@@ -20,6 +20,7 @@ import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.serv
 
 
 export class LandingPageComponent {
+  userId!: string;
   topic: string = '';
   results:any;
   bookChapters: any;
@@ -61,10 +62,11 @@ export class LandingPageComponent {
   constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService, private sharedService: SharedService, private firebaseDB: FirebaseRealtimeDBService) { }
 
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.suggestedTopics.sort( ()=>Math.random()-0.5 );
     let res = this.authService.isAuthenticated();
     console.log("isLoggedIn : ",res);
+    this.userId = await this.authService.getCurrentUserId();
     
   }
 
@@ -76,17 +78,11 @@ export class LandingPageComponent {
    postInputTopic(topic:any){
     this.isGenerating = true;
     console.log(topic)
-    this.syllabusService.generateSyllabus(topic, 'English').subscribe(
+    this.syllabusService.generateSyllabus(topic, 'English', this.userId).subscribe(
       async response => {
-        // Handle the response from the API here
-        console.log(response);
         this.bookChapters = response;
-        console.log(this.bookChapters);
-        //Decrease Credit as one book is already generated.
         await this.firebaseDB.decreaseCredit();
-        // Set the data using the service
         this.dataTransferService.setChaptersData(this.bookChapters);
-        console.log(this.bookChapters);
         this.router.navigate(['/results']);
       },
       error => {
