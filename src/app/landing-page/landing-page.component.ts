@@ -8,6 +8,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { SharedService } from '../shared.service';
 import { jsPDF } from 'jspdf';
 import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.service';
+import { BookConfig } from '../chapter-ui/chapter-ui.component';
 
 
 @Component({
@@ -58,7 +59,7 @@ export class LandingPageComponent {
     "DevOps Engineering"
   ];
   
-  
+  userBooks: BookConfig[] = [];
   constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService, private sharedService: SharedService, private firebaseDB: FirebaseRealtimeDBService) { }
 
 
@@ -67,7 +68,17 @@ export class LandingPageComponent {
     let res = this.authService.isAuthenticated();
     console.log("isLoggedIn : ",res);
     this.userId = await this.authService.getCurrentUserId();
-    
+
+    this.syllabusService.getUserBooks(this.userId).then(data=>{
+      this.userBooks = data;
+    })
+    .catch(error=>{
+      console.log(error);
+      alert('Failed to Fetch Books')
+    })
+  }
+  async selectBook(book: BookConfig) {
+    console.log('Selected book:', book);
   }
 
   onClickLogout(): void{

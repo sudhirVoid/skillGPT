@@ -1,24 +1,46 @@
 <div class="container">
-    <div class="logo">
-        <span class="logo-text">Skill&nbsp;GPT</span>
+    <div class="flex flex-col">
+        <div class="flex justify-between">
+            <div class="logo">
+                <span class="logo-text">Skill&nbsp;GPT</span>
+            </div>
+            <div class="user-panel">
+                <app-user-panel (buttonClick)="onClickLogout()"></app-user-panel>
+            </div>
+        </div>
+        <div class="content gap-4 md:mt-5">
+            <div class="grid grid-cols-3 gap-4">
+                <div class="... bg-red-50">
+                    <div class="topic overflow-y-auto" >
+                        <div  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+                        *ngFor="let item of userBooks"
+                       
+                             (click)="selectBook(item)">
+                          <p class="px-1 py-2 text-base">{{ item.title }}</p>
+                          </div>
+                      </div>
+                </div>
+                  <div class="col-span-2">
+                <div class="flex flex-col flex-wrap justify-end content-center">
+      
+                  <p class="lg:text-6xl md:text-5xl sm:text-3xl lg:w-2/5">Hello! Learners!</p>
+                  <p class="lg:text-6xl md:text-5xl sm:text-3xl lg:w-2/5"> On which topic are you excited to skill up today?</p>
+              </div>
+              <div class="topic-input-container">
+                  <input type="text" class="topic-input" [(ngModel)]="topic" placeholder="Enter your topic here..." (keyup.enter)="postInputTopic(topic)">
+                  <button class="btn btn-outline-secondary" type="submit" [disabled]="!topic" (click)="postInputTopic(topic)"><i class="fa-solid fa-arrow-right"></i></button>
+              </div>
+                  </div>
+      
+              </div>
+            <div>
+                <p *ngIf="isGenerating" class="text-white text-xl">Generating Chapters...</p>
+                <p *ngIf="!isGenerating" class="text-white text-xl">&nbsp;</p>
+            </div>
+        </div>
     </div>
-    <app-user-panel (buttonClick)="onClickLogout()"></app-user-panel>
-    <div class="content gap-4 md:mt-5">
-        <div class="flex flex-col flex-wrap justify-end content-center">
-
-            <p class="lg:text-6xl md:text-5xl sm:text-3xl lg:w-2/5">Hello! Learners!</p>
-            <p class="lg:text-6xl md:text-5xl sm:text-3xl lg:w-2/5"> On which topic are you excited to skill up today?</p>
-        </div>
-        <div class="topic-input-container">
-            <input type="text" class="topic-input" [(ngModel)]="topic" placeholder="Enter your topic here..." (keyup.enter)="postInputTopic(topic)">
-            <button class="btn btn-outline-secondary" type="submit" [disabled]="!topic" (click)="postInputTopic(topic)"><i class="fa-solid fa-arrow-right"></i></button>
-        </div>
-        <div>
-            <p *ngIf="isGenerating" class="text-white text-xl">Generating Chapters...</p>
-            <p *ngIf="!isGenerating" class="text-white text-xl">&nbsp;</p>
-        </div>
-    </div>
-    <button  (click)="downloadPdf()" class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-arrow-down"></i></button>
+    
+    <!-- <button  (click)="downloadPdf()" class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-arrow-down"></i></button> -->
     <div class="suggestedTopics  grid gap-2 mt-5 md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-5 mb-4">
         <div *ngFor="let item of suggestedTopics" class="p-2 m-2 bg-emerald-500 rounded-lg cursor-pointer flex content-center justify-center" (click)="setSuggestedTopics($event)">
             <p class="text-white text-md">{{item}}</p>
