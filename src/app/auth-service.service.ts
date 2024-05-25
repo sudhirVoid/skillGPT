@@ -44,7 +44,7 @@ export class AuthServiceService {
 
     // Sign in with Google
     GoogleAuth() {
-      return this.AuthLogin(new GoogleAuthProvider());
+      return this.afAuth.signInWithPopup(new GoogleAuthProvider())
     }
 
       // Auth logic to run auth providers

@@ -75,21 +75,26 @@ export class LandingPageComponent {
   }
 
 
-   postInputTopic(topic:any){
-    this.isGenerating = true;
-    console.log(topic)
+   async postInputTopic(topic:any){
+    if(await this.firebaseDB.getCreditOfUser()>0){
+      this.isGenerating = true;
     this.syllabusService.generateSyllabus(topic, 'English', this.userId).subscribe(
       async response => {
         this.bookChapters = response;
         await this.firebaseDB.decreaseCredit();
-        this.dataTransferService.setChaptersData(this.bookChapters);
-        this.router.navigate(['/results']);
+          this.dataTransferService.setChaptersData(this.bookChapters);
+          this.router.navigate(['/results']);        
       },
       error => {
         // Handle errors here
         console.error('Error:', error);
       }
     );
+    }
+    else{
+      alert('You exceeded 3 free credits.')
+    }
+    
   }
 
   setSuggestedTopics(event: any) {

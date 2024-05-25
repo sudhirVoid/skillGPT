@@ -69,9 +69,9 @@ export class FirebaseRealtimeDBService {
   }
 
   //set 3 credits for new user
-  async setCreditForNewUser() {
+  async setCreditForNewUser(userId:string, credit:number) {
     const dbRef = ref(this.getDBInstance());
-    const creditPath = `users/${this.authService.user.uid}/credits`;
+    const creditPath = `users/${userId}/credits`;
 
     try {
       const snapshot = await get(child(dbRef, creditPath));
@@ -79,10 +79,10 @@ export class FirebaseRealtimeDBService {
         set(
           ref(
             this.getDBInstance(),
-            'users/' + this.authService.user.uid + '/credits'
+            'users/' + userId + '/credits'
           ),
           {
-            credit: 3,
+            credit: credit,
           }
         );
       }
