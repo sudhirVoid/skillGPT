@@ -77,21 +77,20 @@ export class LandingPageComponent {
       alert('Failed to Fetch Books')
     })
   }
-  async selectBook(book: BookConfig) {
-    console.log('Selected book:', book);
-  }
-
   onClickLogout(): void{
     this.sharedService.logout();
   }
 
-
+  async alreadyGeneratedBookSelection(book: BookConfig) {
+    this.router.navigate(['/results', {bookId:book.book_id, isOldBook:true}]);
+  }
    async postInputTopic(topic:any){
     if(await this.firebaseDB.getCreditOfUser()>0){
       this.isGenerating = true;
     this.syllabusService.generateSyllabus(topic, 'English', this.userId).subscribe(
       async response => {
         this.bookChapters = response;
+        console.log('BOOK CHAPTERS: ',this.bookChapters)
         await this.firebaseDB.decreaseCredit();
           this.dataTransferService.setChaptersData(this.bookChapters);
           this.router.navigate(['/results']);        

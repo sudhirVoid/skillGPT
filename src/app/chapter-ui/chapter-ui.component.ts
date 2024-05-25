@@ -44,6 +44,8 @@ export class ChapterUiComponent {
     gpt: SafeHtml;
     user?: string;
   }[] = [];
+  isOldBook: boolean = false;
+  bookId!: number;
 
   copyCode() {
     const codeElement = this.htmlContent?.nativeElement.querySelector('code');
@@ -197,10 +199,20 @@ export class ChapterUiComponent {
   async ngOnInit(): Promise<void> {
     let firstChapter: ChapterConfig;
     let bookName = '';
+    this.isCurrentSubject = true;
 
     let res = this.authService.isAuthenticated();
-    console.log('isLoggedIn : ', res);
-    // Retrieve the data using the service
+    this.userId = await this.authService.getCurrentUserId();
+
+    // {bookId:book.book_id, isOldBook:true} if user is trying to access the old books;
+
+      this.isOldBook = this.route.snapshot.paramMap.get('isOldBook') === 'true'; // Convert string to boolean
+      console.log(this.isOldBook)
+      this.bookId = parseInt(this.route.snapshot.paramMap.get('bookId') || '0');
+
+    //this.isOldBook =  this.route.snapshot.paramMap.get('isOldBook') === 'true';
+    if(!this.isOldBook){
+      
     try {
       this.dataTransferService.getChaptersData().subscribe((chapters) => {
         this.bookChapters = chapters.chaptersData;
@@ -222,7 +234,7 @@ export class ChapterUiComponent {
         this.breadcrumbs.push(this.currentSubject);
         this.breadcrumbs.push(this.bookChapters[0].chaptertitle);
 
-        this.isCurrentSubject = true;
+        
       });
     } catch (error) {
       console.log('no Topic present');
@@ -256,8 +268,30 @@ export class ChapterUiComponent {
     } catch (error) {
       this.router.navigate(['landingPage']);
     }
-    this.userId = await this.authService.getCurrentUserId();
-    console.log(`MY USER: ${this.userId}`);
+    }else{
+      // handle old book with database fetching.
+      let allBookData = await this.fetchOldBookData(this.bookId,this.userId);
+      this.bookChapters = allBookData.chaptersData;
+      firstChapter = allBookData.chaptersData[0];
+      bookName = allBookData.topicData.title;
+      this.activeItem = this.bookChapters[0].chaptertitle;
+      this.currentSubject = allBookData['topicData']['title'];
+      
+      console.log('Received ALL BOOK DATA :', allBookData);
+      // this.isActiveItem(firstChapter);
+      this.isActiveItem(firstChapter);
+      this.breadcrumbs.push(this.currentSubject);
+      this.breadcrumbs.push(this.bookChapters[0].chaptertitle);
+
+
+      //##NEXT SECTION
+
+      //need to click onece and content is getting visible. this is a bug.
+      this.chapterConversation = await JSON.parse(localStorage.getItem(`${firstChapter.chapterid}`)!);
+    }
+  
+    // Retrieve the data using the service
+    
 
     if(this.userId != null){
       this.booksArray = await this.syllabusService.getUserBooks(this.userId)
@@ -265,6 +299,22 @@ export class ChapterUiComponent {
     console.log('MYBOOKS:', this.booksArray)
   }
 
+  async fetchOldBookData(bookId: number, userId: string){
+    let wholeBookData = await this.syllabusService.getOldBookData(bookId, userId);
+    let userData = wholeBookData.userData;
+    const topicData = {
+      book_id: userData[0].bookid,
+      title: userData[0].booktitle,
+      user_id: userData[0].userid
+  };
+  const chaptersData = userData.map((data: any) => ({
+    chapterid: data.chapterid,
+    chaptertitle: data.chaptertitle
+  }));
+
+  return {topicData, chaptersData, userData}
+
+  }
   renderingHtmlRes(htmlRes: string) {
     this.safeHtml = '';
     this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(htmlRes);

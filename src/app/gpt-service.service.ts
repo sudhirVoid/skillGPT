@@ -48,5 +48,9 @@ export class SyllabusService {
     return bookArray;
   }
 
-
+  async getOldBookData(bookId: number, userId: string){
+    const response = await firstValueFrom(this.http.post<any>('http://localhost:3000/userData/getOldBookData', { bookId, userId }));
+    console.log(`ALL MY DATA: `,response);
+    return response;
+  }
 }
