@@ -8,29 +8,40 @@
                 <app-user-panel (buttonClick)="onClickLogout()"></app-user-panel>
             </div>
         </div>
-        <div class="content gap-4 md:mt-5">
-            <div class="grid grid-cols-3 gap-4">
-                <div class="... bg-red-50">
+        <div class="content gap-4 ">
+            <div class="">
+                <!-- <div class="... bg-red-50">
                     <div class="topic overflow-y-auto" >
-                        <!-- <div class=" w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                            <a href="#" aria-current="true" *ngFor="let book of userBooks" class="block w-full px-4 py-2 text-white bg-blue-700 border-b border-gray-200 rounded-t-lg cursor-pointer dark:bg-gray-800 dark:border-gray-600">
-                                {{book.title}}
-                            </a>
-                        </div> -->
+                       
                         <div  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
                         *ngFor="let item of userBooks"          
                              (click)="alreadyGeneratedBookSelection(item)">
                           <p class="px-1 py-2 text-base">{{ item.title }}</p>
                           </div>
                       </div>
-                </div>
-                  <div class="col-span-2">
-                <div class="flex flex-col flex-wrap justify-end content-center">
+                </div> -->
+                <div #mySidebar class="sidebar bg-emerald-500">
+                    <a href="javascript:void(0)" class="closebtn " (click)="closeNav()">×</a>
+                    <div  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+                        *ngFor="let item of userBooks"          
+                             (click)="alreadyGeneratedBookSelection(item)">
+                          <p class="px-1 py-2 text-base">{{ item.title }}</p>
+                          </div>
+                  </div>
+                  
+                  <div #main id="main">
+                    <div class="side-nav openbtn" (click)="openNav($event)">
+                      <p class="dark:text-emerald-400 px-3">Your Books</p>
+                    </div> 
+                  </div>
+                  
+                  <div class="col-span-2 flex flex-col gap-3">
+                <div class="flex flex-col flex-wrap justify- content-center gap-2">
       
-                  <p class="lg:text-6xl md:text-5xl sm:text-3xl lg:w-2/5">Hello! Learners!</p>
-                  <p class="lg:text-6xl md:text-5xl sm:text-3xl lg:w-2/5"> On which topic are you excited to skill up today?</p>
+                  <p class="lg:text-5xl md:text-4xl sm:text-3xl ">Hello! Learners!</p>
+                  <p class="lg:text-5xl md:text-4xl sm:text-3xl "> On which topic are you excited to skill up today?</p>
               </div>
-              <div class="topic-input-container">
+              <div class="topic-input-container flex justify-center items-center">
                   <input type="text" class="topic-input" [(ngModel)]="topic" placeholder="Enter your topic here..." (keyup.enter)="postInputTopic(topic)">
                   <button class="btn btn-outline-secondary" type="submit" [disabled]="!topic" (click)="postInputTopic(topic)"><i class="fa-solid fa-arrow-right"></i></button>
               </div>

@@ -16,7 +16,7 @@ export class SyllabusService {
       language: language,
       userId: userId
     };
-    return this.http.post<any>('http://localhost:3000/generate/syllabus', body);
+    return this.http.post<any>('https://skillgpt-be.onrender.com/generate/syllabus', body);
   }
 
 
@@ -27,14 +27,14 @@ export class SyllabusService {
       chapterId:chapterConfig.chapterid,
       bookLanguage: language
     };
-    return this.http.post<any>('http://localhost:3000/generate/chapter', body);
+    return this.http.post<any>('https://skillgpt-be.onrender.com/generate/chapter', body);
   }
 
   async getUserBooks(userId: String): Promise<BookConfig[]> {
     let bookArray: BookConfig[] = [];
 
     try {
-      const response = await firstValueFrom(this.http.post<any>('http://localhost:3000/userData/getAllBooks', { userId }));
+      const response = await firstValueFrom(this.http.post<any>('https://skillgpt-be.onrender.com/userData/getAllBooks', { userId }));
       response.userData.forEach((book: any) => {
         bookArray.push({
           book_id: book.book_id,
@@ -49,7 +49,7 @@ export class SyllabusService {
   }
 
   async getOldBookData(bookId: number, userId: string){
-    const response = await firstValueFrom(this.http.post<any>('http://localhost:3000/userData/getOldBookData', { bookId, userId }));
+    const response = await firstValueFrom(this.http.post<any>('https://skillgpt-be.onrender.com/userData/getOldBookData', { bookId, userId }));
     console.log(`ALL MY DATA: `,response);
     return response;
   }
