@@ -90,3 +90,82 @@
 .suggestedTopics .p-2 {
     flex-basis: calc(50% - 2rem);
 } */
+
+
+/* Sidebar */
+
+
+.sidebar {
+    height: 40%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 25%;
+    left: -1%;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+  .sidebar::-webkit-scrollbar{
+    display: none;
+  }
+  
+  .sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidebar .closebtn:hover {
+    color: rgb(52 211 153 );
+    
+    border-radius: 50%;
+  }
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+  
+  .openbtn {
+    border-top-right-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
+    font-size: 20px;
+    position: fixed;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    top: 45%;
+    left: -56px;
+    transform: rotate(90deg);
+  }
+  
+  .openbtn:hover {
+    background-color: #444;
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidebar {
+      padding-top: 15px;
+    }
+    .sidebar a {
+      font-size: 18px;
+    }
+  }
+/*  */

@@ -9,6 +9,9 @@ import { SharedService } from '../shared.service';
 import { jsPDF } from 'jspdf';
 import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.service';
 import { BookConfig } from '../chapter-ui/chapter-ui.component';
+import {  ViewChild, ElementRef ,HostListener, OnInit, OnDestroy } from '@angular/core';
+
+
 
 
 @Component({
@@ -58,15 +61,42 @@ export class LandingPageComponent {
     "System Administration",
     "DevOps Engineering"
   ];
+  @ViewChild('mySidebar') sidebar!: ElementRef;
+  @ViewChild('main') main!: ElementRef;
   
   userBooks: BookConfig[] = [];
   constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService, private sharedService: SharedService, private firebaseDB: FirebaseRealtimeDBService) { }
 
 
+
+ 
+
+  ngOnDestroy() {
+    document.removeEventListener('click', this.onDocumentClick);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.sidebar.nativeElement.contains(event.target)) {
+      this.closeNav();
+    }
+  }
+  openNav(event:Event) {
+    event.stopPropagation();
+    this.sidebar.nativeElement.style.width = "250px";
+    this.main.nativeElement.style.marginLeft = "250px";
+  }
+
+  closeNav() {
+    this.sidebar.nativeElement.style.width = "0";
+    this.main.nativeElement.style.marginLeft = "0";
+  }
+
   async ngOnInit() {
     this.suggestedTopics.sort( ()=>Math.random()-0.5 );
     let res = this.authService.isAuthenticated();
     console.log("isLoggedIn : ",res);
+    document.addEventListener('click', this.onDocumentClick);
     this.userId = await this.authService.getCurrentUserId();
 
     this.syllabusService.getUserBooks(this.userId).then(data=>{
