@@ -297,11 +297,6 @@ export class ChapterUiComponent implements AfterViewInit {
             `${firstChapter.chapterid}`,
             JSON.stringify(this.chapterConversation)
           );
-
-          console.log('AT FIRST CHAPTER DATA : ', this.chapterConversation);
-
-          // this.safeHtml = response.msg;
-          // this.renderingHtmlRes(response.msg)
         });
     } catch (error) {
       this.router.navigate(['landingPage']);
@@ -320,21 +315,12 @@ export class ChapterUiComponent implements AfterViewInit {
       this.isActiveItem(firstChapter);
       this.breadcrumbs.push(this.currentSubject);
       this.breadcrumbs.push(this.bookChapters[0].chaptertitle);
-
-
-      //##NEXT SECTION
-
-      //need to click onece and content is getting visible. this is a bug.
-      this.chapterConversation = await JSON.parse(localStorage.getItem(`${firstChapter.chapterid}`)!);
+      this.selectChapter(this.bookChapters[0])
     }
   
-    // Retrieve the data using the service
-    
-
     if(this.userId != null){
       this.booksArray = await this.syllabusService.getUserBooks(this.userId)
     }
-    console.log('MYBOOKS:', this.booksArray)
   }
 
   async fetchOldBookData(bookId: number, userId: string){

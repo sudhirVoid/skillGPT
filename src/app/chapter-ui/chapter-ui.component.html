@@ -13,7 +13,8 @@
 
         <!-- Conditional Back Button -->
         <div *ngIf="isCurrentSubject" class="bg-slate-800 text-white py-2 gap-2 px-4 rounded-lg cursor-pointer mb-2 flex items-center justify-start">
-          <img (click)="addNewTopic()" width="25" height="25" src="../../assets/back.svg" alt="back-btn">
+          <!-- (click)="addNewTopic()" this was called before here. in img  -->
+          <img  (click)="redirectTo('/landingPage')" width="25" height="25" src="../../assets/back.svg" alt="back-btn">
           <p>Back</p>
         </div>
 
