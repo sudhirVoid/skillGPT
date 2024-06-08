@@ -26,7 +26,11 @@
                         *ngFor="let item of userBooks"          
                              (click)="alreadyGeneratedBookSelection(item)">
                           <p class="px-1 py-2 text-base">{{ item.title }}</p>
-                          </div>
+                    </div>
+                    
+                    <div *ngIf="userBooks.length==0">
+                        <p>No books right now..!</p>
+                    </div>
                   </div>
                   
                   <div #main id="main">

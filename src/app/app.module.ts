@@ -17,6 +17,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { UserPanelComponent } from './user-panel/user-panel.component';
+import { CreditsModalComponent } from './credits-modal/credits-modal.component';
 
 
 
@@ -26,7 +27,8 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
     ChapterUiComponent,
     LandingPageComponent,
     LoginComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    CreditsModalComponent
   ],
   imports: [
     BrowserModule,
