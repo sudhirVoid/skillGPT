@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { SyllabusService } from '../gpt-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../data-transfer.service';
@@ -22,8 +22,33 @@ export interface ChapterConfig {
   templateUrl: './chapter-ui.component.html',
   styleUrls: ['./chapter-ui.component.css'],
 })
-export class ChapterUiComponent {
+export class ChapterUiComponent implements AfterViewInit {
   @ViewChild('htmlContent') htmlContent!: ElementRef<HTMLDivElement>;
+
+
+  ngAfterViewInit() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('h-screen')?.parentElement;
+
+    menuToggle?.addEventListener('click', () => {
+      sidebar?.classList.toggle('hidden');
+    });
+  }
+
+
+  receivedCredits: string='';
+
+  // Method to handle the event and receive data from the child
+  handleChildEvent(data: any) {
+    this.receivedCredits = data;
+    console.log('Data received from child:', data);
+  }
+
+  isSidebarVisible = false;
+
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
+  }
 
   textToType: string = 'Hello, I am ChatGPT!';
   typedText: string = '';
@@ -47,6 +72,19 @@ export class ChapterUiComponent {
   isOldBook: boolean = false;
   bookId!: number;
 
+
+
+
+
+  isModalOpen = false;
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
   copyCode() {
     const codeElement = this.htmlContent?.nativeElement.querySelector('code');
     if (codeElement) {

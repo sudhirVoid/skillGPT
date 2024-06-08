@@ -1,113 +1,106 @@
-<div class="flex">
+<div class="bg-gray-100 font-sans">
+  <!-- Container -->
+  <div class="flex h-screen relative">
     <!-- Sidebar -->
-    <!-- <app-user-panel (buttonClick)="onClickLogout()"></app-user-panel> -->
-    <aside class="h-screen w-1/5  bg-gray-800 text-white top-0 left-0 z-10">
-        <div class="padding-all">
-            <div class="flex justify-center items-center">
-                <h2 class="text-4xl font-extrabold dark:text-white text-center">Skill</h2>
-                <h2 class="text-4xl font-extrabold dark:text-emerald-700 text-center">&nbsp;GPT</h2>
-            </div>
-            <div class="flex  mt-2">
-                <div  *ngIf="isCurrentSubject" class="cursor-pointer gap-4 flex justify-start items-center rounded-md bg-emerald-700 w-full p-2 text-xl">
-                    <img (click)="addNewTopic()" width="25" height="25" src="../../assets/back.png" alt="back-btn">
-                    <p >{{currentSubject}}</p>
-
-                </div>
-                <div *ngIf="!isCurrentSubject" class="cursor-pointer gap-4   flex justify-start items-center rounded-md bg-emerald-700 w-full p-2 text-xl" (click)="redirectTo('/landingPage')">
-                    <img  width="25" height="25" src="../../assets/plus.png" alt="plus-btn">
-                    <p>New Topic</p>
-
-                </div>
-                
-            </div>
-            <!-- TODO: LIST BOOK GENEREATED -->
-            <div class="topic overflow-y-auto" *ngIf="!isCurrentSubject">
-                <div  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
-                *ngFor="let item of booksArray"
-               
-                     (click)="selectBook(item)">
-                  <p class="px-1 py-2 text-base">{{ item.title }}</p>
-                  <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
-                </div>
-              </div>
-              
-              
-
-              <div class="topic overflow-y-auto" *ngIf="isCurrentSubject">
-                <div (click)="selectChapter(chapter)"  class="w-full px-3 py-1 mt-2 hover:bg-emerald-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
-                *ngFor="let chapter of bookChapters"
-                [ngClass]="{ 'activeStatus': isActiveItem(chapter) }"
-                    >
-                  <p class="px-1 py-2 ">{{ chapter.chaptertitle }}</p>
-                  <!-- <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/> -->
-                </div>
-              </div>
-              
-            
-            
+    <div class="sidebar w-1/5 lg:block bg-gray-900 text-white p-6 flex flex-col justify-between overflow-auto"
+         [ngClass]="{'hidden': !isSidebarVisible, 'lg:block': true}">
+      <div>
+        <!-- Logo -->
+        <div class="flex items-center mb-6">
+          <div class="text-2xl font-bold text-green-500">Skill</div>
+          <div class="text-2xl font-bold ml-2">GPT</div>
         </div>
-    </aside>
 
-    <!-- Main Content Panel -->
-    <div class="h-screen w-4/5 relative">
-        
-    
-        <div class="height-1 p-4 bg-emerald-700 flex content-center  flex-wrap">
-            <ul class="breadcrumb flex text-white font-bold m-0">
-                <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}">
-                    
-                  <a *ngIf="!last" [href]="'#'">{{ item }}</a>
-                  <span *ngIf="last">{{ item }}</span>
-                  <span *ngIf="!last">&nbsp;/&nbsp;</span>
-                </li>
-              </ul>
-              <div class="flex">
-                
-                
-              </div>
-              <div class="flex">
-                <app-user-panel (buttonClick)="onClickLogout()"></app-user-panel>
-              </div>
+        <!-- Conditional Back Button -->
+        <div *ngIf="isCurrentSubject" class="bg-slate-800 text-white py-2 gap-2 px-4 rounded-lg cursor-pointer mb-2 flex items-center justify-start">
+          <img (click)="addNewTopic()" width="25" height="25" src="../../assets/back.svg" alt="back-btn">
+          <p>Back</p>
         </div>
-        
-        <!-- <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="safeHtml " >
 
-   
-        </div> -->
-        <div class="height-3 overflow-y-auto pl-12 bg-white">
-          <div *ngIf="!safeHtml">
-            <!-- Circular progress component -->
-            <div class="loader">
-              <svg class="circular">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
-              </svg>
-              <p class="w-32">Loading content...</p>
+        <!-- New Topic Button -->
+        <div *ngIf="!isCurrentSubject" class="bg-slate-800 text-white py-2 gap-2 px-4 rounded-lg cursor-pointer mb-2 flex items-center justify-start" (click)="redirectTo('/landingPage')">
+          <img width="25" height="25" src="../../assets/plus.png" alt="plus-btn">
+          <p>New Topic</p>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="space-y-2 overflow-auto" *ngIf="!isCurrentSubject">
+          <div class="w-full px-3 py-1 mt-2 hover:bg-slate-800 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+               *ngFor="let item of booksArray" (click)="selectBook(item)">
+            <p class="px-1 py-2 text-base">{{ item.title }}</p>
+            <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="chevron-right"/>
+          </div>
+        </nav>
+
+        <nav class="space-y-2 overflow-auto" *ngIf="isCurrentSubject">
+          <div>
+            <div (click)="selectChapter(chapter)" class="w-full px-3 py-1 mt-2 hover:bg-slate-800 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+                 *ngFor="let chapter of bookChapters" [ngClass]="{'activeStatus': isActiveItem(chapter)}">
+              <p class="px-1 py-2 ">{{ chapter.chaptertitle }}</p>
             </div>
           </div>
+        </nav>
+      </div>
 
-          <div *ngIf="safeHtml">
-            <div  *ngFor="let chat of chapterConversation">
-              <!-- Your div with safe HTML content -->
-              
-              <!-- <div class="height-3 overflow-y-auto px-12 bg-slate-200" [innerHTML]="chat?.gpt"></div> -->
-              <div 
-              #htmlContent 
-              class="htmlRes flex flex-col gap-2"
-               [innerHTML]="chat?.gpt">
-               <span class="copy-icon" (click)="copyCode()">Copy</span>
-              </div>
-            </div>
-
-          </div>
-          
-          
-
+      <!-- User Profile -->
+      <div (click)="openModal()" class="fixed bottom-0 left-0 w-1/5 bg-gray-900 p-6 flex items-center space-x-4 cursor-pointer">
+        <img src="../../assets/currency-inr.svg" alt="User Avatar" class="w-10 h-10 rounded-full">
+        <div>
+          <div class="text-sm font-semibold">Buy Credits</div>
+          <div class="text-xs text-gray-400">Generate more topics and chapters...</div>
         </div>
-        <div class="height-2  bg-white">
-            <div class="flex bg-white">
-              <input class="w-full p-3 ml-2 mr-0 border-emerald-700 border-2 rounded-tl-xl rounded-bl-xl rounded-e-none focus:outline-none" type="text" placeholder="Ask a question..">
-              <div class="p-3 mr-2 ml-0 bg-emerald-600 cursor-pointer text-center rounded-s-none rounded-e-xl"><img src="../../assets/send-message(1).png" alt=""></div>
-            </div>
-        </div>
+      </div>
     </div>
+
+    <app-credits-modal *ngIf="isModalOpen" (closeModalEvent)="closeModal()" [remCredits]="receivedCredits"></app-credits-modal>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col bg-white">
+      <!-- Mobile Header with Menu Button -->
+      <div class="lg:hidden flex items-center justify-between p-2 bg-slate-800 text-white">
+        <div class="text-lg font-semibold">Blockchain Technology</div>
+        <button (click)="toggleSidebar()" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+               xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Header -->
+      <div class="hidden min-h-14 lg:flex bg-slate-800 text-white p-3 justify-between items-center">
+        <ul class="breadcrumb flex text-white font-bold m-0">
+          <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}">
+            <a *ngIf="!last" [href]="'#'">{{ item }}</a>
+            <span *ngIf="last">{{ item }}</span>
+            <span *ngIf="!last">&nbsp;/&nbsp;</span>
+          </li>
+        </ul>
+        <app-user-panel (buttonClick)="onClickLogout()" (credits)="handleChildEvent($event)"></app-user-panel>
+      </div>
+
+      <!-- Content Area -->
+      <div class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+        <div *ngIf="safeHtml">
+          <div *ngFor="let chat of chapterConversation">
+            <div #htmlContent class="htmlRes flex flex-col gap-2" [innerHTML]="chat?.gpt">
+              <span class="copy-icon" (click)="copyCode()">Copy</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!safeHtml" class="flex h-full items-center justify-center">
+          <div class="animate-spin inline-block size-10 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-slate-950" role="status" aria-label="loading">
+            <span class="sr-only text-slate-950">Loading...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer / Input -->
+      <div class="p-3 bg-gray-200 border-t border-gray-300 flex items-center ">
+        <input type="text" placeholder="Ask a question..." class="flex-1 p-2 border border-gray-300 opacity-100 rounded-xl focus:outline-none focus:ring focus:border-blue-300">
+        <button class="ml-4 px-4 py-2 bg-slate-800 text-white rounded-md">Send</button>
+      </div>
+    </div>
+  </div>
 </div>

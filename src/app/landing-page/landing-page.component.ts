@@ -101,6 +101,7 @@ export class LandingPageComponent {
 
     this.syllabusService.getUserBooks(this.userId).then(data=>{
       this.userBooks = data;
+      console.log(this.userBooks)
     })
     .catch(error=>{
       console.log(error);
