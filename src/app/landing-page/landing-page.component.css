@@ -96,13 +96,13 @@
 
 
 .sidebar {
-    height: 40%;
+    height: 100%;
     width: 0;
     position: fixed;
     z-index: 1;
-    top: 25%;
-    left: -1%;
-    background-color: #111;
+    top: 0%;
+    left: 0%;
+    background-color: rgb(15 23 42 / var(--tw-bg-opacity));
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -141,7 +141,7 @@
     font-size: 20px;
     position: fixed;
     cursor: pointer;
-    background-color: #111;
+    background-color:  rgb(15 23 42 / var(--tw-bg-opacity));;
     color: white;
     padding: 10px 15px;
     border: none;
