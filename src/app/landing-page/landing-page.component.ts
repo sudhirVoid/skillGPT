@@ -69,7 +69,24 @@ export class LandingPageComponent {
 
 
 
+  isModalOpen = false;
+  isUpgrade=false;
+  receivedCredits: string='';
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+  closeUpgradeModal(){
+    this.isUpgrade=false;
+  }
  
+  handleChildEvent(data: any) {
+    this.receivedCredits = data;
+    console.log('Data received from child:', data);
+  }
 
   ngOnDestroy() {
     document.removeEventListener('click', this.onDocumentClick);
@@ -133,9 +150,17 @@ export class LandingPageComponent {
     );
     }
     else{
-      alert('You exceeded 3 free credits.')
+      // alert('You exceeded 3 free credits.')
+      this.openModal()
     }
     
+  }
+
+  buyCredits(){
+    this.isModalOpen = false;
+    this.isUpgrade=true;
+    console.log(this.receivedCredits)
+
   }
 
   setSuggestedTopics(event: any) {

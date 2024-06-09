@@ -17,9 +17,9 @@
 /* CSS for profile  */
 
 .avatar-menu {
-    position: fixed;
+    position: absolute;
     top: 0;
-    right: 0;
+    right: 1rem;
     padding: 0.4rem;
     
 }
