@@ -253,6 +253,9 @@ a{
 .nav-item:hover {
   background-color: #555;
 }
+.navbar-toggler-icon{
+  height: fit-content;
+}
 
 /* Responsive styles */
 @media (max-width: 1024px) {
