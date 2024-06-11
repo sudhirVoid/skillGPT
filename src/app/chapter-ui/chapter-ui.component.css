@@ -34,7 +34,8 @@ a{
 }
 .activeStatus {
     /* background-color: rgb(5 150 105 / var(--tw-bg-opacity)); */
-    background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+    /* background-color: rgb(30 41 59 / var(--tw-bg-opacity)); */
+    background-color: rgb(148 163 184 / var(--tw-bg-opacity));
     color: white;
     /* Other styles for active state */
   }
@@ -145,6 +146,17 @@ a{
   }
   
 
+  /* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scroll {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
   @media (max-width: 1024px) {
     .sidebar {
         display: none;
@@ -160,4 +172,102 @@ a{
         max-width: 320px;
         background-color: #1F2937;
     }
+}
+
+/* mobile menu */
+
+/* General styles */
+.navbar {
+  /* background-color: #333; */
+  padding: 0.5rem;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1; /* Ensure navbar is above the sidebar */
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-toggler {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+
+
+/* Sidebar styles */
+.sidebar-mobile {
+  position: fixed;
+  top: 0;
+  right: -250px; /* Hidden off the screen initially */
+  height: 100%;
+  width: 250px;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: right 0.3s;
+  z-index: 2; /* Ensure sidebar is above the content */
+}
+
+.sidebar-mobile.active {
+  right: 0; /* Move into view */
+}
+
+.close-btn {
+  font-size: 2rem;
+  color: white;
+  text-decoration: none;
+  align-self: flex-end;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.nav-item {
+  color: white;
+  text-decoration: none;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.3s;
+}
+
+.nav-item:hover {
+  background-color: #555;
+}
+.navbar-toggler-icon{
+  height: fit-content;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .navbar-toggler {
+    display: block;
+  }
+}
+
+/*  */
+
+.user-panel{
+  position: absolute;
+  top: 8px;
+  right: 3rem;
 }

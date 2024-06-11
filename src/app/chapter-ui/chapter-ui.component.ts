@@ -36,6 +36,13 @@ export class ChapterUiComponent implements AfterViewInit {
   }
 
 
+  isNavOpen = false;
+
+  toggleNav() {
+    this.isNavOpen = !this.isNavOpen;
+  }
+
+
   receivedCredits: string='';
 
   // Method to handle the event and receive data from the child
