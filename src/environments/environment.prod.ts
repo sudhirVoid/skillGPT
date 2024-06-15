@@ -9,5 +9,5 @@ export const environment = {
     appId: "1:797220799427:web:82571b709a2e6b60dbf376",
     measurementId: "G-TF06LKXPLM"
   },
-  apiurl: 'https://skillgpt-be.onrender.com/'
+  apiURL: 'https://skillgpt-be.onrender.com/'
 };
