@@ -197,12 +197,12 @@ export class ChapterUiComponent implements AfterViewInit {
       );
       this.chapterConversation = [];
       console.log('IN LOCAL STORAGE: ', chapterData);
-      chapterData.map((singleChat: { gpt: any; user?: string }) => {
+      chapterData.map((singleChat: { gpt: any; user?: any }) => {
         return this.chapterConversation.push({
           gpt: this.renderingHtmlRes(
             singleChat?.gpt.changingThisBreaksApplicationSecurity
           ),
-          user: singleChat?.user ?? '',
+          user: singleChat?.user.changingThisBreaksApplicationSecurity !== '' ? this.renderingHtmlRes(singleChat?.user.changingThisBreaksApplicationSecurity) : '',
         });
       });
 
@@ -274,6 +274,7 @@ export class ChapterUiComponent implements AfterViewInit {
         firstChapter = chapters.chaptersData[0];
         bookName = chapters.topic;
         this.activeItem = this.bookChapters[0].chaptertitle;
+        this.activeChapterId = this.bookChapters[0].chapterid
         this.currentSubject = chapters['topicData']['title'];
         
         console.log('Received chapters:', chapters);
@@ -408,7 +409,7 @@ let chapterConversationByUser: {gpt: string, user: string}[] = []
     let result = await this.syllabusService.handleUserInput(finalObject);
     console.log(result)
     this.chapterConversation.push({gpt: this.renderingHtmlRes(result.msg.gpt)});
-    
+    localStorage.setItem(`${this.activeChapterId}`, JSON.stringify(this.chapterConversation))
   }
   
 
