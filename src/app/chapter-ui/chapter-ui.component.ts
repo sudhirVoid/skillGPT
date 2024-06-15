@@ -24,6 +24,7 @@ export interface ChapterConfig {
 })
 export class ChapterUiComponent implements AfterViewInit {
   @ViewChild('htmlContent') htmlContent!: ElementRef<HTMLDivElement>;
+  activeChapterId!: number;
 
 
   ngAfterViewInit() {
@@ -74,10 +75,11 @@ export class ChapterUiComponent implements AfterViewInit {
   //we have whole conversation of a chapter between user and gpt here.
   chapterConversation: {
     gpt: SafeHtml;
-    user?: string;
+    user?: SafeHtml;
   }[] = [];
   isOldBook: boolean = false;
   bookId!: number;
+  userQuery: string = '';
 
 
 
@@ -174,6 +176,7 @@ export class ChapterUiComponent implements AfterViewInit {
   }
 
   selectChapter(chapter: ChapterConfig): void {
+    this.activeChapterId = chapter.chapterid
     this.safeHtml = '';
     console.log(chapter);
     this.activeItem = chapter.chaptertitle;
@@ -357,6 +360,56 @@ export class ChapterUiComponent implements AfterViewInit {
     this.sharedService.logout();
   }
 
+  async userQueryHandler(){
+    
+    /*
+    interface ChapterConfig {
+    bookTopic: string,
+    bookChapter: string,
+    bookLanguage: string,
+    chapterId:number
+}
+interface ChapterConversationConfig{
+    chapterDetails: ChapterConfig
+    content: {
+        gpt: string,
+        user?: string
+    }[]
+}
+
+    */
+let chapterConversationByUser: {gpt: string, user: string}[] = []
+    let chapterConfig = {
+      bookTopic: this.currentSubject,
+      bookChapter: this.activeItem,
+      bookLanguage: 'English',
+      chapterId: this.activeChapterId
+    }
+    
+    let userQueryHtml = `<p>${this.userQuery}</p>`
+    this.chapterConversation[this.chapterConversation.length-1].user = this.renderingHtmlRes(userQueryHtml);
+    
+    this.chapterConversation.forEach(data => {
+      let gptData = data.gpt as { changingThisBreaksApplicationSecurity: string };
+      let userData = data.user as {changingThisBreaksApplicationSecurity: string};
+      chapterConversationByUser.push({
+        gpt : gptData['changingThisBreaksApplicationSecurity'],
+        user: userData['changingThisBreaksApplicationSecurity']
+
+      })
+    });
+    let finalObject = {
+      chapterDetails: chapterConfig,
+      content: chapterConversationByUser
+    }
+    console.log(chapterConfig)
+
+    this.userQuery = '';
+    let result = await this.syllabusService.handleUserInput(finalObject);
+    console.log(result)
+    this.chapterConversation.push({gpt: this.renderingHtmlRes(result.msg.gpt)});
+    
+  }
   
 
 }
