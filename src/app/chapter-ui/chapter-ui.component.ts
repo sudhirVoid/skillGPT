@@ -198,11 +198,12 @@ export class ChapterUiComponent implements AfterViewInit {
       this.chapterConversation = [];
       console.log('IN LOCAL STORAGE: ', chapterData);
       chapterData.map((singleChat: { gpt: any; user?: any }) => {
+        const userText = singleChat?.user?.changingThisBreaksApplicationSecurity ?? '';
         return this.chapterConversation.push({
           gpt: this.renderingHtmlRes(
             singleChat?.gpt.changingThisBreaksApplicationSecurity
           ),
-          user: singleChat?.user.changingThisBreaksApplicationSecurity !== '' ? this.renderingHtmlRes(singleChat?.user.changingThisBreaksApplicationSecurity) : '',
+          user: userText !== '' ? this.renderingHtmlRes(userText) : '',
         });
       });
 

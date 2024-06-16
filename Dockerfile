@@ -1,32 +1,23 @@
-# Stage 1: Build the Angular application
-FROM node:14 AS build
+# Use an official Node.js runtime as a parent image
+FROM node:14-alpine
 
-# Set the working directory
+# Set the working directory to /app
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
+# Copy package.json and package-lock.json to /app
 COPY package*.json ./
 
-# Install dependencies (you mentioned copying, but the node modules should be present in your project directory)
-COPY node_modules ./node_modules
+# Install app dependencies
+RUN npm install
 
-# Copy the rest of the application to the working directory
+# Copy app source code to /app
 COPY . .
 
-# Build the Angular application
+# Build the app for production
 RUN npm run build --prod
 
-# Stage 2: Serve the application with Nginx
-FROM nginx:alpine
-
-# Copy the built Angular application from the previous stage
-COPY --from=build /app/dist/your-angular-app-name /usr/share/nginx/html
-
-# Copy custom Nginx configuration if needed
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expose port 80
+# Expose port 80 for the container
 EXPOSE 80
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start the app
+CMD ["npm", "start"]
