@@ -134,20 +134,26 @@ export class LandingPageComponent {
   }
    async postInputTopic(topic:any){
     if(await this.firebaseDB.getCreditOfUser()>0){
-      this.isGenerating = true;
-    this.syllabusService.generateSyllabus(topic, 'English', this.userId).subscribe(
-      async response => {
-        this.bookChapters = response;
-        console.log('BOOK CHAPTERS: ',this.bookChapters)
-        await this.firebaseDB.decreaseCredit();
-          this.dataTransferService.setChaptersData(this.bookChapters);
-          this.router.navigate(['/results']);        
-      },
-      error => {
-        // Handle errors here
-        console.error('Error:', error);
+      if(!await this.syllabusService.isEthicalTopic(topic)){
+        alert(`${topic} is unethical.`)
       }
-    );
+      else{
+        this.isGenerating = true;
+        this.syllabusService.generateSyllabus(topic, 'English', this.userId).subscribe(
+          async response => {
+            this.bookChapters = response;
+            console.log('BOOK CHAPTERS: ',this.bookChapters)
+            await this.firebaseDB.decreaseCredit();
+              this.dataTransferService.setChaptersData(this.bookChapters);
+              this.router.navigate(['/results']);        
+          },
+          error => {
+            // Handle errors here
+            console.error('Error:', error);
+          }
+        );
+      }
+    
     }
     else{
       // alert('You exceeded 3 free credits.')

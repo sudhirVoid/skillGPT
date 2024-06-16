@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, firstValueFrom } from 'rxjs';
+import { Observable, first, firstValueFrom } from 'rxjs';
 import { ChapterConfig } from './chapter-ui/chapter-ui.component';
 import {BookConfig} from './chapter-ui/chapter-ui.component';
 import { environment } from 'src/environments/environment';
@@ -59,5 +59,10 @@ export class SyllabusService {
   async handleUserInput(input:any){
     const response = await firstValueFrom(this.http.post<any>(`${environment.apiURL}generate/chapterConversation`, input));
     return response;
+  }
+
+  async isEthicalTopic(topic: string){
+   let response = await firstValueFrom(this.http.post<any>(`${environment.apiURL}generate/isEthicalTopic`, {topic}));
+    return response?.msg;
   }
 }
