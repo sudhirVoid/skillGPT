@@ -1,0 +1,48 @@
+<div class="bg-gray-100 h-[100vh]  text-gray-800">
+    <div class="container mx-auto p-4">
+        <h1 class="text-4xl font-bold text-center mb-8 text-blue-600">Choose Your Plan</h1>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Plan Card -->
+            <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between border-t-4 border-blue-600 hover:shadow-xl transition-shadow duration-300">
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800">Basic Plan</h2>
+                    <p class="text-lg font-semibold text-gray-600 mb-2">$10</p>
+                    <p class="text-gray-600 mb-6">100 credits included</p>
+                    <ul class="text-gray-700 mb-6">
+                        <li class="mb-2 flex items-center"><span class="mr-2 text-green-500">✓</span>Feature 1</li>
+                        <li class="mb-2 flex items-center"><span class="mr-2 text-green-500">✓</span>Feature 2</li>
+                        <li class="mb-2 flex items-center"><span class="mr-2 text-green-500">✓</span>Feature 3</li>
+                    </ul>
+                </div>
+                <button (click)="selectedPlan('Basic Plan', 100, 5)" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-300">Buy Now</button>
+            </div>
+            <!-- More Plan Cards -->
+            <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between border-t-4 border-green-600 hover:shadow-xl transition-shadow duration-300">
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800">Pro Plan</h2>
+                    <p class="text-lg font-semibold text-gray-600 mb-2">$25</p>
+                    <p class="text-gray-600 mb-6">300 credits included</p>
+                    <ul class="text-gray-700 mb-6">
+                        <li class="mb-2 flex items-center"><span class="mr-2 text-green-500">✓</span>Feature 1</li>
+                        <li class="mb-2 flex items-center"><span class="mr-2 text-green-500">✓</span>Feature 2</li>
+                        <li class="mb-2 flex items-center"><span class="mr-2 text-green-500">✓</span>Feature 3</li>
+                    </ul>
+                </div>
+                <button (click)="selectedPlan('Pro Plan', 200, 12)" class="bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700 transition-colors duration-300">Buy Now</button>
+            </div>
+            <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between border-t-4 border-red-600 hover:shadow-xl transition-shadow duration-300">
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800">Premium Plan</h2>
+                    <p class="text-lg font-semibold text-gray-600 mb-2">$50</p>
+                    <p class="text-gray-600 mb-6">600 credits included</p>
+                    <ul class="text-gray-700 mb-6">
+                        <li class="mb-2 flex items-center"><span class="mr-2 text-green-500">✓</span>Feature 1</li>
+                        <li class="mb-2 flex items-center"><span class="mr-2 text-green-500">✓</span>Feature 2</li>
+                        <li class="mb-2 flex items-center"><span class="mr-2 text-green-500">✓</span>Feature 3</li>
+                    </ul>
+                </div>
+                <button (click)="selectedPlan('Premium Plan', 300, 20)" class="bg-red-600 text-white font-semibold py-2 px-4 rounded hover:bg-red-700 transition-colors duration-300">Buy Now</button>
+            </div>
+        </div>
+    </div>
+</div>
