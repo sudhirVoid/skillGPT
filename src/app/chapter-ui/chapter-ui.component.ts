@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../auth-service.service';
 import { SharedService } from '../shared.service';
-
+import { PdfServiceService } from '../pdf-service.service';
 export  interface BookConfig {
   book_id: string;
   title: string;
@@ -35,10 +35,7 @@ export class ChapterUiComponent implements AfterViewInit {
       sidebar?.classList.toggle('hidden');
     });
   }
-
-
   isNavOpen = false;
-
   toggleNav() {
     this.isNavOpen = !this.isNavOpen;
   }
@@ -80,11 +77,6 @@ export class ChapterUiComponent implements AfterViewInit {
   isOldBook: boolean = false;
   bookId!: number;
   userQuery: string = '';
-
-
-
-
-
   isModalOpen = false;
 
   openModal() {
@@ -164,11 +156,6 @@ export class ChapterUiComponent implements AfterViewInit {
     this.breadcrumbs = [];
     
     //get all the books of the user here. BookConfig Interface.
-
-
-
-
-    
   }
 
   redirectTo(route: string): void {
@@ -243,6 +230,7 @@ export class ChapterUiComponent implements AfterViewInit {
     private router: Router,
     private authService: AuthServiceService,
     private sharedService: SharedService,
+    private pdfService: PdfServiceService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -413,5 +401,23 @@ let chapterConversationByUser: {gpt: string, user: string}[] = []
     localStorage.setItem(`${this.activeChapterId}`, JSON.stringify(this.chapterConversation))
   }
   
+  downloadPdf() {
+    console.log(`MY book is ${this.bookId}`)
+    let payload = {
+      userId: this.userId,
+      bookId: this.bookId
+    }
+    this.pdfService.downloadPdf(payload).subscribe(response => {
+      const blob = new Blob([response], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = this.breadcrumbs[0]; 
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
+  }
 
 }

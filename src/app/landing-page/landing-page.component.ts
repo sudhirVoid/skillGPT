@@ -10,6 +10,7 @@ import { jsPDF } from 'jspdf';
 import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.service';
 import { BookConfig } from '../chapter-ui/chapter-ui.component';
 import {  ViewChild, ElementRef ,HostListener, OnInit, OnDestroy } from '@angular/core';
+import { PdfServiceService } from '../pdf-service.service';
 
 
 
@@ -65,7 +66,7 @@ export class LandingPageComponent {
   @ViewChild('main') main!: ElementRef;
   
   userBooks: BookConfig[] = [];
-  constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService, private sharedService: SharedService, private firebaseDB: FirebaseRealtimeDBService) { }
+  constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService, private sharedService: SharedService, private firebaseDB: FirebaseRealtimeDBService, private pdfService: PdfServiceService) { }
 
 
 
@@ -134,10 +135,6 @@ export class LandingPageComponent {
   }
    async postInputTopic(topic:any){
     if(await this.firebaseDB.getCreditOfUser()>0){
-      if(!await this.syllabusService.isEthicalTopic(topic)){
-        alert(`${topic} is unethical.`)
-      }
-      else{
         this.isGenerating = true;
         this.syllabusService.generateSyllabus(topic, 'English', this.userId).subscribe(
           async response => {
@@ -152,7 +149,6 @@ export class LandingPageComponent {
             console.error('Error:', error);
           }
         );
-      }
     
     }
     else{
@@ -175,27 +171,17 @@ export class LandingPageComponent {
     
   }
 
-  downloadPdf() {
-    let doc = new jsPDF();
-    let html = `
-<style>
-  h1 { font-size: 24px; font-weight: bold; }
-  h2 { font-size: 18px; font-weight: bold; }
-  p { font-size: 14px; line-height: 1.5; }
-</style>
-<h1>Introduction to Data Analysis</h1>
-<p>Data analysis is the process of analyzing, cleaning, transforming, and modeling data to discover useful information, draw conclusions, and support decision-making. It is an essential part of understanding trends, making predictions, and gaining insights from various data sources. In today's data-driven world, data analysis plays a crucial role in almost every industry, from business and finance to healthcare and research.</p>
-<h2>Importance of Data Analysis</h2>
-<p>Data analysis helps in:</p>
-`;
-    doc.html(html, {
-     callback: function (doc) {
-       doc.save('test.pdf');
-     },
-     x: 2,
-     y: 2,
-     width: 1000
-     
-  });
- }
+  // downloadPdf() {
+  //   this.pdfService.downloadPdf({}).subscribe(response => {
+  //     const blob = new Blob([response], { type: 'application/pdf' });
+  //     const url = window.URL.createObjectURL(blob);
+  //     const a = document.createElement('a');
+  //     a.href = url;
+  //     a.download = 'filename.pdf'; // Set the filename here
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     document.body.removeChild(a);
+  //     window.URL.revokeObjectURL(url);
+  //   });
+  // }
 }

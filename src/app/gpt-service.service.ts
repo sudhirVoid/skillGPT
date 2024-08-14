@@ -62,7 +62,6 @@ export class SyllabusService {
   }
 
   async isEthicalTopic(topic: string){
-   let response = await firstValueFrom(this.http.post<any>(`${environment.apiURL}generate/isEthicalTopic`, {topic}));
-    return response?.msg;
+   let response = true;
   }
 }
