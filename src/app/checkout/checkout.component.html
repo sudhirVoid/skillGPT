@@ -1,0 +1,24 @@
+<div class="bg-gray-100 h-[100vh] text-slate-900">
+    <div class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-emerald-800">Your New Plan</h1>
+            <p class="text-lg text-green-500">Plan Summary</p>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-lg mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-lg font-bold">Standard Individual Membership</span>
+            </div>
+            <div class="flex justify-between items-center mt-2">
+                <span class="text-lg font-bold">Total No of Credits:</span>
+                <span class="text-lg">{{this.selectedPlan.credits}}</span>
+            </div>
+            <div class="flex justify-between items-center mt-2">
+                <span class="text-lg font-bold">Total Amount:</span>
+                <span class="text-lg">{{this.selectedPlan.amount}}</span>
+            </div>
+        </div>
+        <div class="text-center">
+            <button (click)="payWithRazorpay()" class="bg-gray-800 text-white px-6 py-3 rounded-full hover:bg-green-500 transition">Pay Now</button>
+        </div>
+    </div>
+</div>
