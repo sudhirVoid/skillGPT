@@ -11,3 +11,8 @@ export const environment = {
   },
   apiURL: 'https://skillgpt-be.onrender.com/'
 };
+
+export const razorPay = {
+  key_id: "rzp_test_QkitVyR6c14oCX",
+  key_secret: "xewS14LlJe3633S5wj0wjXtI",
+};

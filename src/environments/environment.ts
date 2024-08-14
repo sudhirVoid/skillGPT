@@ -16,6 +16,11 @@ export const environment = {
   apiURL: 'http://localhost:3000/'
 };
 
+export const razorPay = {
+  key_id: "rzp_test_QkitVyR6c14oCX",
+  key_secret: "xewS14LlJe3633S5wj0wjXtI",
+};
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

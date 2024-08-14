@@ -134,10 +134,6 @@ export class LandingPageComponent {
   }
    async postInputTopic(topic:any){
     if(await this.firebaseDB.getCreditOfUser()>0){
-      if(!await this.syllabusService.isEthicalTopic(topic)){
-        alert(`${topic} is unethical.`)
-      }
-      else{
         this.isGenerating = true;
         this.syllabusService.generateSyllabus(topic, 'English', this.userId).subscribe(
           async response => {
@@ -152,7 +148,6 @@ export class LandingPageComponent {
             console.error('Error:', error);
           }
         );
-      }
     
     }
     else{
