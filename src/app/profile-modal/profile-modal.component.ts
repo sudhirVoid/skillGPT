@@ -33,7 +33,7 @@ export class ProfileModalComponent {
  async ngOnInit() {
   console.log(this.getUserData());
   this.remainingCredits = await this.firestoreDB.getCreditOfUser();
-  const {email,displayName,photoURL}= this.getUserData();
+  const {email,displayName,photoURL}= await this.getUserData();
   this.email=email;
   this.name=displayName;
   this.imgUrl=photoURL?photoURL:`https://avatar.iran.liara.run/username?username=${this.name}`;

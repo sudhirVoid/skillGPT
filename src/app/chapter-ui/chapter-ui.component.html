@@ -144,16 +144,16 @@
               <div class="flex items-center justify-center w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-lg dark:border-gray-600">
                 <img src="../../assets/bot.gif" alt="Avatar" class="w-full h-full object-cover">
               </div>
-              <div class="res-text rounded-lg shadow-2xl flex-1" [innerHTML]="chat?.gpt"></div>
+              <div class="res-text rounded-xl shadow-2xl flex-1" [innerHTML]="chat?.gpt"></div>
             </div>
             
       
-            <div *ngIf="chat?.user" class="flex items-start gap-2  p-4 rounded-lg">
+            <div *ngIf="chat?.user" class="flex items-start gap-2  p-4 rounded-xl self-end w-fit">
               
-              <div class="text-blue-700 text-end flex-1 rounded-lg shadow-2xl "  [innerHTML]="chat?.user"></div>
-              <div class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600">
-                <span class="font-medium text-gray-600 dark:text-gray-300">U</span>
-              </div>
+              <div class="text-blue-700 text-end flex-1 rounded-xl shadow-2xl input-text"  [innerHTML]="chat?.user"></div>
+              <div class="avatar relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                <img [src]="imageUrl" alt="Avatar" class="w-full h-full object-cover">
+            </div>
             </div>
           </div>
         </div>

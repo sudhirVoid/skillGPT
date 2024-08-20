@@ -72,7 +72,7 @@ export class LandingPageComponent {
 
   isModalOpen = false;
   isUpgrade=false;
-  receivedCredits: string='';
+  receivedCredits: number=0;
   openModal() {
     this.isModalOpen = true;
   }

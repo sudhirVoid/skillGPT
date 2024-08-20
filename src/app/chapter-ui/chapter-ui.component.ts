@@ -25,6 +25,7 @@ export interface ChapterConfig {
 export class ChapterUiComponent implements AfterViewInit {
   @ViewChild('htmlContent') htmlContent!: ElementRef<HTMLDivElement>;
   activeChapterId!: number;
+  imageUrl:string='';
 
 
   ngAfterViewInit() {
@@ -41,11 +42,12 @@ export class ChapterUiComponent implements AfterViewInit {
   }
 
 
-  receivedCredits: string='';
+  receivedCredits: number=0;
 
   // Method to handle the event and receive data from the child
   handleChildEvent(data: any) {
-    this.receivedCredits = data;
+    this.receivedCredits = data.credits;
+    this.imageUrl=data.photoURL;
     console.log('Data received from child:', data);
   }
 

@@ -9,7 +9,7 @@ import {  Output, EventEmitter,Input } from '@angular/core';
 export class CreditsModalComponent {
 
   @Output() closeModalEvent = new EventEmitter<void>();
-  @Input() remCredits:string="";
+  @Input() remCredits:number=0;
   closeModal() {
     this.closeModalEvent.emit();
   }

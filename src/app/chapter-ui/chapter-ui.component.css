@@ -288,3 +288,9 @@ a{
  border: 1px solid #898BA8;
 
 }
+.input-text{
+  width: fit-content;
+  padding: 0.8rem;
+  background: rgb(30 41 59 / var(--tw-bg-opacity));
+  color: white;
+}

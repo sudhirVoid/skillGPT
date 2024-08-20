@@ -15,7 +15,7 @@ export class UserPanelComponent{
   isModalOpen = false;
   constructor(private sharedService: SharedService, private firestoreDB: FirebaseRealtimeDBService, private authService: AuthServiceService) { }
   @Output() buttonClick = new EventEmitter<void>();
-  @Output() credits = new EventEmitter<number>();
+  @Output() credits = new EventEmitter<any>();
 
   onClickLogout(): void{
     this.sharedService.logout();
@@ -28,8 +28,9 @@ export class UserPanelComponent{
     this.isModalOpen = false;
   }
 
-  sendDataToParent() {
-    this.credits.emit(this.remainingCredits);
+  sendDataToParent(name:string,photoURL:string) {
+    const data={name,photoURL,credits:this.remainingCredits};
+    this.credits.emit(data);
   }
 
   toggleHover() {
@@ -48,7 +49,7 @@ export class UserPanelComponent{
   const {displayName,photoURL}=await this.getUserData();
   console.log("name on this page:",displayName);
   this.imgUrl=photoURL?photoURL:`https://avatar.iran.liara.run/username?username=${displayName}`
-  this.sendDataToParent();
+  this.sendDataToParent(displayName,photoURL);
 }
 
 }
