@@ -33,7 +33,7 @@
           </div>
         </nav>
 
-        <nav class="space-y-2 overflow-auto" *ngIf="isCurrentSubject">
+        <nav [ngClass]="{'disabled-div': !safeHtml}" class="space-y-2 overflow-auto" *ngIf="isCurrentSubject">
           <div>
             <div (click)="selectChapter(chapter)" class="w-full px-3 py-1 mt-2 hover:bg-slate-800 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
                  *ngFor="let chapter of bookChapters" [ngClass]="{'activeStatus': isActiveItem(chapter)}">
@@ -75,7 +75,9 @@
                   <img   width="25" height="25" src="../../assets/back.svg" alt="back-btn">
                   <p>Back</p>
                 </div>
-                <div (click)="selectChapter(chapter)" class="w-full  px-3 py-1 mt-2 hover:bg-slate-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+                <div   
+                
+                (click)="selectChapter(chapter)" class="w-full  px-3 py-1 mt-2 hover:bg-slate-600 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
                      *ngFor="let chapter of bookChapters" [ngClass]="{'activeStatus': isActiveItem(chapter)}">
                   <p class="px-1 py-2 ">{{ chapter.chaptertitle }}</p>
                 </div>
@@ -122,21 +124,29 @@
       </div>
 
       <!-- Content Area -->
-      <div class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+      <div class="flex-1 p-0 sm:p-6 lg:p-8 overflow-y-auto">
         <div *ngIf="safeHtml">
           <div *ngFor="let chat of chapterConversation" class="flex flex-col gap-4 py-2">
-            <div *ngIf="chat?.gpt" class="flex items-start gap-2 bg-orange-100 p-4 rounded-lg">
+            <!-- <div *ngIf="chat?.gpt" class="flex items-start gap-2 res-background p-4 rounded-lg">
               <div class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600">
                 <span class="font-medium text-gray-600 dark:text-gray-300">G</span>
               </div>
-              <div class="text-orange-700 flex-1" [innerHTML]="chat?.gpt"></div>
+              <div class="res-text shadow-2xl flex-1" [innerHTML]="chat?.gpt"></div>
+            </div> -->
+            <div *ngIf="chat?.gpt" class="flex items-start gap-2 res-background p-4 rounded-lg">
+              <div class="flex items-center justify-center w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-lg dark:border-gray-600">
+                <img src="../../assets/bot.gif" alt="Avatar" class="w-full h-full object-cover">
+              </div>
+              <div class="res-text rounded-lg shadow-2xl flex-1" [innerHTML]="chat?.gpt"></div>
             </div>
+            
       
-            <div *ngIf="chat?.user" class="flex items-start gap-2 bg-blue-100 p-4 rounded-lg">
+            <div *ngIf="chat?.user" class="flex items-start gap-2  p-4 rounded-lg">
+              
+              <div class="text-blue-700 text-end flex-1 rounded-lg shadow-2xl "  [innerHTML]="chat?.user"></div>
               <div class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600">
                 <span class="font-medium text-gray-600 dark:text-gray-300">U</span>
               </div>
-              <div class="text-blue-700 flex-1" [innerHTML]="chat?.user"></div>
             </div>
           </div>
         </div>
@@ -152,7 +162,7 @@
       
 
       <!-- Footer / Input -->
-      <div class="p-3 bg-gray-100  border-t border-gray-300 flex items-center ">
+      <div class="p-3   border-gray-300 flex items-center " [ngClass]="{'disabled-div': !safeHtml}">
         <input [(ngModel)]="userQuery" type="text" placeholder="Ask a question..." class="flex-1 p-2 border border-gray-300 opacity-100 rounded-xl focus:outline-none focus:ring focus:border-blue-300" (keydown.enter)="userQueryHandler()">
         <button class="ml-4 px-4 py-2 bg-slate-800 text-white rounded-md" onclick="userQueryHandler()">Send</button>
       </div>

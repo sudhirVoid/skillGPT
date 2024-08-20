@@ -19,6 +19,7 @@ import { environment } from '../environments/environment';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { CreditsModalComponent } from './credits-modal/credits-modal.component';
+import { ProfileModalComponent } from './profile-modal/profile-modal.component';
 
 
 
@@ -29,7 +30,8 @@ import { CreditsModalComponent } from './credits-modal/credits-modal.component';
     LandingPageComponent,
     LoginComponent,
     UserPanelComponent,
-    CreditsModalComponent
+    CreditsModalComponent,
+    ProfileModalComponent
   ],
   imports: [
     BrowserModule,

@@ -271,3 +271,20 @@ a{
   top: 8px;
   right: 3rem;
 }
+.disabled-div {
+  pointer-events: none;
+  opacity: 0.6; /* Optional: to give a visual cue that the div is disabled */
+}
+.enabled-div {
+  pointer-events: all;
+  opacity: 1; /* Optional: to give a visual cue that the div is disabled */
+}
+.res-background{
+  background-color: rgb(244, 243, 241/ var(--tw-bg-opacity));
+}
+.res-text{
+  color: rgb(2,12,23 / var(--tw-bg-opacity));
+  padding: 0.8rem;
+ border: 1px solid #898BA8;
+
+}
