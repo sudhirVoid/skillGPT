@@ -11,18 +11,26 @@ import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.serv
 export class UserPanelComponent{
   isHovered: boolean=false;
   remainingCredits!: number;
-
+  imgUrl:string='';
+  isModalOpen = false;
   constructor(private sharedService: SharedService, private firestoreDB: FirebaseRealtimeDBService, private authService: AuthServiceService) { }
   @Output() buttonClick = new EventEmitter<void>();
-  @Output() credits = new EventEmitter<number>();
+  @Output() credits = new EventEmitter<any>();
 
   onClickLogout(): void{
     this.sharedService.logout();
     this.buttonClick.emit();
   }
+  openModal() {
+    this.isModalOpen = true;
+  }
+  closeModal() {
+    this.isModalOpen = false;
+  }
 
-  sendDataToParent() {
-    this.credits.emit(this.remainingCredits);
+  sendDataToParent(name:string,photoURL:string) {
+    const data={name,photoURL,credits:this.remainingCredits};
+    this.credits.emit(data);
   }
 
   toggleHover() {
@@ -30,10 +38,18 @@ export class UserPanelComponent{
    
   }
 
+  getUserData(){
+    return this.authService.user.multiFactor.user;
+  }
+
   async ngOnInit() {
   this.remainingCredits = await this.firestoreDB.getCreditOfUser();
   console.log(this.remainingCredits)
-  this.sendDataToParent();
+  console.log("user data:",this.getUserData());
+  const {displayName,photoURL}=await this.getUserData();
+  console.log("name on this page:",displayName);
+  this.imgUrl=photoURL?photoURL:`https://avatar.iran.liara.run/username?username=${displayName}`
+  this.sendDataToParent(displayName,photoURL);
 }
 
 }

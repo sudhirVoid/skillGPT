@@ -21,6 +21,7 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
 import { CreditsModalComponent } from './credits-modal/credits-modal.component';
 import { CreatePaymentOrderComponent } from './create-payment-order/create-payment-order.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ProfileModalComponent } from './profile-modal/profile-modal.component';
 
 
 
@@ -33,7 +34,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     UserPanelComponent,
     CreditsModalComponent,
     CreatePaymentOrderComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ProfileModalComponent
   ],
   imports: [
     BrowserModule,

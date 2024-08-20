@@ -25,6 +25,7 @@ export interface ChapterConfig {
 export class ChapterUiComponent implements AfterViewInit {
   @ViewChild('htmlContent') htmlContent!: ElementRef<HTMLDivElement>;
   activeChapterId!: number;
+  imageUrl:string='';
 
 
   ngAfterViewInit() {
@@ -41,11 +42,12 @@ export class ChapterUiComponent implements AfterViewInit {
   }
 
 
-  receivedCredits: string='';
+  receivedCredits: number=0;
 
   // Method to handle the event and receive data from the child
   handleChildEvent(data: any) {
-    this.receivedCredits = data;
+    this.receivedCredits = data.credits;
+    this.imageUrl=data.photoURL;
     console.log('Data received from child:', data);
   }
 
@@ -77,6 +79,11 @@ export class ChapterUiComponent implements AfterViewInit {
   isOldBook: boolean = false;
   bookId!: number;
   userQuery: string = '';
+  isChapterLoading:boolean=false;
+
+
+
+
   isModalOpen = false;
 
   openModal() {
@@ -163,6 +170,8 @@ export class ChapterUiComponent implements AfterViewInit {
   }
 
   selectChapter(chapter: ChapterConfig): void {
+    this.isChapterLoading=true;
+    console.log("ischapterLoading:",this.isChapterLoading);
     this.activeChapterId = chapter.chapterid
     this.safeHtml = '';
     console.log(chapter);
@@ -217,6 +226,11 @@ export class ChapterUiComponent implements AfterViewInit {
           // this.safeHtml = response.msg;
           //this.renderingHtmlRes(response.msg[0].content_text)
         });
+    }
+    if(this.safeHtml){
+      console.log("ischapterLoadingdfd:",this.isChapterLoading);
+      this.isChapterLoading=false;
+      console.log("ischapterLoadingdfd:",this.isChapterLoading);
     }
   }
 

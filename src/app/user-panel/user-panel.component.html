@@ -14,14 +14,17 @@
 </div>
 <div class="avatar-menu">
    
-<div class="avatar relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-    <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+<div (click)="openModal()" class="avatar relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+    <img src={{imgUrl}} alt="Avatar" class="w-full h-full object-cover">
 </div>
 
+<!-- 
     <ul class="dropdown-menu ">
-        <!-- <li><a href="#">Profile</a></li> -->
-        <li class="flex justify-center content-center"><a href="#" >Credits: {{remainingCredits}}</a></li>
-        <li (click)="onClickLogout()" class="flex justify-center content-center" style="color: red;"><a href="">Logout</a></li>
-        <!-- Add other menu items here -->
-    </ul>
+     
+        <li class="flex justify-center content-center">Credits: {{remainingCredits}}</li>
+        <li (click)="onClickLogout()" class="flex justify-center content-center" style="color: red;"><a href="#">Logout</a></li>
+
+    </ul> -->
+
+    <profile-modal *ngIf="isModalOpen" (closeModalEvent)="closeModal()" ></profile-modal>
 </div>

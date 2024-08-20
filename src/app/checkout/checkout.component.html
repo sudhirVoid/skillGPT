@@ -1,8 +1,29 @@
-<div class="bg-gray-100 h-[100vh] text-slate-900">
-    <div class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
+<div class="min-h-screen bg-gray-50 py-16">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
+      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-bold text-gray-900">
+          <span class="text-xl">Skill GPT</span>
+        </div>
+        <div class="space-x-8 text-gray-500">
+          <!-- <a href="#" class="hover:text-gray-900">Solutions</a>
+          <a href="#" class="hover:text-gray-900">Industries</a>
+          <a href="#" class="hover:text-gray-900">Pricing</a>
+          <a href="#" class="hover:text-gray-900">Resources</a>
+          <a href="#" class="hover:text-gray-900">Company</a> -->
+          <!-- <a href="#" class="ml-6 px-4 py-2 bg-black text-white rounded-full">Get Started</a> -->
+           <div class="user-panel">
+
+               <app-user-panel  (buttonClick)="onClickLogout()" (credits)="handleChildEvent($event)"></app-user-panel>
+           </div>
+
+        </div>
+      </div>
+    </nav>
+    <div class="max-w-lg mx-auto p-6 h-full justify-center bg-white rounded-xl shadow-lg mt-10">
         <div class="text-center mb-6">
-            <h1 class="text-2xl font-bold text-emerald-800">Your New Plan</h1>
-            <p class="text-lg text-green-500">Plan Summary</p>
+            <h1 class="text-2xl font-bold text-emerald-800">{{selectedPlan.title}}</h1>
+            <p class="text-lg text-green-500">Plan Details</p>
         </div>
         <div class="bg-gray-100 p-4 rounded-lg mb-6">
             <div class="flex justify-between items-center mb-4">
@@ -14,11 +35,23 @@
             </div>
             <div class="flex justify-between items-center mt-2">
                 <span class="text-lg font-bold">Total Amount:</span>
-                <span class="text-lg">{{this.selectedPlan.amount}}</span>
+                <span class="text-lg">₹&nbsp;{{this.selectedPlan.amount}}</span>
             </div>
         </div>
         <div class="text-center">
             <button (click)="payWithRazorpay()" class="bg-gray-800 text-white px-6 py-3 rounded-full hover:bg-green-500 transition">Pay Now</button>
         </div>
     </div>
-</div>
+
+
+</div>    
+
+
+
+
+
+
+<!-- 
+<div class="bg-gray-100 h-[100vh] text-slate-900">
+    
+</div> -->

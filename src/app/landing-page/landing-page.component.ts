@@ -72,7 +72,7 @@ export class LandingPageComponent {
 
   isModalOpen = false;
   isUpgrade=false;
-  receivedCredits: string='';
+  receivedCredits: number=0;
   openModal() {
     this.isModalOpen = true;
   }
@@ -95,19 +95,23 @@ export class LandingPageComponent {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    if (!this.sidebar.nativeElement.contains(event.target)) {
+    if (this.sidebar &&!this.sidebar.nativeElement.contains(event.target)) {
       this.closeNav();
     }
   }
   openNav(event:Event) {
-    event.stopPropagation();
-    this.sidebar.nativeElement.style.width = "250px";
-    this.main.nativeElement.style.marginLeft = "250px";
+    if (this.sidebar && this.main) {
+      event.stopPropagation();
+      this.sidebar.nativeElement.style.width = "250px";
+      this.main.nativeElement.style.marginLeft = "250px";
+    }
   }
 
   closeNav() {
-    this.sidebar.nativeElement.style.width = "0";
-    this.main.nativeElement.style.marginLeft = "0";
+    if (this.sidebar && this.main) {
+      this.sidebar.nativeElement.style.width = "0";
+      this.main.nativeElement.style.marginLeft = "0";
+    }
   }
 
   async ngOnInit() {

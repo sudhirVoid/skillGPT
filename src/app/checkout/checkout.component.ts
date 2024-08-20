@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OrderService } from '../order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.service';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-checkout',
@@ -12,13 +13,24 @@ export class CheckoutComponent {
 
   razorPayKey: any;
   selectedPlan: any;
+  receivedCredits: number=0;
 
   constructor(
     private orderService: OrderService,
     private route: ActivatedRoute,
     private router: Router,
-    private FirebaseRealtimeDBService: FirebaseRealtimeDBService
+    private FirebaseRealtimeDBService: FirebaseRealtimeDBService,
+    private sharedService: SharedService
   ) {}
+
+
+  handleChildEvent(data: any) {
+    this.receivedCredits = data;
+    console.log('Data received from child:', data);
+  }
+  onClickLogout(): void{
+    this.sharedService.logout();
+  }
 
   ngOnInit() {
     this.getRazorPayKey();
