@@ -19,6 +19,8 @@ import { environment } from '../environments/environment';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { CreditsModalComponent } from './credits-modal/credits-modal.component';
+import { CreatePaymentOrderComponent } from './create-payment-order/create-payment-order.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { ProfileModalComponent } from './profile-modal/profile-modal.component';
 
 
@@ -31,6 +33,8 @@ import { ProfileModalComponent } from './profile-modal/profile-modal.component';
     LoginComponent,
     UserPanelComponent,
     CreditsModalComponent,
+    CreatePaymentOrderComponent,
+    CheckoutComponent,
     ProfileModalComponent
   ],
   imports: [
