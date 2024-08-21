@@ -21,7 +21,7 @@
     <!-- Main Section -->
     <main class="flex flex-col items-center justify-center text-center mt-16 px-6">
         <h1 class="text-4xl md:text-6xl font-extrabold text-gray-800 mb-6">Hey Learners! Excited to learn something new..?</h1>
-        <div class="relative w-full max-w-xl">
+        <div class="relative w-full max-w-xl" [ngClass]="{'disabled-div': isGenerating}">
             <input (keyup.enter)="postInputTopic(topic)" [(ngModel)]="topic" type="text" placeholder="What's in your mind?...think...think...there you go 😜" class="w-full text-lg px-6 py-4 border border-gray-300 rounded-2xl shadow-md focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent text-gray-800" />
             <button [disabled]="!topic" class="absolute inset-y-0 right-0 px-6 py-4 cursor-pointer text-white bg-slate-900 hover:bg-slate-500 transition rounded-r-2xl" (click)="postInputTopic(topic)">Search</button>
         </div>

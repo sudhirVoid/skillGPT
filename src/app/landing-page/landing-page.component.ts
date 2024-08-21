@@ -85,7 +85,7 @@ export class LandingPageComponent {
   }
  
   handleChildEvent(data: any) {
-    this.receivedCredits = data;
+    this.receivedCredits = data.credits;
     console.log('Data received from child:', data);
   }
 

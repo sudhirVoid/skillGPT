@@ -141,6 +141,11 @@
     margin-left: 50px;
   }
 
+  .disabled-div {
+    pointer-events: none;
+    opacity: 0.6; /* Optional: to give a visual cue that the div is disabled */
+  }
+
   
   .openbtn {
     border-top-right-radius: 0.5rem;

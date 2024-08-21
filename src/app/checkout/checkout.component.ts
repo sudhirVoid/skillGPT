@@ -94,7 +94,7 @@ export class CheckoutComponent {
             this.FirebaseRealtimeDBService.setPayDetails(orderDetails);
             if(response.data.isPaymentVerified){
               console.log("Payment Verified")
-              this.router.navigateByUrl('/paymentsOrder')
+              this.router.navigateByUrl('/landingPage')
             }else{
               this.router.navigateByUrl('paymentfailed');
             }
