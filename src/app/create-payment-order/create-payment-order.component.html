@@ -1,25 +1,6 @@
 <div class="min-h-screen bg-gray-50 py-16">
     <!-- Navbar -->
-    <nav class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
-      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <div class="text-2xl font-bold text-gray-900">
-          <span class="text-xl">Skill GPT</span>
-        </div>
-        <div class="space-x-8 text-gray-500">
-          <!-- <a href="#" class="hover:text-gray-900">Solutions</a>
-          <a href="#" class="hover:text-gray-900">Industries</a>
-          <a href="#" class="hover:text-gray-900">Pricing</a>
-          <a href="#" class="hover:text-gray-900">Resources</a>
-          <a href="#" class="hover:text-gray-900">Company</a> -->
-          <!-- <a href="#" class="ml-6 px-4 py-2 bg-black text-white rounded-full">Get Started</a> -->
-           <div class="user-panel">
-
-               <app-user-panel  (buttonClick)="onClickLogout()" (credits)="handleChildEvent($event)"></app-user-panel>
-           </div>
-
-        </div>
-      </div>
-    </nav>
+     <app-nav-header></app-nav-header>
     
     <!-- Header -->
     <div class="container mx-auto text-center mt-3">
@@ -35,7 +16,7 @@
     <!-- Pricing Plans -->
     <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
       <!-- Free Plan -->
-      <div class="bg-white border border-gray-200 rounded-lg p-6 text-center shadow-sm">
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 text-center shadow-sm">
         <h2 class="text-2xl font-semibold mb-4">Starter</h2>
         <p class="text-5xl font-bold mb-2">₹99</p>
         <p class="text-slate-900 font-bold text-lg sm:text-xl">15 Credits</p>
@@ -43,7 +24,7 @@
       </div>
       
       <!-- Pro Plan -->
-      <div class="bg-white border border-gray-200 rounded-lg p-6 text-center shadow-sm relative">
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 text-center shadow-sm relative">
         <span class="absolute top-0 right-0 mt-4 mr-4 px-2 py-1 bg-red-500 text-white text-xs rounded-full">Popular</span>
         <h2 class="text-2xl font-semibold mb-4">Standard</h2>
         <p class="text-5xl font-bold mb-2">₹299</p>
@@ -52,7 +33,7 @@
       </div>
       
       <!-- Enterprise Plan -->
-      <div class="bg-gray-900 text-white border border-gray-800 rounded-lg p-6 text-center shadow-sm ">
+      <div class="bg-gray-900 text-white border border-gray-800 rounded-2xl p-6 text-center shadow-sm ">
         <h2 class="text-2xl font-semibold mb-4">Premium</h2>
         <p class="text-5xl font-bold mb-2">₹499</p>
         <p class="text-slate-100 font-bold text-lg sm:text-xl">100 Credits</p>
