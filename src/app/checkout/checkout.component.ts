@@ -3,6 +3,7 @@ import { OrderService } from '../order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.service';
 import { SharedService } from '../shared.service';
+import { config } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -71,6 +72,11 @@ export class CheckoutComponent {
       theme: {
         color: '#030f18',
       },
+      config: {
+        display: {
+          hide: [{method: 'paylater'}, {method: 'wallet'}]
+        }
+      }
     };
     options.handler = (response: any, error: any) => {
       options.response = response;
