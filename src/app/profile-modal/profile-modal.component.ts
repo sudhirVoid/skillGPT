@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthServiceService } from '../auth-service.service';
 import { SharedService } from '../shared.service';
 import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'profile-modal',
@@ -9,7 +10,7 @@ import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.serv
   styleUrls: ['./profile-modal.component.css']
 })
 export class ProfileModalComponent {
-  constructor(private authService: AuthServiceService,private sharedService: SharedService,private firestoreDB: FirebaseRealtimeDBService) { }
+  constructor(private authService: AuthServiceService,private sharedService: SharedService,private firestoreDB: FirebaseRealtimeDBService, private router: Router) { }
   
   @Output() closeModalEvent = new EventEmitter<void>();
   remainingCredits!: number;
@@ -40,6 +41,9 @@ export class ProfileModalComponent {
   // console.log(email);
   // console.log(displayName);
   // console.log(photoURL);
+ }
+ navPaymentOrder(){
+  this.router.navigateByUrl('/paymentsOrder');
  }
 
 
