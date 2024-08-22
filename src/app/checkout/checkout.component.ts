@@ -110,7 +110,23 @@ export class CheckoutComponent {
       this.router.navigateByUrl('/paymentsOrder');
     };
     const rzp = new this.orderService.nativeWindow.Razorpay(options);
+
+    // Add a listener for page unload events to handle user navigation
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (rzp && rzp.close) {
+        rzp.close(); // Close Razorpay modal if it is open
+      }
+      options.modal.ondismiss(); // Call the ondismiss handler
+      event.preventDefault(); // Prevent the default behavior of unloading
+      event.returnValue = ''; // Modern browsers require this to show a confirmation dialog
+  };
+
+   window.addEventListener('beforeunload', handleBeforeUnload);
+
     rzp.open();
+    rzp.on('close', () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    });
   }
 
 }
