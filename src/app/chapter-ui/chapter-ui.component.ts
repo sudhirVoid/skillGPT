@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Renderer2 , AfterViewChecked } from '@angular/core';
 import { SyllabusService } from '../gpt-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../data-transfer.service';
@@ -24,8 +24,27 @@ export interface ChapterConfig {
 })
 export class ChapterUiComponent implements AfterViewInit {
   @ViewChild('htmlContent') htmlContent!: ElementRef<HTMLDivElement>;
+  @ViewChild('scrollMe')
+  private myScrollContainer!: ElementRef;
+  scrolledToBottom = false;
   activeChapterId!: number;
   imageUrl:string='';
+
+
+  scrollToBottom(): void {
+    try {
+      /**Add the condition**/
+      if (!this.scrolledToBottom) {
+        this.myScrollContainer.nativeElement.scrollTop =
+          this.myScrollContainer.nativeElement.scrollHeight;
+      }
+    } catch (err) {}
+  }
+
+  /**Add the method**/
+  onScroll() {
+    this.scrolledToBottom = true;
+  }
 
 
   ngAfterViewInit() {
@@ -35,6 +54,11 @@ export class ChapterUiComponent implements AfterViewInit {
     menuToggle?.addEventListener('click', () => {
       sidebar?.classList.toggle('hidden');
     });
+  }
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+    this.addCopyButtons();
+    // this.scrolledToBottom = false;
   }
   isNavOpen = false;
   toggleNav() {
@@ -93,22 +117,22 @@ export class ChapterUiComponent implements AfterViewInit {
   closeModal() {
     this.isModalOpen = false;
   }
-  copyCode() {
-    const codeElement = this.htmlContent?.nativeElement.querySelector('code');
-    if (codeElement) {
-      const codeText = codeElement.textContent!;
-      navigator.clipboard
-        .writeText(codeText)
-        .then(() => {
-          alert('Code copied to clipboard!');
-        })
-        .catch((err) => {
-          console.error('Failed to copy code: ', err);
-        });
-    } else {
-      console.error('Code element not found.');
-    }
-  }
+  // copyCode() {
+  //   const codeElement = this.htmlContent?.nativeElement.querySelector('code');
+  //   if (codeElement) {
+  //     const codeText = codeElement.textContent!;
+  //     navigator.clipboard
+  //       .writeText(codeText)
+  //       .then(() => {
+  //         alert('Code copied to clipboard!');
+  //       })
+  //       .catch((err) => {
+  //         console.error('Failed to copy code: ', err);
+  //       });
+  //   } else {
+  //     console.error('Code element not found.');
+  //   }
+  // }
 
   isActiveItem(item: ChapterConfig): boolean {
     return this.activeItem === item.chaptertitle;
@@ -244,8 +268,101 @@ export class ChapterUiComponent implements AfterViewInit {
     private router: Router,
     private authService: AuthServiceService,
     private sharedService: SharedService,
-    private pdfService: PdfServiceService
+    private pdfService: PdfServiceService,
+    private renderer: Renderer2,
+    private el: ElementRef
   ) {}
+
+// copy code
+// addCopyButtons() {
+//   const codeBlocks = this.el.nativeElement.querySelectorAll('pre');
+
+//   codeBlocks.forEach((codeBlock: HTMLElement, index: number) => {
+//     // Add a unique class to each code block
+//     const uniqueClass = `code-block-${index}`;
+//     this.renderer.addClass(codeBlock, uniqueClass);
+
+//     const existingButton = codeBlock.querySelector('.copy-button');
+//     if (!existingButton) {
+//       const button = this.renderer.createElement('button');
+//       const text = this.renderer.createText('Copy');
+//       this.renderer.appendChild(button, text);
+//       this.renderer.addClass(button, 'copy-button');
+
+//       // Attach the click event to the specific code block's button
+//       this.renderer.listen(button, 'click', () => {
+//         this.copyCode(uniqueClass);
+//       });
+
+//       this.renderer.appendChild(codeBlock, button);
+//     }
+//   });
+// }
+addCopyButtons() {
+  const codeBlocks = this.el.nativeElement.querySelectorAll('pre');
+
+  codeBlocks.forEach((codeBlock: HTMLElement, index: number) => {
+    const uniqueClass = `code-block-${index}`;
+    this.renderer.addClass(codeBlock, uniqueClass);
+
+    const existingButton = codeBlock.querySelector('.copy-button');
+    if (!existingButton) {
+      const button = this.renderer.createElement('button');
+      const text = this.renderer.createText('Copy');
+      this.renderer.appendChild(button, text);
+      this.renderer.addClass(button, 'copy-button');
+
+      // Attach the click event to the specific code block's button
+      this.renderer.listen(button, 'click', () => {
+        this.copyCode(button);
+      });
+
+      this.renderer.appendChild(codeBlock, button);
+    }
+  });
+}
+
+
+// copyCode(uniqueClass: string) {
+//   const codeElement = this.el.nativeElement.querySelector(`.${uniqueClass} code`);
+
+//   if (codeElement) {
+//     const codeToCopy = codeElement.innerText;
+
+//     navigator.clipboard.writeText(codeToCopy).then(() => {
+//       // alert('Code copied to clipboard!');
+    
+
+//     }).catch(err => {
+//       console.error('Failed to copy: ', err);
+//     });
+//   }
+// }
+copyCode(button: HTMLElement) {
+  const codeElement = button.parentElement?.querySelector('code');
+  const codeToCopy = codeElement?.innerText;
+
+  if (codeToCopy) {
+    navigator.clipboard.writeText(codeToCopy).then(() => {
+      const originalText = button.innerText;
+      button.innerText = 'Copied';
+      button.style.background='#b8d5b8';
+      button.style.color='#023302';
+      button.style.fontWeight='bold';
+
+      // Change the text back to "Copy Code" after 3 seconds
+      setTimeout(() => {
+        button.innerText = originalText;
+        
+      }, 300);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  }
+}
+
+
+// 
 
   async ngOnInit(): Promise<void> {
     let firstChapter: ChapterConfig;
@@ -337,6 +454,9 @@ export class ChapterUiComponent implements AfterViewInit {
     }
   }
 
+
+ 
+
   async fetchOldBookData(bookId: number, userId: string){
     let wholeBookData = await this.syllabusService.getOldBookData(bookId, userId);
     let userData = wholeBookData.userData;
@@ -402,6 +522,7 @@ let chapterConversationByUser: {gpt: string, user: string}[] = []
 
       })
     });
+    this.scrolledToBottom = false;
     let finalObject = {
       chapterDetails: chapterConfig,
       content: chapterConversationByUser
@@ -412,6 +533,7 @@ let chapterConversationByUser: {gpt: string, user: string}[] = []
     let result = await this.syllabusService.handleUserInput(finalObject);
     console.log(result)
     this.chapterConversation.push({gpt: this.renderingHtmlRes(result.msg.gpt)});
+    this.scrolledToBottom = false;
     localStorage.setItem(`${this.activeChapterId}`, JSON.stringify(this.chapterConversation))
   }
   

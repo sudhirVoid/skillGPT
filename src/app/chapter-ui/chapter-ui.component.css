@@ -103,6 +103,36 @@ a{
     }
   }
 
+  .custom-border{
+    border:1px solid rgba(64, 76, 102, 0.9);
+  }
+
+  /* pre {
+    position: relative;
+    padding: 1em;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .copy-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .copy-button:hover {
+    background-color: #0056b3;
+  } */
+  
+
 
   /* Css for Chapter content */
 
@@ -110,11 +140,12 @@ a{
 
     code{
       line-height: 1.5rem;
+
   }
   
-  pre{
+  /* pre{
        position: relative;
-       background: rgba(0, 0, 0,0.9);
+       background: rgba(17,24,39,0.9);
        color: whitesmoke;
        padding: 1rem;
        border-radius: 1rem;
@@ -123,6 +154,8 @@ a{
        margin: 0 1rem 0 2rem;
      
   }
+
+
   pre::after{
     content: 'Copy code';
     position: absolute;
@@ -139,6 +172,40 @@ a{
   }
   pre:hover::after{
     background-color: #131212;
+  } */
+
+  pre {
+    /* position: relative;
+    padding: 1em;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px; */
+    position: relative;
+    background: rgba(17,24,39,0.9);
+    color: whitesmoke;
+    padding: 1rem;
+    border-radius: 1rem;
+    width: 50vw;
+    display: flex;
+    margin: 0.5rem 1rem 0.5rem 2rem;
+  }
+  
+  .copy-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .copy-button:hover {
+    background-color: #090e14;
+    color: white;
   }
   h1,h2,h3,h4,h5,h6,p{
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
