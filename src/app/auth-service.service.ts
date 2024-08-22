@@ -21,10 +21,10 @@ export class AuthServiceService {
     afAuth.authState.subscribe(user => {
       if (user) {
         // User is logged in
-        console.log('User is logged in:', user.email);
+        // console.log('User is logged in:', user.email);
       } else {
         // User is logged out
-        console.log('User is logged out');
+        // console.log('User is logged out');
       }
     });
    }
@@ -36,9 +36,9 @@ export class AuthServiceService {
    async checkInitialAuthState() {
     this.user = await this.afAuth.authState.pipe(first()).toPromise();
     if (this.user) {
-      console.log('User is logged in:', this.user.email);
+      // console.log('User is logged in:', this.user.email);
     } else {
-      console.log('User is logged out');
+      // console.log('User is logged out');
     }
   }
 
@@ -52,12 +52,12 @@ export class AuthServiceService {
       return this.afAuth
         .signInWithPopup(provider)
         .then((result) => {
-          console.log('You have been successfully logged in!');
+          // console.log('You have been successfully logged in!');
           this.isLoggedIn = true;
           this.router.navigate(['/landingPage']);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           this.isLoggedIn = false;
           this.router.navigate(['/login']);
         });
@@ -65,20 +65,20 @@ export class AuthServiceService {
 
     async isAuthenticated(): Promise<boolean> {
       // if(this.user){
-      //   console.log("Inside isAuthenticated : ",this.user);
+      //   // console.log("Inside isAuthenticated : ",this.user);
       //   return true;
       // }else{
-      //   console.log("false");
+      //   // console.log("false");
         
       //   return false;
       // }
 
       this.user = await this.afAuth.authState.pipe(first()).toPromise();
       if (this.user) {
-        console.log('User is logged in:', this.user.email);
+        // console.log('User is logged in:', this.user.email);
         return true;
       } else {
-        console.log('User is logged out');
+        // console.log('User is logged out');
         return false;
       }
       

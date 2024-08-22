@@ -29,10 +29,10 @@ export class LoginComponent {
       const user = result.user;
       if (result.additionalUserInfo?.isNewUser && user) {
         //assign three credits now.
-        console.log('New user signed in');
+        // console.log('New user signed in');
         await this.firestoreDB.setCreditForNewUser(user.uid,3)
       } else {
-        console.log('Existing user signed in');
+        // console.log('Existing user signed in');
       }
       this.router.navigate(['/landingPage']); 
     })
@@ -43,15 +43,15 @@ export class LoginComponent {
 
   async ngOnInit() {
     // let res = this.authService.isAuthenticated();
-    // console.log("isLoggedIn : ",res);
+    // // console.log("isLoggedIn : ",res);
     const result = await this.authService.isAuthenticated();
     if (result) {
       console.log(this.authService.user)
-      // console.log(myDB);
+      // // console.log(myDB);
       //await this.firestoreDB.setCreditForNewUser()
       
       // let database = this.database.ref();
-      // console.log(database);
+      // // console.log(database);
       this.router.navigate(['landingPage']);
       // this.loginUser.sessionTimeOut();
     }

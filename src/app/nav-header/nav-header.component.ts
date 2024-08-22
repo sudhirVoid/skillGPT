@@ -12,7 +12,7 @@ export class NavHeaderComponent {
   constructor(private sharedService: SharedService) {}
   handleChildEvent(data: any) {
     this.receivedCredits = data;
-    console.log('Data received from child:', data);
+    // console.log('Data received from child:', data);
   }
   onClickLogout(): void{
     this.sharedService.logout();

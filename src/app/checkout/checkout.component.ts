@@ -27,7 +27,7 @@ export class CheckoutComponent {
 
   handleChildEvent(data: any) {
     this.receivedCredits = data;
-    console.log('Data received from child:', data);
+    // console.log('Data received from child:', data);
   }
   onClickLogout(): void{
     this.sharedService.logout();
@@ -53,7 +53,7 @@ export class CheckoutComponent {
 
   payWithRazorpay() {
     const paymentOrderId = this.getOrderId();
-    console.log(this.razorPayKey);
+    // console.log(this.razorPayKey);
     const options: any = {
       key: this.razorPayKey,
       amount: this.selectedPlan?.price, // amount should be in paise format to display Rs 1255 without decimal point
@@ -86,8 +86,8 @@ export class CheckoutComponent {
         this.orderService
           .verifyPaymentSignature(response, paymentOrderId)
           .subscribe((response: any) => {
-            console.log("IsPaymentVerified",response.data.isPaymentVerified);
-            console.log("IsPaymentVerified data",response.data);
+            // console.log("IsPaymentVerified",response.data.isPaymentVerified);
+            // console.log("IsPaymentVerified data",response.data);
             const orderDetails = {
               paymentDate: (Date.now()).toString(),
               order_id: response.data.order_id,

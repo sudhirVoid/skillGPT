@@ -86,7 +86,7 @@ export class LandingPageComponent {
  
   handleChildEvent(data: any) {
     this.receivedCredits = data.credits;
-    console.log('Data received from child:', data);
+    // console.log('Data received from child:', data);
   }
 
   ngOnDestroy() {
@@ -117,7 +117,7 @@ export class LandingPageComponent {
   async ngOnInit() {
     this.suggestedTopics.sort( ()=>Math.random()-0.5 );
     let res = this.authService.isAuthenticated();
-    console.log("isLoggedIn : ",res);
+    // console.log("isLoggedIn : ",res);
     document.addEventListener('click', this.onDocumentClick);
     this.userId = await this.authService.getCurrentUserId();
 
@@ -126,7 +126,7 @@ export class LandingPageComponent {
       console.log(this.userBooks)
     })
     .catch(error=>{
-      console.log(error);
+      // console.log(error);
       alert('Failed to Fetch Books')
     })
   }
