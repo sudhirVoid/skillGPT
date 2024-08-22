@@ -274,19 +274,47 @@ export class ChapterUiComponent implements AfterViewInit {
   ) {}
 
 // copy code
+// addCopyButtons() {
+//   const codeBlocks = this.el.nativeElement.querySelectorAll('pre');
+
+//   codeBlocks.forEach((codeBlock: HTMLElement, index: number) => {
+//     // Add a unique class to each code block
+//     const uniqueClass = `code-block-${index}`;
+//     this.renderer.addClass(codeBlock, uniqueClass);
+
+//     const existingButton = codeBlock.querySelector('.copy-button');
+//     if (!existingButton) {
+//       const button = this.renderer.createElement('button');
+//       const text = this.renderer.createText('Copy');
+//       this.renderer.appendChild(button, text);
+//       this.renderer.addClass(button, 'copy-button');
+
+//       // Attach the click event to the specific code block's button
+//       this.renderer.listen(button, 'click', () => {
+//         this.copyCode(uniqueClass);
+//       });
+
+//       this.renderer.appendChild(codeBlock, button);
+//     }
+//   });
+// }
 addCopyButtons() {
   const codeBlocks = this.el.nativeElement.querySelectorAll('pre');
 
-  codeBlocks.forEach((codeBlock: HTMLElement) => {
+  codeBlocks.forEach((codeBlock: HTMLElement, index: number) => {
+    const uniqueClass = `code-block-${index}`;
+    this.renderer.addClass(codeBlock, uniqueClass);
+
     const existingButton = codeBlock.querySelector('.copy-button');
     if (!existingButton) {
       const button = this.renderer.createElement('button');
-      const text = this.renderer.createText('Copy Code');
+      const text = this.renderer.createText('Copy');
       this.renderer.appendChild(button, text);
       this.renderer.addClass(button, 'copy-button');
 
+      // Attach the click event to the specific code block's button
       this.renderer.listen(button, 'click', () => {
-        this.copyCode(codeBlock);
+        this.copyCode(button);
       });
 
       this.renderer.appendChild(codeBlock, button);
@@ -294,15 +322,45 @@ addCopyButtons() {
   });
 }
 
-copyCode(codeElement: HTMLElement) {
-  const codeToCopy = codeElement.innerText;
 
-  navigator.clipboard.writeText(codeToCopy).then(() => {
-    alert('Code copied to clipboard!');
-  }).catch(err => {
-    console.error('Failed to copy: ', err);
-  });
+// copyCode(uniqueClass: string) {
+//   const codeElement = this.el.nativeElement.querySelector(`.${uniqueClass} code`);
+
+//   if (codeElement) {
+//     const codeToCopy = codeElement.innerText;
+
+//     navigator.clipboard.writeText(codeToCopy).then(() => {
+//       // alert('Code copied to clipboard!');
+    
+
+//     }).catch(err => {
+//       console.error('Failed to copy: ', err);
+//     });
+//   }
+// }
+copyCode(button: HTMLElement) {
+  const codeElement = button.parentElement?.querySelector('code');
+  const codeToCopy = codeElement?.innerText;
+
+  if (codeToCopy) {
+    navigator.clipboard.writeText(codeToCopy).then(() => {
+      const originalText = button.innerText;
+      button.innerText = 'Copied';
+      button.style.background='#b8d5b8';
+      button.style.color='#023302';
+      button.style.fontWeight='bold';
+
+      // Change the text back to "Copy Code" after 3 seconds
+      setTimeout(() => {
+        button.innerText = originalText;
+        
+      }, 300);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  }
 }
+
 
 // 
 
