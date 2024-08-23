@@ -391,6 +391,7 @@ copyCode(button: HTMLElement) {
               "chaptertitle": "Introduction to Astronomy"
           }
         */
+       this.bookId = chapters.topicData.book_id
         firstChapter = chapters.chaptersData[0];
         bookName = chapters.topic;
         this.activeItem = this.bookChapters[0].chaptertitle;
@@ -538,6 +539,7 @@ let chapterConversationByUser: {gpt: string, user: string}[] = []
   }
   
   downloadPdf() {
+    console.log(this.breadcrumbs)
     console.log(`MY book is ${this.bookId}`)
     let payload = {
       userId: this.userId,
