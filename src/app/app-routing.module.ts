@@ -6,12 +6,16 @@ import { LoginComponent } from './login/login.component';
 import { CreatePaymentOrderComponent } from './create-payment-order/create-payment-order.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ComplianceComponent } from './compliance/compliance.component';
 
 const routes: Routes = [
   {
     path: "login",
     component: LoginComponent,
   },
+  { path: 't&c', component: ComplianceComponent, data: { route: 't&c' } },
+  { path: 'privacy-policy', component: ComplianceComponent, data: { route: 'privacy-policy' } },
+  { path: 'refund-policy', component: ComplianceComponent, data: { route: 'refund-policy' } },
   {
     path: "landingPage",
     component: LandingPageComponent,

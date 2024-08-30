@@ -2,7 +2,15 @@
 
     <!-- Header -->
     <header class="flex justify-between items-center px-6 py-4  ">
-        <div class="text-2xl font-extrabold text-gray-800">Skill GPT</div>
+        <!-- <div class="text-2xl font-extrabold text-gray-800">Skill GPT</div> -->
+        <div class="flex items-center">
+            <div class="w-8 h-8  rounded-full">
+                <img src="../../assets/logo.png"  alt="logo">
+              </div>
+              &nbsp;
+            <div class="text-3xl font-bold text-gray-800">Skill</div>
+            <div class="text-3xl font-bold ml-2 text-green-500">GPT</div>
+          </div>
         <nav class="space-x-6  md:flex">
             <!-- <a href="#" class="text-white bg-purple-600 hover:bg-purple-700 transition px-4 py-2 rounded-lg">Login</a> -->
             <div class="user-panel">
@@ -105,9 +113,9 @@
                 <p class="text-gray-600">© 2024 Skill GPT All rights reserved.</p>
             </div>
             <nav class="space-x-6">
-                <a href="#" class="text-gray-600 hover:text-gray-900 transition">Privacy Policy</a>
-                <a href="#" class="text-gray-600 hover:text-gray-900 transition">Terms of Service</a>
-                <a href="#" class="text-gray-600 hover:text-gray-900 transition">Contact Us</a>
+                <a routerLink="/privacy-policy" class="text-gray-600 hover:text-gray-900 transition">Privacy Policy</a>
+                <a routerLink="/refund-policy" class="text-gray-600 hover:text-gray-900 transition">Refund Policy</a>
+                
             </nav>
         </div>
     </footer>
