@@ -1,0 +1,46 @@
+.gradient-text {
+    font-weight: bold;
+    background: linear-gradient(
+        90deg,
+        #ff00ff,
+        #00ff00,
+        #0000ff,
+        #ff0000,
+        #ff00ff
+    );
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-animation 10s ease infinite;
+}
+
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.typewriter-container {
+    font-family: 'Courier New', monospace;
+    font-size: 24px;
+    line-height: 1.5;
+  }
+  .typewriter-line {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .caret {
+    border-right: 2px solid #000;
+    animation: blink-caret 0.75s step-end infinite;
+  }
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #000 }
+  }
+
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
