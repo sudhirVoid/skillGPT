@@ -76,12 +76,12 @@
               <div class="px-6 py-4">
                 <h2 class="text-lg font-semibold side-title">Your Books</h2>
                 <div
-                  class="bg-slate-500 w-full px-3 py-1 mt-2 custom-border hover:bg-slate-500 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-white relative"
+                  class=" w-full px-3 py-1 mt-2 custom-border hover:bg-slate-500 hover:text-white flex justify-between items-center cursor-pointer rounded-lg dark:text-white relative"
                   *ngFor="let item of userBooks"
                   (click)="alreadyGeneratedBookSelection(item)">
                   
                   <!-- Background indicating completion -->
-                  <div class="absolute top-0 left-0 h-full percent-bg-color rounded-md" 
+                  <div class="absolute top-0 left-0 h-full percent-bg-color rounded-lg" 
                        [style.width.%]="item.percentOfBookRead">
                   </div>
                   
