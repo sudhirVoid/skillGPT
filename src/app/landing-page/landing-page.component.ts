@@ -161,7 +161,10 @@ export class LandingPageComponent {
     }
     
   }
-
+  // markBookAsCompleted(item:BookConfig, $event: MouseEvent){
+  //   $event.stopPropagation();
+  //   console.log($event)
+  // }
   buyCredits(){
     this.isModalOpen = false;
     this.isUpgrade=true;
