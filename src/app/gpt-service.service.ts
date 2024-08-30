@@ -40,7 +40,8 @@ export class SyllabusService {
       response.userData.forEach((book: any) => {
         bookArray.push({
           book_id: book.book_id,
-          title: book.title
+          title: book.title,
+          percentOfBookRead: book.percentread
         });
       });
     } catch (error) {
@@ -61,7 +62,9 @@ export class SyllabusService {
     return response;
   }
 
-  async isEthicalTopic(topic: string){
-   let response = true;
+  async setChapterCompletionStatus(chapterConfig:ChapterConfig){
+    return this.http.post<any>(`${environment.apiURL}update/isChapterCompleted`, chapterConfig).subscribe(data=>{
+      return data;
+    })
   }
 }

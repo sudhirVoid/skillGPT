@@ -12,10 +12,12 @@ import { PdfServiceService } from '../pdf-service.service';
 export  interface BookConfig {
   book_id: string;
   title: string;
+  percentOfBookRead?:number
 }
 export interface ChapterConfig {
   chapterid: number;
   chaptertitle: string;
+  isChapterCompleted?:boolean
 }
 @Component({
   selector: 'app-chapter-ui',
@@ -468,7 +470,8 @@ copyCode(button: HTMLElement) {
   };
   const chaptersData = userData.map((data: any) => ({
     chapterid: data.chapterid,
-    chaptertitle: data.chaptertitle
+    chaptertitle: data.chaptertitle,
+    isChapterCompleted: data.ischaptercompleted
   }));
 
   return {topicData, chaptersData, userData}
@@ -556,6 +559,12 @@ let chapterConversationByUser: {gpt: string, user: string}[] = []
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     });
+  }
+
+  async markBookAsCompleted(item:ChapterConfig, $event: MouseEvent){
+    $event.stopPropagation();
+    item.isChapterCompleted = ($event.target as HTMLInputElement).checked;
+    this.syllabusService.setChapterCompletionStatus(item)
   }
 
 }

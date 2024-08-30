@@ -39,10 +39,14 @@
                 <p class="absolute side-title text-emerald-800">Your Books</p>
                 <a href="javascript:void(0)" class="closebtn " (click)="closeNav()">×</a>
             </div>
-            <div  class="w-full px-3 py-1 mt-2  hover:bg-slate-500 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-white"
-                *ngFor="let item of userBooks"          
-                     (click)="alreadyGeneratedBookSelection(item)">
-                  <p class="px-1 py-2 text-base">{{ item.title }}</p>
+            <div class="mx-2">
+
+                <div  class="w-full px-3 py-1 mt-2 custom-border  hover:bg-slate-500 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-white"
+                    *ngFor="let item of userBooks"          
+                         (click)="alreadyGeneratedBookSelection(item)">
+                      <p class="px-1 py-2 text-base">{{ item.title }}</p>
+                      <!-- <input type="checkbox" class="border-cyan-50" (click)="markBookAsCompleted(item, $event)"> -->
+                </div>
             </div>
             
             <div *ngIf="userBooks.length==0">
