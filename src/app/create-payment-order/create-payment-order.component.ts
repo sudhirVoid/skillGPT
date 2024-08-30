@@ -27,7 +27,7 @@ export class CreatePaymentOrderComponent {
   constructor( private route: ActivatedRoute, private router: Router, private orderService: OrderService ,private sharedService: SharedService) {}
   handleChildEvent(data: any) {
     this.receivedCredits = data;
-    console.log('Data received from child:', data);
+    // console.log('Data received from child:', data);
   }
   onClickLogout(): void{
     this.sharedService.logout();
@@ -38,7 +38,7 @@ export class CreatePaymentOrderComponent {
   }
 
   selectedPlan(title:string, amount:number, credits:number):void{
-    console.log(`${title} clicked`);
+    // console.log(`${title} clicked`);
     this.plan['title'] = title;
     this.plan['amount'] = amount;
     this.plan['credits'] = credits;
@@ -58,11 +58,11 @@ export class CreatePaymentOrderComponent {
   
 
   ProPlanBuy(){
-    console.log("Pro Plan Clicked");
+    // console.log("Pro Plan Clicked");
   }
 
   PremiumPlanBuy(){
-    console.log("Premium Plan Clicked");
+    // console.log("Premium Plan Clicked");
   }
   
   getRazorPayKey() {

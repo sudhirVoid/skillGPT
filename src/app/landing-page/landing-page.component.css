@@ -111,7 +111,8 @@
     left: 0%;
     background-color: rgb(15 23 42 / var(--tw-bg-opacity));
     overflow-x: hidden;
-    transition: 0.5s;
+    transition: 0.3s;
+    transition-timing-function: ease-in-out;
     padding-top: 60px;
     border-radius: 0 0.5rem 0.5rem 0;
   }
@@ -125,7 +126,7 @@
     font-size: 25px;
     color: #818181;
     display: block;
-    transition: 0.3s;
+    transition: 0s;
   }
   
   .sidebar .closebtn:hover {
@@ -146,6 +147,9 @@
     opacity: 0.6; /* Optional: to give a visual cue that the div is disabled */
   }
 
+  .custom-border{
+    border:1px solid rgba(64, 76, 102, 0.9);
+  }
   
   .openbtn {
     border-top-right-radius: 0.5rem;
@@ -172,8 +176,8 @@
   }
 
   .side-title{
-    top: 23px;
-  left: 21px;
+    /* top: 23px;
+  left: 21px; */
   color: #1dc696;
   font-weight: bold;
   font-size: 1.3rem;

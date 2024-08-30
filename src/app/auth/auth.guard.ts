@@ -8,12 +8,21 @@ import { AuthServiceService } from '../auth-service.service';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthServiceService, private router: Router) {}
 
-  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
-    if (await this.authService.isAuthenticated()) {
-      return true; // User is authenticated, allow access
-    } else {
-      // Redirect to login page with returnUrl
-      return this.router.createUrlTree(['/login'], { queryParams: { returnUrl: state.url } });
-    }
+   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree>  {
+    return this.authService.isAuthenticated().then(data=>{
+      if(data){
+        return true;
+      }
+      else{
+        this.router.createUrlTree(['/login'], { queryParams: { returnUrl: state.url } });
+        return false;
+      }
+    })
+    // if (await this.authService.isAuthenticated()) {
+    //   return true; // User is authenticated, allow access
+    // } else {
+    //   // Redirect to login page with returnUrl
+      
+    // }
   }
 }

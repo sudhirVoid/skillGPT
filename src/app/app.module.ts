@@ -23,7 +23,9 @@ import { CreatePaymentOrderComponent } from './create-payment-order/create-payme
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ProfileModalComponent } from './profile-modal/profile-modal.component';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
+import { LoaderComponent } from './loader/loader.component';
 import { ComplianceComponent } from './compliance/compliance.component';
+import { ElipsisPipe } from './pipes/elipsis.pipe';
 
 
 
@@ -39,7 +41,9 @@ import { ComplianceComponent } from './compliance/compliance.component';
     CheckoutComponent,
     ProfileModalComponent,
     NavHeaderComponent,
-    ComplianceComponent
+    LoaderComponent,
+    ComplianceComponent,
+    ElipsisPipe
   ],
   imports: [
     BrowserModule,

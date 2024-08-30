@@ -27,7 +27,7 @@ export class CheckoutComponent {
 
   handleChildEvent(data: any) {
     this.receivedCredits = data;
-    console.log('Data received from child:', data);
+    // console.log('Data received from child:', data);
   }
   onClickLogout(): void{
     this.sharedService.logout();
@@ -53,7 +53,7 @@ export class CheckoutComponent {
 
   payWithRazorpay() {
     const paymentOrderId = this.getOrderId();
-    console.log(this.razorPayKey);
+    // console.log(this.razorPayKey);
     const options: any = {
       key: this.razorPayKey,
       amount: this.selectedPlan?.price, // amount should be in paise format to display Rs 1255 without decimal point
@@ -86,8 +86,8 @@ export class CheckoutComponent {
         this.orderService
           .verifyPaymentSignature(response, paymentOrderId)
           .subscribe((response: any) => {
-            console.log("IsPaymentVerified",response.data.isPaymentVerified);
-            console.log("IsPaymentVerified data",response.data);
+            // console.log("IsPaymentVerified",response.data.isPaymentVerified);
+            // console.log("IsPaymentVerified data",response.data);
             const orderDetails = {
               paymentDate: (Date.now()).toString(),
               order_id: response.data.order_id,
@@ -116,7 +116,23 @@ export class CheckoutComponent {
       this.router.navigateByUrl('/paymentsOrder');
     };
     const rzp = new this.orderService.nativeWindow.Razorpay(options);
+
+    // Add a listener for page unload events to handle user navigation
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (rzp && rzp.close) {
+        rzp.close(); // Close Razorpay modal if it is open
+      }
+      options.modal.ondismiss(); // Call the ondismiss handler
+      event.preventDefault(); // Prevent the default behavior of unloading
+      event.returnValue = ''; // Modern browsers require this to show a confirmation dialog
+  };
+
+   window.addEventListener('beforeunload', handleBeforeUnload);
+
     rzp.open();
+    rzp.on('close', () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    });
   }
 
 }

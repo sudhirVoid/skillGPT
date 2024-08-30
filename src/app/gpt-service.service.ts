@@ -52,7 +52,7 @@ export class SyllabusService {
 
   async getOldBookData(bookId: number, userId: string){
     const response = await firstValueFrom(this.http.post<any>(`${environment.apiURL}userData/getOldBookData`, { bookId, userId }));
-    console.log(`ALL MY DATA: `,response);
+    // console.log(`ALL MY DATA: `,response);
     return response;
   }
 

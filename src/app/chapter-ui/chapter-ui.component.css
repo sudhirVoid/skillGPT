@@ -37,6 +37,7 @@ a{
     /* background-color: rgb(30 41 59 / var(--tw-bg-opacity)); */
     background-color: rgb(148 163 184 / var(--tw-bg-opacity));
     color: white;
+    font-weight: bold;
     /* Other styles for active state */
   }
 
@@ -352,7 +353,7 @@ a{
 .res-text{
   color: rgb(2,12,23 / var(--tw-bg-opacity));
   padding: 0.8rem;
- border: 1px solid #898BA8;
+ /* border: 1px solid #898BA8; */
 
 }
 .input-text{

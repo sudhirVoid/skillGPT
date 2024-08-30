@@ -45,9 +45,9 @@ export class UserPanelComponent{
   async ngOnInit() {
   this.remainingCredits = await this.firestoreDB.getCreditOfUser();
   console.log(this.remainingCredits)
-  console.log("user data:",this.getUserData());
+  // console.log("user data:",this.getUserData());
   const {displayName,photoURL}=await this.getUserData();
-  console.log("name on this page:",displayName);
+  // console.log("name on this page:",displayName);
   this.imgUrl=photoURL?photoURL:`https://avatar.iran.liara.run/username?username=${displayName}`
   this.sendDataToParent(displayName,photoURL);
 }

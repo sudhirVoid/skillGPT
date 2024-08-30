@@ -16,7 +16,7 @@ import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.serv
 export class LoginComponent {
   // private database: firebase.database.Database;
   responseLogin: any;
-  
+  isLoading: boolean = true;
   constructor(
     private authService: AuthServiceService,
     private router: Router,
@@ -93,10 +93,10 @@ export class LoginComponent {
       const user = result.user;
       if (result.additionalUserInfo?.isNewUser && user) {
         //assign three credits now.
-        console.log('New user signed in');
+        // console.log('New user signed in');
         await this.firestoreDB.setCreditForNewUser(user.uid,3)
       } else {
-        console.log('Existing user signed in');
+        // console.log('Existing user signed in');
       }
       this.router.navigate(['/landingPage']); 
     })
@@ -108,18 +108,24 @@ export class LoginComponent {
   async ngOnInit() {
     this.animateText();
     // let res = this.authService.isAuthenticated();
-    // console.log("isLoggedIn : ",res);
+    // // console.log("isLoggedIn : ",res);
+    this.authService.isAuthenticated().then(result =>{
+      if(result){
+        this.router.navigate(['landingPage']);
+      }
+      this.isLoading = false;
+    })
     const result = await this.authService.isAuthenticated();
     if (result) {
       
       console.log('res:',result);
       console.log(this.authService.user)
-      // console.log(myDB);
+      // // console.log(myDB);
       //await this.firestoreDB.setCreditForNewUser()
       
       // let database = this.database.ref();
-      // console.log(database);
-      this.router.navigate(['landingPage']);
+      // // console.log(database);
+      
       // this.loginUser.sessionTimeOut();
     }
     
