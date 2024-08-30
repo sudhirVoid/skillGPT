@@ -16,7 +16,7 @@ import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.serv
 export class LoginComponent {
   // private database: firebase.database.Database;
   responseLogin: any;
-  
+  isLoading: boolean = true;
   constructor(
     private authService: AuthServiceService,
     private router: Router,
@@ -109,6 +109,12 @@ export class LoginComponent {
     this.animateText();
     // let res = this.authService.isAuthenticated();
     // // console.log("isLoggedIn : ",res);
+    this.authService.isAuthenticated().then(result =>{
+      if(result){
+        this.router.navigate(['landingPage']);
+      }
+      this.isLoading = false;
+    })
     const result = await this.authService.isAuthenticated();
     if (result) {
       
@@ -119,7 +125,7 @@ export class LoginComponent {
       
       // let database = this.database.ref();
       // // console.log(database);
-      this.router.navigate(['landingPage']);
+      
       // this.loginUser.sessionTimeOut();
     }
     
