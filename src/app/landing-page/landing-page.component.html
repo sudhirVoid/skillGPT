@@ -2,7 +2,15 @@
 
     <!-- Header -->
     <header class="flex justify-between items-center px-6 py-4  ">
-        <div class="text-2xl font-extrabold text-gray-800">Skill GPT</div>
+        <!-- <div class="text-2xl font-extrabold text-gray-800">Skill GPT</div> -->
+        <div class="flex items-center">
+            <div class="w-8 h-8  rounded-full">
+                <img src="../../assets/logo.png"  alt="logo">
+              </div>
+              &nbsp;
+            <div class="text-3xl font-bold text-gray-800">Skill</div>
+            <div class="text-3xl font-bold ml-2 text-green-500">GPT</div>
+          </div>
         <nav class="space-x-6  md:flex">
             <!-- <a href="#" class="text-white bg-purple-600 hover:bg-purple-700 transition px-4 py-2 rounded-lg">Login</a> -->
             <div class="user-panel">
@@ -26,7 +34,7 @@
             <button [ngClass]="{'disabled-div': !topic}" [disabled]="!topic" class="absolute inset-y-0 right-0 px-6 py-4 cursor-pointer text-white bg-slate-900 hover:bg-slate-500 transition rounded-r-2xl" (click)="postInputTopic(topic)">Search</button>
         </div>
 <!-- sidebar books -->
-        <div #mySidebar class="sidebar bg-slate-900">
+        <!-- <div #mySidebar class="sidebar bg-slate-900">
             <div class="flex items-center justify-between">
                 <p class="absolute side-title text-emerald-800">Your Books</p>
                 <a href="javascript:void(0)" class="closebtn " (click)="closeNav()">×</a>
@@ -38,18 +46,58 @@
                          (click)="alreadyGeneratedBookSelection(item)">
                       <p class="px-1 py-2 text-base">{{ item.title }}</p>
                       <!-- <input type="checkbox" class="border-cyan-50" (click)="markBookAsCompleted(item, $event)"> -->
-                </div>
+                <!-- </div>
             </div>
             
             <div *ngIf="userBooks.length==0">
                 <p class="text-white">No books right now..!</p>
             </div>
+          </div>  -->
+          <div class="flex ">
+            <input type="checkbox" id="drawer-toggle" class="relative sr-only hidden peer" >
+            <label for="drawer-toggle" class="fixed rotate-90  top-[45%] left-[-2.8rem] inline-block p-2 transition-all duration-500 bg-slate-800 rounded-lg peer-checked peer-checked:left-[13.2rem]">
+                <!-- <div class="w-6 h-1 mb-3 -rotate-45 bg-white rounded-lg"></div> -->
+                <!-- <div class="w-6 h-1 rotate-45 bg-white rounded-lg"></div> -->
+                <p class="dark:text-emerald-400 px-3 ">Your Books</p>
+                
+                
+          
+            
+            </label>
+            <div class="fixed top-0 left-0 z-20 w-64 h-full transition-all duration-500 transform -translate-x-full bg-slate-900 shadow-lg peer-checked:translate-x-0">
+              <!-- <div class="px-6 py-4">
+                <h2 class="text-lg font-semibold side-title">Your Books</h2>
+                <div  class=" w-full px-3 py-1 mt-2 custom-border  hover:bg-slate-500 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-white"
+                *ngFor="let item of userBooks"          
+                     (click)="alreadyGeneratedBookSelection(item)">
+                  <p class="px-1 py-2 text-base">{{ item.title | elipsis:18 }}</p>
+            </div>
+              </div> -->
+              <div class="px-6 py-4">
+                <h2 class="text-lg font-semibold side-title">Your Books</h2>
+                <div
+                  class="bg-slate-500 w-full px-3 py-1 mt-2 custom-border hover:bg-slate-500 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-white relative"
+                  *ngFor="let item of userBooks"
+                  (click)="alreadyGeneratedBookSelection(item)">
+                  
+                  <!-- Background indicating completion -->
+                  <div class="absolute top-0 left-0 h-full percent-bg-color rounded-md" 
+                       [style.width.%]="item.percentOfBookRead">
+                  </div>
+                  
+                  <!-- Title and percentage text -->
+                  <p class="px-1 py-2 text-base z-10">{{ item.title | elipsis:20 }}</p>
+                  <!-- <p class="text-sm font-semibold z-10">{{ item.percentOfBookRead |number}}%</p> -->
+                </div>
+              </div>
+              
+            </div>
           </div>
-        <div #main id="main">
+        <!-- <div #main id="main">
             <div class="side-nav openbtn" (click)="openNav($event)">
               <p class="dark:text-emerald-400 px-3">Your Books</p>
             </div> 
-          </div>
+          </div> -->
           <!--  -->
 
         <div>
@@ -109,9 +157,9 @@
                 <p class="text-gray-600">© 2024 Skill GPT All rights reserved.</p>
             </div>
             <nav class="space-x-6">
-                <a href="#" class="text-gray-600 hover:text-gray-900 transition">Privacy Policy</a>
-                <a href="#" class="text-gray-600 hover:text-gray-900 transition">Terms of Service</a>
-                <a href="#" class="text-gray-600 hover:text-gray-900 transition">Contact Us</a>
+                <a routerLink="/privacy-policy" class="text-gray-600 hover:text-gray-900 transition">Privacy Policy</a>
+                <a routerLink="/refund-policy" class="text-gray-600 hover:text-gray-900 transition">Refund Policy</a>
+                
             </nav>
         </div>
     </footer>

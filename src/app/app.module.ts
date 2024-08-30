@@ -24,6 +24,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ProfileModalComponent } from './profile-modal/profile-modal.component';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
 import { LoaderComponent } from './loader/loader.component';
+import { ComplianceComponent } from './compliance/compliance.component';
+import { ElipsisPipe } from './pipes/elipsis.pipe';
 
 
 
@@ -39,7 +41,9 @@ import { LoaderComponent } from './loader/loader.component';
     CheckoutComponent,
     ProfileModalComponent,
     NavHeaderComponent,
-    LoaderComponent
+    LoaderComponent,
+    ComplianceComponent,
+    ElipsisPipe
   ],
   imports: [
     BrowserModule,
