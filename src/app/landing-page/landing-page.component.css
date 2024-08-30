@@ -144,6 +144,9 @@
     font-size: 36px;
     margin-left: 50px;
   }
+  .percent-bg-color{
+    background-color: rgba(27, 213, 160, 0.62);
+  }
 
   .disabled-div {
     pointer-events: none;
