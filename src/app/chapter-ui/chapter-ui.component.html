@@ -39,11 +39,11 @@
                  *ngFor="let chapter of bookChapters" [ngClass]="{'activeStatus': isActiveItem(chapter)}">
               <p class="px-1 py-2 ">{{ chapter.chaptertitle }}</p>
               <!-- <input type="checkbox" [checked]="chapter.isChapterCompleted" class="border-cyan-50" (click)="markBookAsCompleted(chapter, $event)"> -->
-              <label class="custom-checkbox">
+              <label class="custom-checkbox" (click)="markBookAsCompleted(chapter, $event)">
                 <input
                   type="checkbox"
                   [checked]="chapter.isChapterCompleted"
-                  (click)="markBookAsCompleted(chapter, $event)"
+                  
                 />
                 <span class="checkmark"></span>
               </label>
