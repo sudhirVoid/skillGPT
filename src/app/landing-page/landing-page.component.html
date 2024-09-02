@@ -27,7 +27,7 @@
     </header>
 
     <!-- Main Section -->
-    <main class="flex flex-col items-center justify-center text-center mt-16 px-6">
+    <main class="flex flex-col items-center justify-center text-center mt-10 px-6">
         <h1 class="text-4xl md:text-6xl font-extrabold text-gray-800 mb-6">Hey Learners! Excited to learn something new..?</h1>
         <div class="relative w-full max-w-xl" [ngClass]="{'disabled-div': isGenerating}">
             <input (keyup.enter)="postInputTopic(topic)" [(ngModel)]="topic" type="text" placeholder="What's in your mind?...think...think...there you go 😜" class="w-full text-lg px-6 py-4 border border-gray-300 rounded-2xl shadow-md focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent text-gray-800" />
@@ -55,16 +55,26 @@
           </div>  -->
           <div class="flex ">
             <input type="checkbox" id="drawer-toggle" class="relative sr-only hidden peer" >
-            <label for="drawer-toggle" class="fixed rotate-90  top-[45%] left-[-2.8rem] inline-block p-2 transition-all duration-500 bg-slate-800 rounded-lg peer-checked peer-checked:left-[13.2rem]">
+            <label  (click)="toggleSidebar()" [class.left-13rem]="isOpen" for="drawer-toggle" class="cursor-pointer fixed rotate-90  top-[45%] left-[-3.7rem] inline-block p-2 transition-all duration-500 bg-slate-800 rounded-lg peer-checked peer-checked:left-[12.3rem]">
                 <!-- <div class="w-6 h-1 mb-3 -rotate-45 bg-white rounded-lg"></div> -->
                 <!-- <div class="w-6 h-1 rotate-45 bg-white rounded-lg"></div> -->
-                <p class="dark:text-emerald-400 px-3 ">Your Books</p>
+                 <!-- Right Arrow -->
+                 <div class="flex items-center justify-between w-full">
+                  <svg *ngIf="!isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white transform -rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                  </svg>
+                <!-- Cross/X -->
+                <svg *ngIf="isOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <p class="dark:text-emerald-400 px-3 font-bold">Your Books</p>
+              </div>
                 
                 
           
             
             </label>
-            <div class="fixed top-0 left-0 z-20 w-64 h-full transition-all duration-500 transform -translate-x-full bg-slate-900 shadow-lg peer-checked:translate-x-0">
+            <div [@slideInOut]="isOpen ? 'open' : 'closed'" class="fixed top-0 left-0 z-20 w-64 h-full transition-all duration-500 transform -translate-x-full bg-slate-900 shadow-lg peer-checked:translate-x-0">
               <!-- <div class="px-6 py-4">
                 <h2 class="text-lg font-semibold side-title">Your Books</h2>
                 <div  class=" w-full px-3 py-1 mt-2 custom-border  hover:bg-slate-500 hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-white"
@@ -159,6 +169,7 @@
             <nav class="space-x-6">
                 <a routerLink="/privacy-policy" class="text-gray-600 hover:text-gray-900 transition">Privacy Policy</a>
                 <a routerLink="/refund-policy" class="text-gray-600 hover:text-gray-900 transition">Refund Policy</a>
+                <a routerLink="/terms-of-service" class="text-gray-600 hover:text-gray-900 transition">Terms Of Service</a>
                 
             </nav>
         </div>

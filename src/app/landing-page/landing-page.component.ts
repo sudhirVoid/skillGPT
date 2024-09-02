@@ -11,6 +11,7 @@ import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.serv
 import { BookConfig } from '../chapter-ui/chapter-ui.component';
 import {  ViewChild, ElementRef ,HostListener, OnInit, OnDestroy } from '@angular/core';
 import { PdfServiceService } from '../pdf-service.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 
 
@@ -18,7 +19,18 @@ import { PdfServiceService } from '../pdf-service.service';
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.css']
+  styleUrls: ['./landing-page.component.css'],
+  animations: [
+    trigger('slideInOut', [
+      state('closed', style({
+        transform: 'translateX(-100%)'
+      })),
+      state('open', style({
+        transform: 'translateX(0)'
+      })),
+      transition('closed <=> open', animate('0ms ease-in-out'))
+    ])
+  ]
 })
 
 
@@ -73,6 +85,15 @@ export class LandingPageComponent {
   isModalOpen = false;
   isUpgrade=false;
   receivedCredits: number=0;
+
+
+  isOpen = false;
+
+  toggleSidebar() {
+    this.isOpen = !this.isOpen;
+  }
+
+
   openModal() {
     this.isModalOpen = true;
   }

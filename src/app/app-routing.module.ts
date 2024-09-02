@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 't&c', component: ComplianceComponent, data: { route: 't&c' } },
   { path: 'privacy-policy', component: ComplianceComponent, data: { route: 'privacy-policy' } },
   { path: 'refund-policy', component: ComplianceComponent, data: { route: 'refund-policy' } },
+  { path: 'terms-of-service', component: ComplianceComponent, data: { route: 'terms-of-service' } },
   {
     path: "landingPage",
     component: LandingPageComponent,
