@@ -76,7 +76,7 @@ export class ChapterUiComponent implements AfterViewInit {
   handleChildEvent(data: any) {
     this.receivedCredits = data.credits;
     this.imageUrl=data.photoURL;
-    // console.log('Data received from child:', data);
+    // // console.log('Data received from child:', data);
   }
 
   isSidebarVisible = false;
@@ -171,7 +171,7 @@ export class ChapterUiComponent implements AfterViewInit {
         this.activeItem = this.bookChapters[0].chaptertitle;
         this.currentSubject = chapters['topicData']['title'];
         
-        // console.log('Received chapters:', chapters);
+        // // console.log('Received chapters:', chapters);
         // this.isActiveItem(firstChapter);
         this.isActiveItem(firstChapter);
         this.breadcrumbs.push(this.currentSubject);
@@ -180,7 +180,7 @@ export class ChapterUiComponent implements AfterViewInit {
         this.isCurrentSubject = true;
       });
     } catch (error) {
-      // console.log('no Topic present');
+      // // console.log('no Topic present');
       this.router.navigate(['landingPage']);
     }
   }
@@ -199,12 +199,12 @@ export class ChapterUiComponent implements AfterViewInit {
 
   selectChapter(chapter: ChapterConfig): void {
     this.isChapterLoading=true;
-    // console.log("ischapterLoading:",this.isChapterLoading);
+    // // console.log("ischapterLoading:",this.isChapterLoading);
     this.activeChapterId = chapter.chapterid
     this.safeHtml = '';
-    // console.log(chapter);
+    // // console.log(chapter);
     this.activeItem = chapter.chaptertitle;
-    // console.log('active item: ', this.activeItem);
+    // // console.log('active item: ', this.activeItem);
     // this.isActiveItem(chapter);
 
     if (!this.breadcrumbs.includes(chapter.chaptertitle)) {
@@ -220,7 +220,7 @@ export class ChapterUiComponent implements AfterViewInit {
         localStorage.getItem(`${chapter.chapterid}`)!
       );
       this.chapterConversation = [];
-      // console.log('IN LOCAL STORAGE: ', chapterData);
+      // // console.log('IN LOCAL STORAGE: ', chapterData);
       chapterData.map((singleChat: { gpt: any; user?: any }) => {
         const userText = singleChat?.user?.changingThisBreaksApplicationSecurity ?? '';
         return this.chapterConversation.push({
@@ -250,15 +250,15 @@ export class ChapterUiComponent implements AfterViewInit {
             `${chapter.chapterid}`,
             JSON.stringify(this.chapterConversation)
           );
-          // console.log(response);
+          // // console.log(response);
           // this.safeHtml = response.msg;
           //this.renderingHtmlRes(response.msg[0].content_text)
         });
     }
     if(this.safeHtml){
-      // console.log("ischapterLoadingdfd:",this.isChapterLoading);
+      // // console.log("ischapterLoadingdfd:",this.isChapterLoading);
       this.isChapterLoading=false;
-      // console.log("ischapterLoadingdfd:",this.isChapterLoading);
+      // // console.log("ischapterLoadingdfd:",this.isChapterLoading);
     }
   }
 
@@ -402,7 +402,7 @@ copyCode(button: HTMLElement) {
         this.activeChapterId = this.bookChapters[0].chapterid
         this.currentSubject = chapters['topicData']['title'];
         
-        // console.log('Received chapters:', chapters);
+        // // console.log('Received chapters:', chapters);
         // this.isActiveItem(firstChapter);
         this.isActiveItem(firstChapter);
         this.breadcrumbs.push(this.currentSubject);
@@ -411,7 +411,7 @@ copyCode(button: HTMLElement) {
         
       });
     } catch (error) {
-      // console.log('no Topic present');
+      // // console.log('no Topic present');
       this.router.navigate(['landingPage']);
     }
     try {
@@ -419,7 +419,7 @@ copyCode(button: HTMLElement) {
         .getChapterContents(bookName, this.bookChapters[0], 'English')
         .subscribe((response) => {
           // Handle the response from the API here
-          // console.log(response);
+          // // console.log(response);
 
           response.msg[0].content_text.map(
             (singleChat: { gpt: string; user?: string }) => {
@@ -446,7 +446,7 @@ copyCode(button: HTMLElement) {
       this.activeItem = this.bookChapters[0].chaptertitle;
       this.currentSubject = allBookData['topicData']['title'];
       
-      // console.log('Received ALL BOOK DATA :', allBookData);
+      // // console.log('Received ALL BOOK DATA :', allBookData);
       // this.isActiveItem(firstChapter);
       this.isActiveItem(firstChapter);
       this.breadcrumbs.push(this.currentSubject);
@@ -482,7 +482,7 @@ copyCode(button: HTMLElement) {
   renderingHtmlRes(htmlRes: string) {
     this.safeHtml = '';
     this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(htmlRes);
-    // console.log(this.safeHtml);
+    // // console.log(this.safeHtml);
     return this.safeHtml;
   }
 
@@ -566,8 +566,8 @@ if(this.userQuery.trim().length>1){
   
   downloadPdf() {
     this.isDownloading = true;
-    console.log("Download PDF clicked");
-    console.log("isDownloading :", this.isDownloading);
+    // console.log("Download PDF clicked");
+    // console.log("isDownloading :", this.isDownloading);
     console.log(this.breadcrumbs)
     console.log(`MY book is ${this.bookId}`)
     let payload = {

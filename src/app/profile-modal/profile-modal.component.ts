@@ -32,15 +32,15 @@ export class ProfileModalComponent {
   }
 
  async ngOnInit() {
-  // console.log(this.getUserData());
+  // // console.log(this.getUserData());
   this.remainingCredits = await this.firestoreDB.getCreditOfUser();
   const {email,displayName,photoURL}= await this.getUserData();
   this.email=email;
   this.name=displayName;
   this.imgUrl=photoURL?photoURL:`https://avatar.iran.liara.run/username?username=${this.name}`;
-  // console.log(email);
-  // console.log(displayName);
-  // console.log(photoURL);
+  // // console.log(email);
+  // // console.log(displayName);
+  // // console.log(photoURL);
  }
  navPaymentOrder(){
   this.router.navigateByUrl('/paymentsOrder');

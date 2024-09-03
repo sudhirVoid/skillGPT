@@ -27,7 +27,7 @@ export class FirebaseRealtimeDBService {
     )
       .then((snapshot) => {
         if (snapshot.exists()) {
-          // console.log(snapshot.val()['credit']);
+          // // console.log(snapshot.val()['credit']);
           return snapshot.val()['credit'];
         } else {
           return 1; //incase to make user happy.
@@ -61,7 +61,7 @@ export class FirebaseRealtimeDBService {
         credit: newCredit,
       });
 
-      // console.log(`Credit updated to: ${newCredit}`);
+      // // console.log(`Credit updated to: ${newCredit}`);
       this.remainingCredit = newCredit;
     } catch (error) {
       console.error('Error updating credit:', error);
@@ -134,8 +134,8 @@ export class FirebaseRealtimeDBService {
       paymentDate: Date.now()
     }
     this.orderService.setPayDetailsNeon(payObj).subscribe((data)=>{
-      // console.log('Details saved to Neon Succesfully');
-      // console.log("Response Pay Obj :", data);
+      // // console.log('Details saved to Neon Succesfully');
+      // // console.log("Response Pay Obj :", data);
     });
 
 
@@ -162,7 +162,7 @@ export class FirebaseRealtimeDBService {
         credit: newCredit,
       });
 
-      // console.log(`Credit updated to: ${newCredit}`);
+      // // console.log(`Credit updated to: ${newCredit}`);
       this.remainingCredit = newCredit;
     } catch (error) {
       console.error('Error updating credit:', error);

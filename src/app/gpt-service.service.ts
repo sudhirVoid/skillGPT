@@ -22,7 +22,7 @@ export class SyllabusService {
     try {
       return await this.authService.getCurrentUserId();
     } catch (err) {
-      console.log('Cannot fetch userId:', err);
+      // console.log('Cannot fetch userId:', err);
       return ''; // Return an empty string or handle the error appropriately
     }
   }
@@ -67,10 +67,13 @@ getChapterContents(bookTopic: string, chapterConfig: ChapterConfig, language: st
 
   async getUserBooks(userId: String): Promise<BookConfig[]> {
     const headers = await this.generateHeader();
+    const httpOptions = {
+      headers: headers
+    };
     let bookArray: BookConfig[] = [];
 
     try {
-      const response = await firstValueFrom(this.http.post<any>(`${environment.apiURL}userData/getAllBooks`, { userId },{headers}));
+      const response = await firstValueFrom(this.http.post<any>(`${environment.apiURL}userData/getAllBooks`, { userId },httpOptions));
       response.userData.forEach((book: any) => {
         bookArray.push({
           book_id: book.book_id,
@@ -88,7 +91,7 @@ getChapterContents(bookTopic: string, chapterConfig: ChapterConfig, language: st
   async getOldBookData(bookId: number, userId: string){
     const headers = await this.generateHeader();
     const response = await firstValueFrom(this.http.post<any>(`${environment.apiURL}userData/getOldBookData`, { bookId, userId },{headers}));
-    // console.log(`ALL MY DATA: `,response);
+    // // console.log(`ALL MY DATA: `,response);
     return response;
   }
 

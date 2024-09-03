@@ -16,7 +16,7 @@ export class PdfServiceService {
     try {
       return await this.authService.getCurrentUserId();
     } catch (err) {
-      console.log('Cannot fetch userId:', err);
+      // console.log('Cannot fetch userId:', err);
       return ''; // Return an empty string or handle the error appropriately
     }
   }

@@ -16,7 +16,7 @@ export class SharedService {
     const auth = getAuth();
     signOut(auth).then(() => {
       // Sign-out successful.
-      // console.log("User Logged Out");
+      // // console.log("User Logged Out");
       this.router.navigate(['/']);
     }).catch((error) => {
       // An error happened.
