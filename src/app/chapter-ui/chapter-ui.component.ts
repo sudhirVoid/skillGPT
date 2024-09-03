@@ -31,6 +31,7 @@ export class ChapterUiComponent implements AfterViewInit {
   scrolledToBottom = false;
   activeChapterId!: number;
   imageUrl:string='';
+  isDownloading: boolean = false;
   inputEvent: MouseEvent | undefined;
 
 
@@ -564,12 +565,16 @@ if(this.userQuery.trim().length>1){
   }
   
   downloadPdf() {
+    this.isDownloading = true;
+    console.log("Download PDF clicked");
+    console.log("isDownloading :", this.isDownloading);
     console.log(this.breadcrumbs)
     console.log(`MY book is ${this.bookId}`)
     let payload = {
       userId: this.userId,
       bookId: this.bookId
     }
+   try {
     this.pdfService.downloadPdf(payload).subscribe(response => {
       const blob = new Blob([response], { type: 'application/pdf' });
       const url = window.URL.createObjectURL(blob);
@@ -580,7 +585,11 @@ if(this.userQuery.trim().length>1){
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
-    });
+      this.isDownloading = false;
+    },(error)=> this.isDownloading = false);
+   } catch (error) {
+    this.isDownloading = false;
+   }
   }
 
   async markBookAsCompleted(item:ChapterConfig,checkedVal:any, $event: any){
