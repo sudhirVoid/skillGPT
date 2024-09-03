@@ -32,6 +32,7 @@ export class ChapterUiComponent implements AfterViewInit {
   activeChapterId!: number;
   imageUrl:string='';
   isDownloading: boolean = false;
+  inputEvent: MouseEvent | undefined;
 
 
   scrollToBottom(): void {
@@ -489,7 +490,23 @@ copyCode(button: HTMLElement) {
     this.sharedService.logout();
   }
 
+  validateInput(event: any) {
+    const value = event.target.value;
+    // Allow alphanumeric characters and at most 2 special characters
+    const isValid = /^[A-Za-z0-9]*[^A-Za-z0-9]{0,2}$/.test(value);
+  
+    if (!isValid) {
+      // If input is invalid, remove the last character
+      event.target.value = value.slice(0, -1);
+      this.userQuery = event.target.value;
+    } else {
+      this.userQuery = value;
+    }
+  }
+  
+
   async userQueryHandler(){
+    console.log('User Query:',typeof this.userQuery)
     
     /*
     interface ChapterConfig {
@@ -507,39 +524,44 @@ interface ChapterConversationConfig{
 }
 
     */
-let chapterConversationByUser: {gpt: string, user: string}[] = []
-    let chapterConfig = {
-      bookTopic: this.currentSubject,
-      bookChapter: this.activeItem,
-      bookLanguage: 'English',
-      chapterId: this.activeChapterId
-    }
-    
-    let userQueryHtml = `<p>${this.userQuery}</p>`
-    this.chapterConversation[this.chapterConversation.length-1].user = this.renderingHtmlRes(userQueryHtml);
-    
-    this.chapterConversation.forEach(data => {
-      let gptData = data.gpt as { changingThisBreaksApplicationSecurity: string };
-      let userData = data.user as {changingThisBreaksApplicationSecurity: string};
-      chapterConversationByUser.push({
-        gpt : gptData['changingThisBreaksApplicationSecurity'],
-        user: userData['changingThisBreaksApplicationSecurity']
 
-      })
-    });
-    this.scrolledToBottom = false;
-    let finalObject = {
-      chapterDetails: chapterConfig,
-      content: chapterConversationByUser
-    }
-    console.log(chapterConfig)
 
-    this.userQuery = '';
-    let result = await this.syllabusService.handleUserInput(finalObject);
-    console.log(result)
-    this.chapterConversation.push({gpt: this.renderingHtmlRes(result.msg.gpt)});
-    this.scrolledToBottom = false;
-    localStorage.setItem(`${this.activeChapterId}`, JSON.stringify(this.chapterConversation))
+if(this.userQuery.trim().length>1){
+  let chapterConversationByUser: {gpt: string, user: string}[] = []
+  let chapterConfig = {
+    bookTopic: this.currentSubject,
+    bookChapter: this.activeItem,
+    bookLanguage: 'English',
+    chapterId: this.activeChapterId
+  }
+  
+  let userQueryHtml = `<p>${this.userQuery.trim()}</p>`
+  this.chapterConversation[this.chapterConversation.length-1].user = this.renderingHtmlRes(userQueryHtml);
+  
+  this.chapterConversation.forEach(data => {
+    let gptData = data.gpt as { changingThisBreaksApplicationSecurity: string };
+    let userData = data.user as {changingThisBreaksApplicationSecurity: string};
+    chapterConversationByUser.push({
+      gpt : gptData['changingThisBreaksApplicationSecurity'],
+      user: userData['changingThisBreaksApplicationSecurity']
+
+    })
+  });
+  this.scrolledToBottom = false;
+  let finalObject = {
+    chapterDetails: chapterConfig,
+    content: chapterConversationByUser
+  }
+  console.log(chapterConfig)
+
+  this.userQuery = '';
+  let result = await this.syllabusService.handleUserInput(finalObject);
+  console.log(result)
+  this.chapterConversation.push({gpt: this.renderingHtmlRes(result.msg.gpt)});
+  this.scrolledToBottom = false;
+  localStorage.setItem(`${this.activeChapterId}`, JSON.stringify(this.chapterConversation))
+}
+
   }
   
   downloadPdf() {
@@ -570,9 +592,15 @@ let chapterConversationByUser: {gpt: string, user: string}[] = []
    }
   }
 
-  async markBookAsCompleted(item:ChapterConfig, $event: MouseEvent){
+  async markBookAsCompleted(item:ChapterConfig,checkedVal:any, $event: any){
+   
     $event.stopPropagation();
-    item.isChapterCompleted = ($event.target as HTMLInputElement).checked;
+    if($event){
+
+      // item.isChapterCompleted = ($event.target as HTMLInputElement).checked;
+      item.isChapterCompleted = checkedVal;
+    }
+
     this.syllabusService.setChapterCompletionStatus(item)
   }
 

@@ -28,7 +28,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
       state('open', style({
         transform: 'translateX(0)'
       })),
-      transition('closed <=> open', animate('0ms ease-in-out'))
+      transition('closed <=> open', animate('0ms ease-in'))
     ])
   ]
 })
@@ -42,6 +42,29 @@ export class LandingPageComponent {
   results:any;
   bookChapters: any;
   isGenerating: boolean = false;
+  prompts: string[] = [
+    "Share your thoughts...what’s on your mind? 🤔",
+    "Type away...we’re all ears! 🎧",
+    "What’s buzzing in your brain? Let us know! 🧠",
+    "Got something to say? Spill the beans! 🌟",
+    "Unleash your ideas here...we’re excited to read them! 📖",
+    "What’s your latest thought? Type it out! 💭",
+    "Let’s hear what you’re thinking...no limits! 🌈",
+    "Got a question or a thought? Just type it below! 💬",
+    "Your thoughts matter...share them with us! 📝",
+    "Feeling inspired? Write it down here! ✨",
+    "What’s on your mind? Type your thoughts here! 🗨️",
+    "Let your ideas flow...we’re ready to listen! 🚀",
+    "What’s the latest idea you’ve got? Share it! 🧩",
+    "Your words could be magic...start typing! 🪄",
+    "Feeling chatty? Let’s hear what you’ve got! 📣",
+    "What’s cooking in your brain? Type it out! 🔥",
+    "Got a spark of inspiration? Share it with us! 🌟",
+    "What’s your latest brainstorm? We’re all ears! 👂",
+    "Share your thoughts...we’re curious! 🌟",
+    "Got something to share? Let’s see it! 👀"
+  ];
+  placeholderText: string='';
   suggestedTopics: string[] = [
     "Computer Science",
     "Data Analysis",
@@ -85,6 +108,7 @@ export class LandingPageComponent {
   isModalOpen = false;
   isUpgrade=false;
   receivedCredits: number=0;
+  isTopicSelected:boolean=false;
 
 
   isOpen = false;
@@ -93,6 +117,10 @@ export class LandingPageComponent {
     this.isOpen = !this.isOpen;
   }
 
+  setRandomPlaceholder() {
+    const randomIndex = Math.floor(Math.random() * this.prompts.length);
+    this.placeholderText = this.prompts[randomIndex];
+  }
 
   openModal() {
     this.isModalOpen = true;
@@ -136,6 +164,7 @@ export class LandingPageComponent {
   }
 
   async ngOnInit() {
+    this.setRandomPlaceholder();
     this.suggestedTopics.sort( ()=>Math.random()-0.5 );
     let res = this.authService.isAuthenticated();
     // console.log("isLoggedIn : ",res);
@@ -159,29 +188,53 @@ export class LandingPageComponent {
     this.router.navigate(['/results', {bookId:book.book_id, isOldBook:true}]);
   }
    async postInputTopic(topic:any){
-    if(await this.firebaseDB.getCreditOfUser()>0){
-        this.isGenerating = true;
-        this.syllabusService.generateSyllabus(topic, 'English', this.userId).subscribe(
-          async response => {
-            this.bookChapters = response;
-            console.log('BOOK CHAPTERS: ',this.bookChapters)
-            await this.firebaseDB.decreaseCredit();
-              this.dataTransferService.setChaptersData(this.bookChapters);
-              this.router.navigate(['/results']);        
-          },
-          error => {
-            // Handle errors here
-            console.error('Error:', error);
-          }
-        );
+    // this.isTopicSelected=true;
+    if(topic.trim().length>1){
+
+      if(await this.firebaseDB.getCreditOfUser()>0){
+          this.isGenerating = true;
+          this.syllabusService.generateSyllabus(topic, 'English', this.userId).subscribe(
+            async response => {
+              this.bookChapters = response;
+              console.log('BOOK CHAPTERS: ',this.bookChapters)
+              await this.firebaseDB.decreaseCredit();
+                this.dataTransferService.setChaptersData(this.bookChapters);
+                this.router.navigate(['/results']);  
+                // this.isTopicSelected=false;      
+            },
+            error => {
+              // Handle errors here
+              console.error('Error:', error);
+            }
+          );
+         
+      
+      }
+      else{
+        // alert('You exceeded 3 free credits.')
+        this.openModal()
+      }
+    }
     
-    }
-    else{
-      // alert('You exceeded 3 free credits.')
-      this.openModal()
-    }
+    this.topic='';
     
   }
+
+
+  validateInput(event: any) {
+    const value = event.target.value;
+    // Allow alphanumeric characters and at most 2 special characters
+    const isValid = /^[A-Za-z0-9]*[^A-Za-z0-9]{0,2}$/.test(value);
+  
+    if (!isValid) {
+      // If input is invalid, remove the last character
+      event.target.value = value.slice(0, -1);
+      this.topic = event.target.value;
+    } else {
+      this.topic = value;
+    }
+  }
+  
   // markBookAsCompleted(item:BookConfig, $event: MouseEvent){
   //   $event.stopPropagation();
   //   console.log($event)
@@ -194,10 +247,12 @@ export class LandingPageComponent {
   }
 
   setSuggestedTopics(event: any) {
-    this.topic = event.target.innerText;
-    this.postInputTopic(this.topic)
-    
+    this.isTopicSelected = true;
+    // Trim whitespace around the text and store it
+    this.topic = event.target.innerText.trim();
+    this.postInputTopic(this.topic);
   }
+  
 
   // downloadPdf() {
   //   this.pdfService.downloadPdf({}).subscribe(response => {
