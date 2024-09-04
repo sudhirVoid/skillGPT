@@ -16,6 +16,7 @@ import { getDatabase } from 'firebase/database';
 export class AuthServiceService {
   isLoggedIn:boolean = false;
   user:any;
+  private provider = new GoogleAuthProvider();
 
   constructor(private afAuth: AngularFireAuth,private router: Router) {
     afAuth.authState.subscribe(user => {
@@ -26,6 +27,10 @@ export class AuthServiceService {
         // User is logged out
         // // console.log('User is logged out');
       }
+    });
+
+    this.provider.setCustomParameters({
+      prompt: 'select_account'
     });
    }
     async getCurrentUserId(): Promise<string> {
@@ -44,7 +49,7 @@ export class AuthServiceService {
 
     // Sign in with Google
     GoogleAuth() {
-      return this.afAuth.signInWithPopup(new GoogleAuthProvider())
+      return this.afAuth.signInWithPopup(this.provider)
     }
 
       // Auth logic to run auth providers

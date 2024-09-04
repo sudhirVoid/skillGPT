@@ -81,6 +81,11 @@
   background: linear-gradient(90deg, #2c06e8, transparent);
 }
 
+.disabled-div {
+  pointer-events: none;
+  opacity: 0.6; /* Optional: to give a visual cue that the div is disabled */
+}
+
 @keyframes animate {
   0% {
     transform: rotate(315deg) translateX(0);
