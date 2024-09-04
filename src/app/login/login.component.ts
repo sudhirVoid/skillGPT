@@ -17,6 +17,7 @@ export class LoginComponent {
   // private database: firebase.database.Database;
   responseLogin: any;
   isLoading: boolean = true;
+  isLoginClicked: boolean = false;
   constructor(
     private authService: AuthServiceService,
     private router: Router,
@@ -88,7 +89,7 @@ export class LoginComponent {
 
 
   signInWithGoogle() {
-    
+    this.isLoginClicked = true;
     this.authService.GoogleAuth().then(async (result: firebase.auth.UserCredential) => {
       const user = result.user;
       if (result.additionalUserInfo?.isNewUser && user) {
@@ -99,9 +100,11 @@ export class LoginComponent {
         // // console.log('Existing user signed in');
       }
       this.router.navigate(['/landingPage']); 
+      this.isLoginClicked = false;
     })
     .catch((error) => {
       console.error('Error during sign-in:', error);
+      this.isLoginClicked = false;
     });
   }
 

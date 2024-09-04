@@ -31,10 +31,10 @@
     </div>
     
  
-    <div class="flex items-center space-x-4" (click)="signInWithGoogle()">
+    <div class="flex items-center space-x-4"  >
 
      
-      <button class="px-4 py-3 text-sm  text-white font-bold bg-slate-800 rounded-full hover:bg-gray-800">Login with Google</button>
+      <button class="px-4 py-3 text-sm  text-white font-bold bg-slate-800 rounded-full hover:bg-gray-800" [ngClass]="{'disabled-div': isLoginClicked}" (click)="signInWithGoogle()">Login with Google</button>
     </div>
   </header>
   <!-- Main Content -->
@@ -65,7 +65,7 @@
         <!-- <div class="bg-yellow-400 text-sm font-medium px-2 py-1 rounded">★ 4.9</div> -->
       </div>
       <div class="flex space-x-4" >
-        <button (click)="signInWithGoogle()" class="px-6 py-3 bg-slate-800 text-white rounded-full hover:bg-gray-800">Discover</button>
+        <button [ngClass]="{'disabled-div': isLoginClicked}" (click)="signInWithGoogle()" class="px-6 py-3 bg-slate-800 text-white rounded-full hover:bg-gray-800">Discover</button>
         <!-- <button class="px-6 py-3 border border-gray-300 rounded-full hover:bg-gray-100">Get API →</button> -->
       </div>
     </div>
