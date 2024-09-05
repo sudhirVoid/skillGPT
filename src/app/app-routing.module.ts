@@ -7,6 +7,7 @@ import { CreatePaymentOrderComponent } from './create-payment-order/create-payme
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ComplianceComponent } from './compliance/compliance.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'privacy-policy', component: ComplianceComponent, data: { route: 'privacy-policy' } },
   { path: 'refund-policy', component: ComplianceComponent, data: { route: 'refund-policy' } },
   { path: 'terms-of-service', component: ComplianceComponent, data: { route: 'terms-of-service' } },
+  { path: 'shipping-policy', component: ComplianceComponent, data: { route: 'shipping-policy' } },
+  {path:'contact',component:ContactUsComponent},
   {
     path: "landingPage",
     component: LandingPageComponent,

@@ -26,6 +26,7 @@ import { NavHeaderComponent } from './nav-header/nav-header.component';
 import { LoaderComponent } from './loader/loader.component';
 import { ComplianceComponent } from './compliance/compliance.component';
 import { ElipsisPipe } from './pipes/elipsis.pipe';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 
 
@@ -43,7 +44,8 @@ import { ElipsisPipe } from './pipes/elipsis.pipe';
     NavHeaderComponent,
     LoaderComponent,
     ComplianceComponent,
-    ElipsisPipe
+    ElipsisPipe,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,

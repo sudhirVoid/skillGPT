@@ -83,7 +83,7 @@ export class ComplianceService {
   <address class="mb-4">
     Skill GPT<br>
     Address: &nbsp;Noida,&nbsp;Uttar Pradesh,&nbsp;India(Republic of Bharat).<br>
-    Email: <a href="mailto:info@relatedcode.com" class="text-blue-500 underline">users.helpandcare@gmail.com</a>
+    Email: <a href="mailto:users.helpandcare@gmail.com" class="text-blue-500 underline">users.helpandcare@gmail.com</a>
   </address>
   
   <p class="mb-4">
@@ -218,6 +218,66 @@ export class ComplianceService {
 
 `;
 
+shippingPolicy:string=`
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+  <h1 class="text-2xl font-bold mb-4 text-gray-800">Shipping and Deliverance Policy</h1>
+  
+  <!-- Digital Product Delivery -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-gray-700">1. Digital Product Delivery</h2>
+    <p class="text-gray-600 mt-2">
+      All purchases made on our platform are for digital credits. Upon successful payment, the credits will be automatically delivered to your account and will be available for immediate use. There is no physical shipment involved.
+    </p>
+  </div>
+
+  <!-- Delivery Time -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-gray-700">2. Delivery Time</h2>
+    <p class="text-gray-600 mt-2">
+      Digital credits are typically delivered instantly upon successful payment confirmation. In rare cases, there may be a delay of up to 10 minutes due to network or server issues. If you do not see the credits reflected in your account within this timeframe, please contact our support team at 
+      <a href="mailto:users.helpandcare@gmail.com" class="text-blue-500 underline">users.helpandcare@gmail.com</a>.
+    </p>
+  </div>
+
+  <!-- Confirmation Email -->
+ 
+
+  <!-- Refunds and Cancellations -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-gray-700">3. Refunds and Cancellations</h2>
+    <p class="text-gray-600 mt-2">
+      Since the product offered is digital in nature and is delivered instantly, we do not offer refunds for credits once they have been delivered. If you experience any technical issues or believe a purchase was made in error, please reach out to our support team within 24 hours of the transaction for assistance.
+    </p>
+  </div>
+
+  <!-- Use of Credits -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-gray-700">4. Use of Credits</h2>
+    <p class="text-gray-600 mt-2">
+      Credits purchased can be used immediately to access learning topics on our platform. They do not expire unless specified otherwise during promotional offers or specific terms for certain users.
+    </p>
+  </div>
+
+  <!-- Errors and Disputes -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-gray-700">5. Errors and Disputes</h2>
+    <p class="text-gray-600 mt-2">
+      In the event of any errors in the deliverance of credits, or if you experience any issues accessing your purchased credits, please notify our customer support within 48 hours of purchase to resolve the matter.
+    </p>
+  </div>
+
+  <!-- Account Security -->
+  <div>
+    <h2 class="text-xl font-semibold text-gray-700">6. Account Security</h2>
+    <p class="text-gray-600 mt-2">
+      It is your responsibility to ensure that your account is secure and that no unauthorized parties have access to it. We are not responsible for any loss of credits due to unauthorized access to your account.
+    </p>
+  </div>
+</div>
+
+
+`;
+
   getContent(route: string): string {
     switch(route) {
       case 'privacy-policy':
@@ -225,7 +285,9 @@ export class ComplianceService {
       case 'refund-policy':
         return this.refundPolicy;
       case 'terms-of-service':
-          return this.termOfService;  
+          return this.termOfService; 
+      case 'shipping-policy':
+          return this.shippingPolicy;     
       default:
         return '<h1>404</h1><p>Route not found</p>';
     }
