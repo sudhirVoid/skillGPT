@@ -1,7 +1,7 @@
-<div class="min-h-screen bg-gray-50 py-16">
+<div class="min-h-screen bg-gray-50 pt-16">
     <!-- Navbar -->
     <app-nav-header></app-nav-header>
-    <div class="max-w-lg mx-auto p-6 h-full justify-center bg-white rounded-xl shadow-lg mt-10">
+    <!-- <div class="max-w-lg mx-auto p-6 h-full justify-center bg-white rounded-xl shadow-lg mt-10">
         <div class="text-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">{{selectedPlan.title}}</h1>
             <p class="text-lg text-gray-600">Plan Details</p>
@@ -22,7 +22,64 @@
         <div class="text-center">
             <button (click)="payWithRazorpay()" class="bg-gray-800 text-white px-6 py-3 rounded-full hover:bg-green-500 transition">Pay Now</button>
         </div>
+    </div> -->
+
+    <!-- payment-checkout.component.html -->
+<div class="bg-slate-800 max-w-lg mx-auto p-8 mt-4 rounded-xl shadow-lg space-y-6">
+    <!-- Close button -->
+    
+       <p class="text-center space-x-4 text-2xl text-white">Skill GPT Credit Checkout  Page</p>
+    <!-- Guest Checkout Section -->
+    <div class=" p-0 rounded-lg flex justify-center items-center">
+      <div class="flex items-center space-x-4">
+        
+        <span class="font-semibold text-emerald-400 text-2xl">Your Order</span>
+      </div>
+      
     </div>
+  
+  
+  
+    <!-- Payment Information Section -->
+    <div class="bg-white p-4 rounded-lg">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <span class="font-bold text-gray-700">Selected Plan Details:</span>
+        </div>
+      
+      </div>
+      <p *ngIf="selectedPlan?.title" class="text-gray-500 text-sm mt-2">Plan Name: {{selectedPlan.title}}</p>
+       <p *ngIf="selectedPlan?.credits" class="text-gray-500 text-sm mt-2">Credit Promised: {{this.selectedPlan.credits}}</p>
+        <p *ngIf="selectedPlan?.amount" class="text-gray-500 text-sm mt-2">Payable Amount: ₹{{this.selectedPlan.amount}}</p>
+      
+    </div>
+  
+    <!-- Pricing and Total -->
+    <div class="text-sm space-y-1">
+      <div class="flex justify-between">
+        <span class="text-gray-100">Subtotal:</span>
+        <span class="text-gray-100">₹{{this.selectedPlan.amount}}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-100">Taxes:</span>
+        <div class="flex flex-col">
+
+            <span class="text-gray-100 line-through">₹2.36</span>
+            <span class="text-gray-100 space-x-2">₹0</span>
+        </div>
+      </div>
+      <div class="flex justify-between font-semibold text-emerald-200">
+        <span>Total price:</span>
+        <span>₹{{this.selectedPlan.amount}}.00</span>
+      </div>
+    </div>
+  
+    <!-- Place Order Button -->
+    <button (click)="payWithRazorpay()" class="w-full bg-emerald-400 text-gray-900 py-2 rounded-lg font-semibold hover:bg-stone-500 hover:text-white">
+      Pay Now
+    </button>
+  </div>
+  
 
 
 </div>    
@@ -32,7 +89,3 @@
 
 
 
-<!-- 
-<div class="bg-gray-100 h-[100vh] text-slate-900">
-    
-</div> -->

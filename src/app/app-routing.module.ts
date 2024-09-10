@@ -9,6 +9,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { ComplianceComponent } from './compliance/compliance.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 
+
 const routes: Routes = [
   {
     path: "login",

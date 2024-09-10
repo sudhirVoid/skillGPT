@@ -17,27 +17,27 @@
     <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
       <!-- Free Plan -->
       <div class="bg-white border border-gray-200 rounded-2xl p-6 text-center shadow-sm">
-        <h2 class="text-2xl font-semibold mb-4">Starter</h2>
+        <h2 class="text-2xl font-semibold mb-4">Basic Plan</h2>
         <p class="text-5xl font-bold mb-2">₹99</p>
         <p class="text-slate-900 font-bold text-lg sm:text-xl">15 Credits</p>
-        <button (click)="selectedPlan('Basic Plan', 99, 15)" class="px-6 py-2 bg-white text-blue-500 border border-blue-500 rounded-full font-medium mt-3">Upgrade to Starter</button>
+        <button (click)="selectedPlan('Basic Plan', 99, 15)" class="px-6 py-2 bg-green-100 hover:bg-green-500 hover:font-bold hover:text-slate-800 text-green-500 border border-blue-500 rounded-full font-medium mt-3">Buy</button>
       </div>
       
       <!-- Pro Plan -->
       <div class="bg-white border border-gray-200 rounded-2xl p-6 text-center shadow-sm relative">
         <span class="absolute top-0 right-0 mt-4 mr-4 px-2 py-1 bg-red-500 text-white text-xs rounded-full">Popular</span>
-        <h2 class="text-2xl font-semibold mb-4">Standard</h2>
+        <h2 class="text-2xl font-semibold mb-4">Pro Plan</h2>
         <p class="text-5xl font-bold mb-2">₹299</p>
         <p class="text-slate-900 font-bold text-lg sm:text-xl">50 Credits</p>
-        <button (click)="selectedPlan('Pro Plan',299,50)" class="px-6 py-2 bg-blue-500 text-white rounded-full font-medium mt-3">Upgrade to Standard</button>
+        <button (click)="selectedPlan('Pro Plan',299,50)" class="px-6 py-2 bg-green-100 hover:bg-green-500 hover:font-bold hover:text-slate-800 text-green-500 rounded-full font-medium mt-3">Buy</button>
       </div>
       
       <!-- Enterprise Plan -->
       <div class="bg-gray-900 text-white border border-gray-800 rounded-2xl p-6 text-center shadow-sm ">
-        <h2 class="text-2xl font-semibold mb-4">Premium</h2>
+        <h2 class="text-2xl font-semibold mb-4">Premium Plan</h2>
         <p class="text-5xl font-bold mb-2">₹499</p>
         <p class="text-slate-100 font-bold text-lg sm:text-xl">100 Credits</p>
-        <button (click)="selectedPlan('Premium Plan', 499,100)" class="px-6 py-2 bg-white text-gray-900 rounded-full font-medium mt-3">Upgrade to Premium</button>
+        <button (click)="selectedPlan('Premium Plan', 499,100)" class="px-6 py-2 bg-green-100 hover:bg-green-500 hover:font-bold hover:text-slate-800 text-green-900 rounded-full font-medium mt-3">Buy</button>
       </div>
      
     </div>

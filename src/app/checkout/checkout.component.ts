@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,AfterViewInit } from '@angular/core';
 import { OrderService } from '../order.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router,Route  } from '@angular/router';
 import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.service';
 import { SharedService } from '../shared.service';
 import { config } from 'rxjs';
@@ -10,11 +10,12 @@ import { config } from 'rxjs';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements AfterViewInit{
 
-  razorPayKey: any;
-  selectedPlan: any;
+  razorPayKey: any='';
+  selectedPlan: any={};
   receivedCredits: number=0;
+  isInit:boolean=false;
 
   constructor(
     private orderService: OrderService,
@@ -23,6 +24,7 @@ export class CheckoutComponent {
     private FirebaseRealtimeDBService: FirebaseRealtimeDBService,
     private sharedService: SharedService
   ) {}
+  isLoading: boolean = true;
 
 
   handleChildEvent(data: any) {
@@ -34,9 +36,20 @@ export class CheckoutComponent {
   }
 
   ngOnInit() {
+    const routes: Route[] = this.router.config;
+    console.log(routes,this.selectedPlan);
+    
+    
+    
+    
+
     this.getRazorPayKey();
     this.listenSelectedProduct();
     this.getOrderId();
+  }
+  ngAfterViewInit() {
+    this.isInit=true;
+    console.log('View has been initialized');
   }
   getRazorPayKey() {
     this.razorPayKey = this.orderService.getRazorPayKey()
@@ -44,10 +57,31 @@ export class CheckoutComponent {
   getOrderId() {
     return this.route.snapshot.params['paymentOrderId'];
   }
+  // listenSelectedProduct() {
+
+  //   try {
+  //     this.selectedPlan = this.orderService.getSelectedProductForCheckout();
+    
+  //   console.log(this.selectedPlan)
+  //   } catch (error) {
+  //     console.log(error)
+      
+  //   }
+    
+  // }
+
   listenSelectedProduct() {
-    this.selectedPlan = this.orderService.getSelectedProductForCheckout();
-    console.log(this.selectedPlan)
+    this.isLoading = true;
+    const product = this.orderService.getSelectedProductForCheckout();
+    if (product) {
+      this.selectedPlan = product;
+    } else {
+      // Handle the case where the product is undefined (e.g., redirect, show an error)
+      this.router.navigateByUrl('/landingPage');
+    }
+    this.isLoading = false;
   }
+  
  
 
 
