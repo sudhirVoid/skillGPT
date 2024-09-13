@@ -38,12 +38,12 @@
       
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input id="email" type="email" [(ngModel)]="contactForm.email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" required>
+            <input id="email" type="email" maxlength="40" [(ngModel)]="contactForm.email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" required>
           </div>
       
             <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Mobile Number</label>
-            <input id="Number" type="email" [(ngModel)]="contactForm.phone" name="mobile" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" required>
+            <input id="Number" type="number" min="0"  [maxLength]="10" [(ngModel)]="contactForm.phone" name="mobile" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" required>
           </div>
           <div>
             <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
@@ -62,9 +62,9 @@
             </label>
           </div>
       
-          <div>
-            <button type="submit" class="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition">
-              Send message
+          <div [ngClass]="{'disabled-div': isSending}">
+            <button  [ngClass]="{'bg-purple-600': !isSending, 'bg-gray-400': isSending}" type="submit" class="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition">
+              {{ isSending ? 'Sending message...' : 'Send message' }} 
             </button>
           </div>
         </form>
