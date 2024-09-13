@@ -27,6 +27,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { ComplianceComponent } from './compliance/compliance.component';
 import { ElipsisPipe } from './pipes/elipsis.pipe';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -60,7 +61,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    ReactiveFormsModule
   ],
   providers: [
     // { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }

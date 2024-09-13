@@ -1,0 +1,4 @@
+.disabled-div {
+    pointer-events: none;
+    opacity: 0.6; /* Optional: to give a visual cue that the div is disabled */
+  }
