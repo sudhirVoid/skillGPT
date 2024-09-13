@@ -223,17 +223,24 @@ export class LandingPageComponent {
 
   validateInput(event: any) {
     const value = event.target.value;
-    // Allow alphanumeric characters and at most 2 special characters
-    const isValid = /^[A-Za-z0-9]*[^A-Za-z0-9]{0,2}$/.test(value);
   
-    if (!isValid) {
-      // If input is invalid, remove the last character
+    // Regular expression to validate words with up to two spaces between them
+    // and up to two special characters anywhere in the input
+    const isValid = /^(\w+(\s+)?){1,}[^A-Za-z0-9\s]*$/.test(value);
+  
+    // Check the count of special characters
+    const specialCharCount = (value.match(/[^A-Za-z0-9\s]/g) || []).length;
+  
+    // Allow up to two special characters anywhere
+    if (!isValid || specialCharCount > 2) {
+      // If input is invalid or has more than two special characters, remove the last character
       event.target.value = value.slice(0, -1);
       this.topic = event.target.value;
     } else {
       this.topic = value;
     }
   }
+  
   
   // markBookAsCompleted(item:BookConfig, $event: MouseEvent){
   //   $event.stopPropagation();
