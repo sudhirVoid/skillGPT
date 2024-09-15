@@ -38,12 +38,13 @@
             <div (click)="selectChapter(chapter)" class="w-full px-3  py-1 mt-2 mb-2 hover:bg-slate-800 custom-border font hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
                  *ngFor="let chapter of bookChapters" [ngClass]="{'activeStatus': isActiveItem(chapter)}">
               <p class="px-1 py-2 ">{{ chapter.chaptertitle }}</p>
-              <!-- <input type="checkbox" [checked]="chapter.isChapterCompleted" class="border-cyan-50" (click)="markBookAsCompleted(chapter, $event)"> -->
-              <label class="custom-checkbox" (click)="markBookAsCompleted(chapter,checkBoxInput.checked,$event)">
+              <!-- <input type="checkbox" [checked]="chapter.isChapterCompleted" class="border-cyan-50" (click)="markBookAsCompleted(chapter, $event)"/> -->
+              <label class="custom-checkbox" (click)="$event.stopPropagation();">
                 <input
                   #checkBoxInput
                   type="checkbox"
                   [checked]="chapter.isChapterCompleted"
+                  (change)="markBookAsCompleted(chapter, $event)"
                  
                 />
                 <span class="checkmark"></span>
@@ -91,12 +92,14 @@
                      *ngFor="let chapter of bookChapters" [ngClass]="{'activeStatus': isActiveItem(chapter)}">
                   <p class="px-1 py-2 ">{{ chapter.chaptertitle }}</p>
                   <!-- <input type="checkbox" [checked]="chapter.isChapterCompleted" class="border-cyan-50" (click)="markBookAsCompleted(chapter, $event)"> -->
-                  <label class="custom-checkbox" (click)="markBookAsCompleted(chapter,checkBoxInput.checked,$event)">
+                  <!-- (click)="markBookAsCompleted(chapter,checkBoxInput.checked,$event)" -->
+                  <!-- (click)="inputEvent = $event;$event.stopPropagation();" -->
+                  <label class="custom-checkbox" >
                     <input
                     #checkBoxInput
                       type="checkbox"
                       [checked]="chapter.isChapterCompleted"
-                      (click)="inputEvent = $event"
+                      (change)="markBookAsCompleted(chapter, $event)"
                       
                     />
                     <span class="checkmark"></span>
