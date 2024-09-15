@@ -441,6 +441,7 @@ copyCode(button: HTMLElement) {
       // handle old book with database fetching.
       let allBookData = await this.fetchOldBookData(this.bookId,this.userId);
       this.bookChapters = allBookData.chaptersData;
+      this.bookChapters.sort((a, b) => a.chapterid - b.chapterid);
       firstChapter = allBookData.chaptersData[0];
       bookName = allBookData.topicData.title;
       this.activeItem = this.bookChapters[0].chaptertitle;
@@ -506,8 +507,7 @@ copyCode(button: HTMLElement) {
   
 
   async userQueryHandler(){
-    console.log('User Query:',typeof this.userQuery)
-    
+  
     /*
     interface ChapterConfig {
     bookTopic: string,
@@ -552,11 +552,11 @@ if(this.userQuery.trim().length>1){
     chapterDetails: chapterConfig,
     content: chapterConversationByUser
   }
-  console.log(chapterConfig)
+  // console.log(chapterConfig)
 
   this.userQuery = '';
   let result = await this.syllabusService.handleUserInput(finalObject);
-  console.log(result)
+  // console.log(result)
   this.chapterConversation.push({gpt: this.renderingHtmlRes(result.msg.gpt)});
   this.scrolledToBottom = false;
   localStorage.setItem(`${this.activeChapterId}`, JSON.stringify(this.chapterConversation))
@@ -568,8 +568,6 @@ if(this.userQuery.trim().length>1){
     this.isDownloading = true;
     // console.log("Download PDF clicked");
     // console.log("isDownloading :", this.isDownloading);
-    console.log(this.breadcrumbs)
-    console.log(`MY book is ${this.bookId}`)
     let payload = {
       userId: this.userId,
       bookId: this.bookId
@@ -592,16 +590,10 @@ if(this.userQuery.trim().length>1){
    }
   }
 
-  async markBookAsCompleted(item:ChapterConfig,checkedVal:any, $event: any){
+  async markBookAsCompleted(item:ChapterConfig, $event: any){
    
     $event.stopPropagation();
-    if($event){
-
-      // item.isChapterCompleted = ($event.target as HTMLInputElement).checked;
-      item.isChapterCompleted = checkedVal;
-    }
-
+    item.isChapterCompleted = ($event.target as HTMLInputElement).checked;
     this.syllabusService.setChapterCompletionStatus(item)
   }
-
 }
