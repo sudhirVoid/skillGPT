@@ -35,9 +35,10 @@
 
         <nav [ngClass]="{'disabled-div': !safeHtml}" class="space-y-2 overflow-auto mb-20" *ngIf="isCurrentSubject">
           <div>
-            <div (click)="selectChapter(chapter)" class="w-full px-3  py-1 mt-2 mb-2 hover:bg-slate-800 custom-border font hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
+            <div (click)="selectChapter(chapter)" class="w-full px-3 course-item  py-1 mt-2 mb-2 hover:bg-slate-800 custom-border font hover:text-white flex justify-between items-center cursor-pointer rounded-md dark:text-emerald-400"
                  *ngFor="let chapter of bookChapters" [ngClass]="{'activeStatus': isActiveItem(chapter)}">
-              <p class="px-1 py-2 ">{{ chapter.chaptertitle }}</p>
+              <p class="px-1 py-2 ">{{ chapter.chaptertitle}}</p>
+              
               <!-- <input type="checkbox" [checked]="chapter.isChapterCompleted" class="border-cyan-50" (click)="markBookAsCompleted(chapter, $event)"/> -->
               <label class="custom-checkbox" (click)="$event.stopPropagation();">
                 <input
@@ -109,7 +110,7 @@
             </div>
             </nav>
           <ul class="breadcrumb flex text-white font-bold m-0">
-            <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}">
+            <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}" class="flex">
               <p *ngIf="!last" >{{ item }}</p>
               <span *ngIf="last">{{ item }}</span>
               <span *ngIf="!last">&nbsp;/&nbsp;</span>
@@ -135,7 +136,7 @@
       <!-- Header -->
       <div class="hidden min-h-14 lg:flex bg-slate-800 text-white p-3 justify-between items-center">
         <ul class="breadcrumb flex text-white font-bold m-0">
-          <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}">
+          <li *ngFor="let item of breadcrumbs; let last = last" [ngClass]="{'active': last}" class="flex" >
             <a *ngIf="!last" [href]="">{{ item }}</a>
             <span *ngIf="last">{{ item }}</span>
             <span *ngIf="!last">&nbsp;/&nbsp;</span>
@@ -191,16 +192,20 @@
           <p class="font-bold text-xl">Just a moment..🫸</p>
         </div>
       </div>
+      <app-toaster *ngIf="toastVisible" [message]="toastMessage"></app-toaster>
       
       
       
       
 
       <!-- Footer / Input -->
-      <div class="p-3   border-gray-300 flex items-center " [ngClass]="{'disabled-div': !safeHtml}">
-        <input [(ngModel)]="userQuery" type="text" placeholder="Ask a question...(First 20 conversations are free)" class="flex-1 p-2 border border-gray-300 opacity-100 rounded-xl focus:outline-none focus:ring focus:border-blue-300" (keydown.enter)="userQueryHandler()">
-        <button [ngClass]="{'disabled-div': !userQuery}" class="ml-4 px-4 py-2 bg-slate-800 text-white rounded-md" (click)="userQueryHandler()">Send</button>
-      </div>
+      <div class="p-3   border-gray-300 flex items-center " [ngClass]="{'disabled-div': !safeHtml ||isUserInput}">
+        <input  [(ngModel)]="userQuery" type="text" [placeholder]="!isUserInput?'Ask a question...(First 20 conversations are free)':typingPlaceHolder" class="flex-1 p-2 border border-gray-300 opacity-100 rounded-xl focus:outline-none focus:ring focus:border-blue-300" (keydown.enter)="userQueryHandler()">
+        <button  [ngClass]="{'disabled-div': !userQuery}" class="ml-4 px-4 py-2 bg-slate-800 text-white rounded-md" (click)="userQueryHandler()">Send</button>
+        <!-- <div *ngIf="isUserInput"  class="flex flex-1 flex-row gap-3 h-full items-center justify-center">
+          <p class="font-bold text-xl">AI is generating....</p>
+          
+      </div> -->
     </div>
   </div>
 </div>

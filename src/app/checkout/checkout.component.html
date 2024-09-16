@@ -49,7 +49,7 @@
       
       </div>
       <p *ngIf="selectedPlan?.title" class="text-gray-500 text-sm mt-2">Plan Name: {{selectedPlan.title}}</p>
-       <p *ngIf="selectedPlan?.credits" class="text-gray-500 text-sm mt-2">Credit Promised: {{this.selectedPlan.credits}}</p>
+       <p *ngIf="selectedPlan?.credits" class="text-gray-500 text-sm mt-2">Credits: {{this.selectedPlan.credits}}</p>
         <p *ngIf="selectedPlan?.amount" class="text-gray-500 text-sm mt-2">Payable Amount: ₹{{this.selectedPlan.amount}}</p>
       
     </div>
@@ -57,20 +57,20 @@
     <!-- Pricing and Total -->
     <div class="text-sm space-y-1">
       <div class="flex justify-between">
-        <span class="text-gray-100">Subtotal:</span>
+        <span class="text-gray-100">Subtotal&nbsp;+&nbsp;Platform fee(2%):</span>
         <span class="text-gray-100">₹{{this.selectedPlan.amount}}</span>
       </div>
-      <div class="flex justify-between">
-        <span class="text-gray-100">Taxes:</span>
+      <!-- <div class="flex justify-between">
+        <span class="text-gray-100">Platform fee(2%):</span>
         <div class="flex flex-col">
 
-            <span class="text-gray-100 line-through">₹2.36</span>
-            <span class="text-gray-100 space-x-2">₹0</span>
+            <span class="text-gray-100 ">{{this.selectedPlan.amount*0.02}}</span>
+           
         </div>
-      </div>
+      </div> -->
       <div class="flex justify-between font-semibold text-emerald-200">
         <span>Total price:</span>
-        <span>₹{{this.selectedPlan.amount}}.00</span>
+        <span>₹{{this.selectedPlan.amount}}</span>
       </div>
     </div>
   

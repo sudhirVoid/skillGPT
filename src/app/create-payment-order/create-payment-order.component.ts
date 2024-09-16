@@ -40,7 +40,7 @@ export class CreatePaymentOrderComponent {
   selectedPlan(title:string, amount:number, credits:number):void{
     // // console.log(`${title} clicked`);
     this.plan['title'] = title;
-    this.plan['amount'] = amount;
+    this.plan['amount'] = amount+amount*0.02;
     this.plan['credits'] = credits;
 
     // Implement your checkout logic here

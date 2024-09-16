@@ -216,7 +216,7 @@ export class LandingPageComponent {
       }
     }
     
-    this.topic='';
+   
     
   }
 

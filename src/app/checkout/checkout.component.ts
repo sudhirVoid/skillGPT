@@ -90,7 +90,7 @@ export class CheckoutComponent implements AfterViewInit{
     // // console.log(this.razorPayKey);
     const options: any = {
       key: this.razorPayKey,
-      amount: this.selectedPlan?.price, // amount should be in paise format to display Rs 1255 without decimal point
+      amount: this.selectedPlan?.amount+this.selectedPlan?.amount*0.02, // amount should be in paise format to display Rs 1255 without decimal point
       currency: 'INR',
       name: 'Skill GPT Credits Shop', // company name or product name
       description: '', // product description
@@ -146,6 +146,7 @@ export class CheckoutComponent implements AfterViewInit{
     };
     options.modal.ondismiss = () => {
       // handle the case when user closes the form while transaction is in progress
+      console.log('Transaction cancelled:',options);
       alert('Transaction has been cancelled.');
       this.router.navigateByUrl('/paymentsOrder');
     };

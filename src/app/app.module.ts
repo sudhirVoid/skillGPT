@@ -28,6 +28,7 @@ import { ComplianceComponent } from './compliance/compliance.component';
 import { ElipsisPipe } from './pipes/elipsis.pipe';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToasterComponent } from './toaster/toaster.component';
 
 
 
@@ -48,6 +49,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ComplianceComponent,
     ElipsisPipe,
     ContactUsComponent,
+    ToasterComponent,
    
   ],
   imports: [
