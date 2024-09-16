@@ -33,6 +33,15 @@ export class ChapterUiComponent implements AfterViewInit {
   imageUrl:string='';
   isDownloading: boolean = false;
   inputEvent: MouseEvent | undefined;
+  isUserInput:boolean=false;
+  typingPlaceHolder:string=`AI is generating....`;
+  toastVisible = false;
+  toastMessage = 'Download started...';
+
+  showToast() {
+    this.toastVisible = true;
+    setTimeout(() => this.toastVisible = false, 4300); // 4000ms + 300ms for animation
+  }
 
 
   scrollToBottom(): void {
@@ -308,6 +317,7 @@ addCopyButtons() {
   codeBlocks.forEach((codeBlock: HTMLElement, index: number) => {
     const uniqueClass = `code-block-${index}`;
     this.renderer.addClass(codeBlock, uniqueClass);
+    this.renderer.setStyle(codeBlock, 'color', '#31fffe');
 
     const existingButton = codeBlock.querySelector('.copy-button');
     if (!existingButton) {
@@ -507,6 +517,7 @@ copyCode(button: HTMLElement) {
   
 
   async userQueryHandler(){
+    this.isUserInput=true;
   
     /*
     interface ChapterConfig {
@@ -559,12 +570,14 @@ if(this.userQuery.trim().length>1){
   // console.log(result)
   this.chapterConversation.push({gpt: this.renderingHtmlRes(result.msg.gpt)});
   this.scrolledToBottom = false;
+  this.isUserInput=false;
   localStorage.setItem(`${this.activeChapterId}`, JSON.stringify(this.chapterConversation))
 }
 
   }
   
   downloadPdf() {
+    this.showToast();
     this.isDownloading = true;
     // console.log("Download PDF clicked");
     // console.log("isDownloading :", this.isDownloading);

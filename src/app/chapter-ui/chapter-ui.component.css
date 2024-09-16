@@ -432,3 +432,10 @@ a{
 }
 
 /*  */
+
+
+/* tooltip */
+
+input::placeholder {
+  font-weight: bold;
+}
