@@ -73,13 +73,14 @@
       <div class="lg:hidden flex items-center justify-between p-2 bg-slate-800 text-white">
 
         <div class="flex items-center justify-start gap-2">
-          <nav class="navbar">
+          <nav  class="navbar">
             <div class="navbar-container">
               <button class="navbar-toggler" (click)="toggleNav()">
-                <span class="navbar-toggler-icon">&#9776;</span>
+                <span *ngIf="!isNavOpen" class="navbar-toggler-icon">&#9776;</span>
+                <span *ngIf="isNavOpen" class="navbar-toggler-icon">&#9747;</span>
               </button>
             </div>
-            <div class="sidebar-mobile" [class.active]="isNavOpen">
+            <div  class="sidebar-mobile" [class.active]="isNavOpen">
               <a class="close-btn" (click)="toggleNav()">×</a>
               <div class="overflow-auto px-2">
                 <div (click)="redirectTo('/landingPage')" *ngIf="isCurrentSubject" class="bg-slate-800 text-white py-2 gap-2 px-4 rounded-lg cursor-pointer mb-2 flex items-center justify-start">
@@ -148,48 +149,37 @@
       </div>
 
       <!-- Content Area -->
-      <div class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto " (scroll)="onScroll()" #scrollMe>
-        <div class="flex justify-end">
-          <button [disabled]="this.isDownloading"  data-twe-toggle="tooltip" title="Download PDF" class="text-primary dark:text-primary-400"  (click)="downloadPdf()" >
-            <!-- <a data-twe-toggle="tooltip" title="Download PDF" class="text-primary dark:text-primary-400"  (click)="downloadPdf()" > -->
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="18" height="18" class="hover:cursor-pointer">
-                <path d="M8.75 2.75a.75.75 0 0 0-1.5 0v5.69L5.03 6.22a.75.75 0 0 0-1.06 1.06l3.5 3.5a.75.75 0 0 0 1.06 0l3.5-3.5a.75.75 0 0 0-1.06-1.06L8.75 8.44V2.75Z" />
-                <path d="M3.5 9.75a.75.75 0 0 0-1.5 0v1.5A2.75 2.75 0 0 0 4.75 14h6.5A2.75 2.75 0 0 0 14 11.25v-1.5a.75.75 0 0 0-1.5 0v1.5c0 .69-.56 1.25-1.25 1.25h-6.5c-.69 0-1.25-.56-1.25-1.25v-1.5Z" />
-              </svg>  
-            <!-- </a>  -->
+      <div class="flex-1  sm:p-4 lg:p-6 overflow-y-auto" (scroll)="onScroll()" #scrollMe>
+        <div class="flex justify-end mb-2 ">
+          <button  [disabled]="this.isDownloading" data-twe-toggle="tooltip" title="Download PDF" class="rounded-full bg-emerald-200 p-1 text-slate-800 dark:text-primary-400" (click)="downloadPdf()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="18" height="18" class="hover:cursor-pointer">
+              <path d="M8.75 2.75a.75.75 0 0 0-1.5 0v5.69L5.03 6.22a.75.75 0 0 0-1.06 1.06l3.5 3.5a.75.75 0 0 0 1.06 0l3.5-3.5a.75.75 0 0 0-1.06-1.06L8.75 8.44V2.75Z" />
+              <path d="M3.5 9.75a.75.75 0 0 0-1.5 0v1.5A2.75 2.75 0 0 0 4.75 14h6.5A2.75 2.75 0 0 0 14 11.25v-1.5a.75.75 0 0 0-1.5 0v1.5c0 .69-.56 1.25-1.25 1.25h-6.5c-.69 0-1.25-.56-1.25-1.25v-1.5Z" />
+            </svg>  
           </button>                         
         </div>
         <div *ngIf="safeHtml">
           <div *ngFor="let chat of chapterConversation" class="flex flex-col gap-4 py-2">
-            <!-- <div *ngIf="chat?.gpt" class="flex items-start gap-2 res-background p-4 rounded-lg">
-              <div class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600">
-                <span class="font-medium text-gray-600 dark:text-gray-300">G</span>
+            <div *ngIf="chat?.gpt" class="flex items-start gap-2 res-background rounded-lg">
+              <div class="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-white shadow-lg dark:border-gray-600">
+                <img src="../../assets/bot1.png" alt="Avatar" class="w-full h-full object-cover">
               </div>
-              <div class="res-text shadow-2xl flex-1" [innerHTML]="chat?.gpt"></div>
-            </div> -->
-            <div *ngIf="chat?.gpt" class="flex items-start gap-2 res-background  rounded-lg">
-              <div class="flex items-center justify-center w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-lg dark:border-gray-600">
-                <!-- <img src="../../assets/bot.gif" alt="Avatar" class="w-full h-full object-cover"> -->
-                <img  src="../../assets/bot1.png" alt="Avatar" class="w-full h-full object-cover">
-              </div>
-              <div class="res-text rounded-xl shadow-2xl flex-1 dynamic-content" [innerHTML]="chat?.gpt" ></div>
+              <div class="res-text rounded-xl shadow-2xl flex-1 dynamic-content text-sm sm:text-base" [innerHTML]="chat?.gpt"></div>
             </div>
             
-      
-            <div *ngIf="chat?.user" class="flex items-start gap-2  p-4 rounded-xl self-end w-fit">
-              
-              <div class="text-blue-700 text-end flex-1 rounded-xl shadow-2xl input-text"  [innerHTML]="chat?.user"></div>
-              <div class="avatar relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+            <div *ngIf="chat?.user" class="flex items-start gap-2 p-2 sm:p-4 rounded-xl self-end w-fit">
+              <div class="text-blue-700 text-end flex-1 rounded-xl shadow-2xl input-text text-sm sm:text-base" [innerHTML]="chat?.user"></div>
+              <div class="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-600">
                 <img [src]="imageUrl" alt="Avatar" class="w-full h-full object-cover">
-            </div>
+              </div>
             </div>
           </div>
         </div>
         <div *ngIf="!safeHtml" class="flex flex-row gap-3 h-full items-center justify-center">
-          <div class="animate-spin inline-block w-10 h-10 border-4 border-current border-t-transparent text-slate-800 rounded-full" role="status" aria-label="loading">
+          <div class="animate-spin inline-block w-8 h-8 sm:w-10 sm:h-10 border-4 border-current border-t-transparent text-slate-800 rounded-full" role="status" aria-label="loading">
             <span class="sr-only">Loading...</span>
           </div>
-          <p class="font-bold text-xl">Just a moment..🫸</p>
+          <p class="font-bold text-lg sm:text-xl">Just a moment..🫸</p>
         </div>
       </div>
       <app-toaster *ngIf="toastVisible" [message]="toastMessage"></app-toaster>
@@ -199,8 +189,8 @@
       
 
       <!-- Footer / Input -->
-      <div class="p-3   border-gray-300 flex items-center " [ngClass]="{'disabled-div': !safeHtml ||isUserInput}">
-        <input  [(ngModel)]="userQuery" type="text" [placeholder]="!isUserInput?'Ask a question...(First 20 conversations are free)':typingPlaceHolder" class="flex-1 p-2 border border-gray-300 opacity-100 rounded-xl focus:outline-none focus:ring focus:border-blue-300" (keydown.enter)="userQueryHandler()">
+      <div class="p-3   border-gray-300 flex items-center "  [ngClass]="{'disabled-div': !safeHtml ||isUserInput}">
+        <input [disabled]="!safeHtml ||isUserInput"   [(ngModel)]="userQuery" type="text" [placeholder]="!isUserInput?'Ask a question...(First 20 conversations are free)':typingPlaceHolder" class="flex-1 p-2  border border-gray-300 opacity-100 rounded-xl focus:outline-none focus:ring focus:border-blue-300" (keydown.enter)="userQueryHandler()">
         <button  [ngClass]="{'disabled-div': !userQuery}" class="ml-4 px-4 py-2 bg-slate-800 text-white rounded-md" (click)="userQueryHandler()">Send</button>
         <!-- <div *ngIf="isUserInput"  class="flex flex-1 flex-row gap-3 h-full items-center justify-center">
           <p class="font-bold text-xl">AI is generating....</p>

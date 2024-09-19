@@ -438,4 +438,12 @@ a{
 
 input::placeholder {
   font-weight: bold;
+  
+}
+@media (min-width: 640px) {
+  input::placeholder {
+      font-size: 1rem /* 16px */;
+      line-height: 1.5rem /* 24px */;
+      font-weight: bold;
+  }
 }

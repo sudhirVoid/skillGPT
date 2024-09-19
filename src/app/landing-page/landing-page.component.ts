@@ -95,7 +95,9 @@ export class LandingPageComponent {
     "Network Administration",
     "Database Management",
     "System Administration",
-    "DevOps Engineering"
+    "DevOps Engineering",
+    "System Design",
+    "Next.js"
   ];
   @ViewChild('mySidebar') sidebar!: ElementRef;
   @ViewChild('main') main!: ElementRef;

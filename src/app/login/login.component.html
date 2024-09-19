@@ -11,94 +11,75 @@
     <span></span>
     <span></span>
     <span></span>
-    <span></span>
   </div>
 
-
   <!-- Header -->
-  <header class="flex justify-between items-center p-4 md:p-6 mobile-screen">
-    <div class="flex items-center space-x-2 ">
-      <div class="w-9 h-9  rounded-full">
-        <img src="../../assets/logo.png"  alt="logo">
+  <header class="flex justify-between items-center p-4 mobile-screen">
+    <div class="flex items-center space-x-2">
+      <div class="w-9 h-9 rounded-full">
+        <img src="../../assets/logo.png" alt="logo">
       </div>
-      <!-- <span class="font-bold text-3xl ">Skill GPT</span> -->
-       
-      <!-- <img src="../../assets/logo.png" class="w-1/6 h-1/6" alt="logo"> -->
       <div class="flex items-center">
-        <div class="text-3xl font-bold ">Skill</div>
-        <div class="text-3xl font-bold ml-2 text-green-500">GPT</div>
-        <sup class="text-md text-pink-800 font-bold">&nbsp;Beta</sup>
+        <div class="text-xl sm:text-2xl font-bold">Skill</div>
+        <div class="text-xl sm:text-2xl font-bold ml-2 text-green-500">GPT</div>
+        <sup class="text-sm sm:text-md text-pink-800 font-bold">&nbsp;Beta</sup>
       </div>
     </div>
-    
- 
-    <div class="flex items-center space-x-4"  >
-
-     
-      <button class="px-4 py-3 text-sm  text-white font-bold bg-slate-800 rounded-full hover:bg-gray-800" [ngClass]="{'disabled-div': isLoginClicked}" (click)="signInWithGoogle()">Login with Google</button>
+    <div class="flex items-center space-x-4">
+      <button class="px-3 py-2 sm:px-4 sm:py-3 text-sm text-white font-bold bg-slate-800 rounded-full hover:bg-gray-800" 
+              [ngClass]="{'disabled-div': isLoginClicked}" 
+              (click)="signInWithGoogle()">Login with Google</button>
     </div>
   </header>
-  <!-- Main Content -->
 
- 
-  <main class="container mx-auto px-4 md:px-0 flex flex-col md:flex-row items-center flex-grow">
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 flex flex-col md:flex-row items-center flex-grow">
     <!-- Left Column -->
-    <div class="md:w-1/2 mb-8 md:mb-0">
+    <div class="md:w-1/2 mb-8">
       <div class="flex items-center space-x-2 mb-4">
-        <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 bg-slate-800 rounded-lg flex items-center justify-center">
           <span class="text-white text-xl">&#10003;</span>
         </div>
-       
       </div>
-     
-      <div class=" min-h-[8rem]">
-        <div class="text-2xl md:text-2xl font-bold mb-6 typewriter-line">{{ displayText1 }}</div>
-        <div class="text-2xl md:text-2xl font-bold mb-6 typewriter-line">{{ displayText2 }}</div>
+      <div class="min-h-[6rem] sm:min-h-[8rem]">
+        <div class="text-lg sm:text-2xl font-bold mb-6 typewriter-line">{{ displayText1 }}</div>
+        <div class="text-lg sm:text-2xl font-bold mb-6 typewriter-line">{{ displayText2 }}</div>
       </div>
-     
-      <p class="text-xl mb-6 white">"Always Learn from the best tool and SkillGPT is the one"</p>
+      <p class="text-md sm:text-xl mb-6">"Always Learn from the best tool and SkillGPT is the one"</p>
       <div class="flex items-center space-x-4 mb-8">
-       
-        <div>
-          <p class="font-medium italic">-- Anonymous user</p>
-          <!-- <p class="text-sm text-gray-600">UX / Motion Designer</p> -->
-        </div>
-        <!-- <div class="bg-yellow-400 text-sm font-medium px-2 py-1 rounded">★ 4.9</div> -->
+        <p class="font-medium italic">-- Anonymous user</p>
       </div>
-      <div class="flex space-x-4" >
-        <button [ngClass]="{'disabled-div': isLoginClicked}" (click)="signInWithGoogle()" class="px-6 py-3 bg-slate-800 text-white rounded-full hover:bg-gray-800">Discover</button>
-        <!-- <button class="px-6 py-3 border border-gray-300 rounded-full hover:bg-gray-100">Get API →</button> -->
+      <div class="flex space-x-4">
+        <button [ngClass]="{'disabled-div': isLoginClicked}" 
+                (click)="signInWithGoogle()" 
+                class="px-4 py-2 sm:px-6 sm:py-3 bg-slate-800 text-white rounded-full hover:bg-gray-800">Discover</button>
       </div>
     </div>
+
     <!-- Right Column -->
     <div class="md:w-1/2 relative">
-      <div class=" rounded-3xl p-8  ">
-       
-        <div class=" rounded-2xl p-6  ">
+      <div class="rounded-3xl p-8">
+        <div class="rounded-2xl p-6">
           <img src="../../assets/checklist.jpg" alt="rising">
         </div>
-
       </div>
-     
     </div>
   </main>
-  
+
   <!-- Footer -->
-  <footer class="mt-16  py-8 px-6 ">
+  <footer class="mt-16 py-8 px-6">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-        <div class="text-center md:text-left mb-4 md:mb-0">
-            <h2 class="text-2xl font-extrabold text-gray-800">Skill GPT</h2>
-            <p class="text-gray-600">© 2024 Skill GPT All rights reserved.</p>
-        </div>
-        <nav class="space-x-6">
-            <a routerLink="/privacy-policy" class="text-gray-600 hover:text-gray-900 transition">Privacy Policy</a>
-            <a routerLink="/refund-policy" class="text-gray-600 hover:text-gray-900 transition">Refund Policy</a>
-            <a routerLink="/shipping-policy" class="text-gray-600 hover:text-gray-900 transition">Shipping Policy</a>
-            <a routerLink="/terms-of-service" class="text-gray-600 hover:text-gray-900 transition">Terms Of Service</a>
-            <a routerLink="/contact" class="text-gray-600 hover:text-gray-900 transition">Contact Us</a>
-            
-            
-        </nav>
+      <div class="text-center md:text-left mb-4 md:mb-0">
+        <h2 class="text-lg sm:text-2xl font-extrabold text-gray-800">Skill GPT</h2>
+        <p class="text-gray-600">© 2024 Skill GPT All rights reserved.</p>
+      </div>
+      <nav class="space-y-2 md:space-x-6 md:space-y-0">
+        <a routerLink="/privacy-policy" class="text-gray-600 hover:text-gray-900 transition">Privacy Policy</a>
+        <a routerLink="/refund-policy" class="text-gray-600 hover:text-gray-900 transition">Refund Policy</a>
+        <a routerLink="/shipping-policy" class="text-gray-600 hover:text-gray-900 transition">Shipping Policy</a>
+        <a routerLink="/terms-of-service" class="text-gray-600 hover:text-gray-900 transition">Terms Of Service</a>
+        <a routerLink="/contact" class="text-gray-600 hover:text-gray-900 transition">Contact Us</a>
+      </nav>
     </div>
-</footer>
+  </footer>
 </div>
