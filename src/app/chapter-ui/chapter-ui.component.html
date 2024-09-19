@@ -189,8 +189,8 @@
       
 
       <!-- Footer / Input -->
-      <div class="p-3   border-gray-300 flex items-center " [ngClass]="{'disabled-div': !safeHtml ||isUserInput}">
-        <input [ngClass]="{'disabled-div': !safeHtml ||isUserInput}"  [(ngModel)]="userQuery" type="text" [placeholder]="!isUserInput?'Ask a question...(First 20 conversations are free)':typingPlaceHolder" class="flex-1 p-2  border border-gray-300 opacity-100 rounded-xl focus:outline-none focus:ring focus:border-blue-300" (keydown.enter)="userQueryHandler()">
+      <div class="p-3   border-gray-300 flex items-center "  [ngClass]="{'disabled-div': !safeHtml ||isUserInput}">
+        <input [disabled]="!safeHtml ||isUserInput"   [(ngModel)]="userQuery" type="text" [placeholder]="!isUserInput?'Ask a question...(First 20 conversations are free)':typingPlaceHolder" class="flex-1 p-2  border border-gray-300 opacity-100 rounded-xl focus:outline-none focus:ring focus:border-blue-300" (keydown.enter)="userQueryHandler()">
         <button  [ngClass]="{'disabled-div': !userQuery}" class="ml-4 px-4 py-2 bg-slate-800 text-white rounded-md" (click)="userQueryHandler()">Send</button>
         <!-- <div *ngIf="isUserInput"  class="flex flex-1 flex-row gap-3 h-full items-center justify-center">
           <p class="font-bold text-xl">AI is generating....</p>

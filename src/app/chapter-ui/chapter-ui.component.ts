@@ -459,6 +459,7 @@ copyCode(button: HTMLElement) {
       this.router.navigate(['landingPage']);
     }
     }else{
+      this.isUserInput=true;
       // handle old book with database fetching.
       let allBookData = await this.fetchOldBookData(this.bookId,this.userId);
       this.bookChapters = allBookData.chaptersData;
@@ -474,6 +475,7 @@ copyCode(button: HTMLElement) {
       this.breadcrumbs.push(this.currentSubject);
       this.breadcrumbs.push(this.bookChapters[0].chaptertitle);
       this.selectChapter(this.bookChapters[0])
+      this.isUserInput=false;
     }
   
     if(this.userId != null){
