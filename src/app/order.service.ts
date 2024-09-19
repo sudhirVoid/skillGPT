@@ -11,7 +11,6 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root'
 })
 export class OrderService {
-  private userIdPromise: Promise<string>;
   selectedPlanForCheckout : any;
 
   constructor(
@@ -19,7 +18,6 @@ export class OrderService {
     @Inject(PLATFORM_ID) private platformId: object,
     private authService: AuthServiceService
   ) { 
-    this.userIdPromise = this.initializeUserId();
   }
   private async initializeUserId(): Promise<string> {
     try {
@@ -30,7 +28,7 @@ export class OrderService {
     }
   }
   private async generateHeader(): Promise<HttpHeaders> {
-    const userId = await this.userIdPromise; // Ensure userId is resolved
+    const userId = await this.initializeUserId(); // Ensure userId is resolved
     return new HttpHeaders().set('X-User-Id', userId);
   }
   createOrder(plan: any): Observable<any> {

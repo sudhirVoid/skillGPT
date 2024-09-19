@@ -8,9 +8,7 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root'
 })
 export class PdfServiceService {
-  private userIdPromise: Promise<string>;
   constructor(private http: HttpClient, private authService: AuthServiceService) {
-    this.userIdPromise = this.initializeUserId(); // Initialize the userId Promise
   }
   private async initializeUserId(): Promise<string> {
     try {
@@ -21,7 +19,7 @@ export class PdfServiceService {
     }
   }
   private async generateHeader(): Promise<HttpHeaders> {
-    const userId = await this.userIdPromise; // Ensure userId is resolved
+    const userId = await this.initializeUserId(); // Ensure userId is resolved
     return new HttpHeaders().set('X-User-Id', userId);
   }
   downloadPdf(payload: { bookId: number; userId: string }): Observable<Blob> {

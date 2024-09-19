@@ -10,11 +10,8 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root'
 })
 export class SyllabusService {
-
-  private userIdPromise: Promise<string>; // Store the userId as a Promise
-
   constructor(private http: HttpClient, private authService: AuthServiceService) {
-    this.userIdPromise = this.initializeUserId(); // Initialize the userId Promise
+    // Initialize the userId Promise
   }
 
   // Method to fetch userId asynchronously and store it in a Promise
@@ -29,7 +26,7 @@ export class SyllabusService {
 
   // Helper function to generate headers with 'X-User-Id'
   private async generateHeader(): Promise<HttpHeaders> {
-    const userId = await this.userIdPromise; // Ensure userId is resolved
+    const userId = await this.initializeUserId(); // Ensure userId is resolved
     return new HttpHeaders().set('X-User-Id', userId);
   }
   generateSyllabus(bookTopic: string, language: string, userId: string): Observable<any> {
