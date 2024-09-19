@@ -1,58 +1,49 @@
 <!-- profile-modal.component.html -->
 <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-    <div class="bg-gray-900 rounded-xl shadow-lg p-6 w-full max-w-lg">
-      <!-- Header Section -->
-      <div class="flex justify-between items-center border-b pb-4 mb-4">
-        <div class="flex flex-row  gap-4">
-          <div class="avatar relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-            <img [src]="imgUrl" alt="Avatar" class="w-full h-full object-cover">
-          </div>
-          <h2 class="text-2xl font-semibold text-white">{{name}}</h2>
+  <div class="bg-gray-900 rounded-xl shadow-lg p-6 w-full max-w-lg sm:max-w-sm sm:p-4">
+    <!-- Header Section -->
+    <div class="flex justify-between items-center border-b pb-4 mb-4">
+      <div class="flex flex-row gap-4 items-center">
+        <div class="avatar relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+          <img [src]="imgUrl" alt="Avatar" class="w-full h-full object-cover">
         </div>
-            
-            
-          
-        
-        <div class="flex space-x-4">
-          
-          <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700 focus:outline-none">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-        </div>
+        <h2 class="text-2xl font-semibold text-white sm:text-xl">{{name}}</h2>
       </div>
-  
-      <!-- Profile Section -->
-      <div class="flex items-center space-x-4 mb-6 ">
-        <div class="flex flex-row w-full justify-between content-center">
-          <p class="text-lg font-semibold text-white">Credits:&nbsp;{{remainingCredits}}</p>
-          <!-- <p class="text-gray-500">amelie@untitledui.com</p> -->
-          <button class="bg-emerald-500 hover:bg-slate-500 text-white font-bold p-2  rounded transition duration-200" (click)="navPaymentOrder()">
-            Buy credits
-          </button>
-        </div>
-      </div>
-  
-      <!-- Form Section -->
-      <div class="space-y-4">  
-        <!-- Email Input -->
-        <div class="flex">
-            <p class="text-lg font-semibold text-white">Email:&nbsp; </p>
-            <p class="text-lg font-semibold text-gray-300">{{email}} </p>
-        </div>
-  
-  
-      
-      </div>
-  
-      <!-- Action Buttons -->
-      <div class="flex justify-between items-center mt-6">
-        <div class="flex space-x-4" (click)="onClickLogout()">
-          <button class="bg-red-700 text-white px-4 py-2 rounded-md hover:bg-red-500 focus:outline-none">Logout</button>
-        </div>
+
+      <div class="flex space-x-4">
+        <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
       </div>
     </div>
+
+    <!-- Profile Section -->
+    <div class="flex items-center space-x-4 mb-6">
+      <div class="flex flex-row w-full justify-between items-center">
+        <p class="text-lg font-semibold text-white sm:text-base">Credits:&nbsp;{{remainingCredits}}</p>
+        <button class="bg-emerald-500 hover:bg-slate-500 text-white font-bold p-2 rounded transition duration-200 sm:px-2 sm:py-1 sm:text-sm" (click)="navPaymentOrder()">
+          Buy credits
+        </button>
+      </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="space-y-4">
+      <!-- Email Input -->
+      <div class="flex flex-wrap">
+        <p class="text-lg font-semibold text-white sm:text-base">Email:&nbsp;</p>
+        <p class="text-lg font-semibold text-gray-300 sm:text-base">{{email}}</p>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-between items-center mt-6">
+      <button class="bg-red-700 text-white px-4 py-2 rounded-md hover:bg-red-500 focus:outline-none sm:px-3 sm:py-1 sm:text-sm" (click)="onClickLogout()">
+        Logout
+      </button>
+    </div>
   </div>
-  
+</div>

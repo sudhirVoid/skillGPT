@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Renderer2 , AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Renderer2 , AfterViewChecked, HostListener } from '@angular/core';
 import { SyllabusService } from '../gpt-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../data-transfer.service';
@@ -42,6 +42,15 @@ export class ChapterUiComponent implements AfterViewInit {
     this.toastVisible = true;
     setTimeout(() => this.toastVisible = false, 4300); // 4000ms + 300ms for animation
   }
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    // Check if click was outside sidebar and toggle button
+    if (this.isNavOpen && this.eRef.nativeElement.contains(targetElement)) {
+      console.log("clicked")
+      this.isNavOpen = false;
+    }
+  }
 
 
   scrollToBottom(): void {
@@ -78,6 +87,7 @@ export class ChapterUiComponent implements AfterViewInit {
     this.isNavOpen = !this.isNavOpen;
   }
 
+  
 
   receivedCredits: number=0;
 
@@ -273,6 +283,7 @@ export class ChapterUiComponent implements AfterViewInit {
 
   bookChapters: ChapterConfig[] = [];
   constructor(
+    private eRef: ElementRef,
     private syllabusService: SyllabusService,
     private route: ActivatedRoute,
     private dataTransferService: DataTransferService,
