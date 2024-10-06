@@ -530,7 +530,7 @@ copyCode(button: HTMLElement) {
   
 
   async userQueryHandler(){
-    this.isUserInput=true;
+    
   
     /*
     interface ChapterConfig {
@@ -551,6 +551,7 @@ interface ChapterConversationConfig{
 
 
 if(this.userQuery.trim().length>1){
+  this.isUserInput=true;
   let chapterConversationByUser: {gpt: string, user: string}[] = []
   let chapterConfig = {
     bookTopic: this.currentSubject,

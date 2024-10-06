@@ -61,7 +61,7 @@
     <!-- Suggested Topics -->
     <div class="mt-8 sm:mt-12 w-full px-4 sm:px-0">
       <div class="suggestedTopics grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 lg:px-48 md:px-8 sm:px-0">
-        <div [ngClass]="{'disabled-div': isTopicSelected || isGenerating}" *ngFor="let item of suggestedTopics" class="p-2 sm:p-3 m-1 sm:m-2 bg-slate-800 hover:bg-slate-500 hover:text-white rounded-xl cursor-pointer flex items-center justify-center" (click)="setSuggestedTopics($event)">
+        <div [ngClass]="{'disabled-div': isTopicSelected || isGenerating}" *ngFor="let item of suggestedTopics" class="p-2 sm:p-3 m-1 sm:m-2 bg-slate-800 hover:bg-slate-500 hover:text-white rounded-xl cursor-pointer flex items-center justify-center transition transform hover:scale-105 duration-300" (click)="setSuggestedTopics($event)">
           <p class="text-white text-xs sm:text-sm md:text-base">{{item|elipsis:22}}</p>
         </div>
       </div>
