@@ -1,0 +1,88 @@
+<!-- <div class="bg-gray-50 min-h-screen flex flex-col">
+  <header class="flex justify-between items-center px-4 sm:px-6 py-4  ">
+    <div class="flex items-center">
+      <div class="w-8 h-8 rounded-full">
+        <img src="../../assets/logo.png" alt="logo" class="w-full h-full object-contain">
+      </div>
+      <div class="text-2xl sm:text-3xl font-bold text-gray-800 ml-2">Skill</div>
+      <div class="text-2xl sm:text-3xl font-bold ml-1 text-green-500">GPT</div>
+      <sup class="text-xs sm:text-sm text-pink-800 font-bold">&nbsp;Beta</sup>
+    </div>
+    <nav class="mr-12 ">
+     
+      
+      <div class="user-panel">
+        <app-user-panel (buttonClick)="onClickLogout()" (credits)="handleChildEvent($event)"></app-user-panel>
+      </div>
+    </nav>
+  </header>
+
+
+<div class="flashcard-wrapper">
+    <h2 class="heading">Flashcard Quiz</h2>
+    
+    <div class="flashcard-container" (click)="flipCard()" [class.flipped]="isFlipped">
+      <div class="flashcard">
+        <div class="front">
+          <p class="text-sm font-semibold">Question:</p>
+          <p class="text-sm">{{ currentFlashcard.question }}</p>
+        </div>
+        <div class="back">
+          <p class="text-sm font-semibold">Answer:</p>
+          <p class="text-sm">{{ currentFlashcard.answer }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="navigation-buttons">
+      <button (click)="prevFlashcard()" [disabled]="currentIndex === 0">Previous</button>
+      <button (click)="nextFlashcard()" [disabled]="currentIndex === flashcards.length - 1">Next</button>
+    </div>
+  </div>
+</div> -->
+
+<div class="bg-gray-50 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="flex justify-between items-center px-4 sm:px-6 py-4  ">
+    <div class="flex items-center">
+      <div class="w-8 h-8 rounded-full">
+        <img src="../../assets/logo.png" alt="logo" class="w-full h-full object-contain">
+      </div>
+      <div class="text-2xl sm:text-3xl font-bold text-gray-800 ml-2">Skill</div>
+      <div class="text-2xl sm:text-3xl font-bold ml-1 text-green-500">GPT</div>
+      <sup class="text-xs sm:text-sm text-pink-800 font-bold">&nbsp;Beta</sup>
+    </div>
+    <nav>
+      <div class="user-panel">
+        <app-user-panel (buttonClick)="onClickLogout()" (credits)="handleChildEvent($event)"></app-user-panel>
+      </div>
+    </nav>
+  </header>
+  <div class="flashcard-wrapper">
+    <h2 class="heading">Flashcard Quiz</h2>
+    
+    <div class="flashcard-container" (click)="flipCard()" [class.flipped]="isFlipped">
+      <div class="flashcard">
+        <div class="front">
+          <p class="text-md font-semibold">Question:</p>
+          <p class="text-md">{{ currentFlashcard.question }}</p>
+        </div>
+        <div class="back">
+          <p class="text-md font-semibold">Answer:</p>
+          <p class="text-md">{{ currentFlashcard.answer }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="navigation-buttons">
+      <button (click)="prevFlashcard()" [disabled]="currentIndex === 0" [ngClass]="{'hover:bg-slate-600 rounded-full': currentIndex != 0}"><img class="w-20 h-20" src="../../assets/chevron-left.svg" alt=""></button>
+      <button (click)="nextFlashcard()" [disabled]="currentIndex === flashcards.length - 1" [ngClass]="{'hover:bg-slate-600 rounded-full': currentIndex != flashcards.length - 1}"><img class="w-20 h-20 " src="../../assets/chevron-right.svg" alt=""></button>
+    </div>
+  </div>
+</div> 
+
+
+  
+    
+
+

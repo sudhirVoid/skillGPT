@@ -104,4 +104,21 @@ getChapterContents(bookTopic: string, chapterConfig: ChapterConfig, language: st
       return data;
     })
   }
+
+
+  generateFlashCards(userId: string, bookId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'x-user-id': userId,
+      'Content-Type': 'application/json'
+    });
+
+    const body = {
+      userId: userId,
+      bookId: bookId
+    };
+
+    // Returning the Observable from the POST request
+    return this.http.post<any>(`${environment.apiURL}generate/flashCards`, body, { headers });
+  }
+
 }

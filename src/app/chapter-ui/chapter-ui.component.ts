@@ -9,6 +9,11 @@ import { Router } from '@angular/router';
 import { AuthServiceService } from '../auth-service.service';
 import { SharedService } from '../shared.service';
 import { PdfServiceService } from '../pdf-service.service';
+
+import { initializeApp } from '@angular/fire/app';
+import { getDatabase, ref, child, get, update, set } from 'firebase/database';
+import { environment } from 'src/environments/environment';
+import { FirebaseRealtimeDBService } from '../services/firebase-realtime-db.service';
 export  interface BookConfig {
   book_id: string;
   title: string;
@@ -294,6 +299,7 @@ export class ChapterUiComponent implements AfterViewInit {
     private sharedService: SharedService,
     private pdfService: PdfServiceService,
     private renderer: Renderer2,
+    private firebaseService:FirebaseRealtimeDBService,
     private el: ElementRef
   ) {}
 
@@ -388,8 +394,17 @@ copyCode(button: HTMLElement) {
 
 
 // 
+getDBInstance() {
+  const myApp = initializeApp(environment.firebaseConfig);
+  const myDB = getDatabase(
+    myApp,
+    'https://skill-gpt-ca3a9-default-rtdb.asia-southeast1.firebasedatabase.app'
+  );
+  return myDB;
+}
 
   async ngOnInit(): Promise<void> {
+    
     let firstChapter: ChapterConfig;
     let bookName = '';
     this.isCurrentSubject = true;
@@ -549,44 +564,63 @@ interface ChapterConversationConfig{
 
     */
 
+    const dbRef = ref(this.getDBInstance());
+    const creditPath = `users/${this.authService.user.uid}/credits`;
+    const snapshot = await get(child(dbRef, creditPath));
+    let currentCredit = 1; // Default in case the data doesn't exist
 
-if(this.userQuery.trim().length>1){
-  this.isUserInput=true;
-  let chapterConversationByUser: {gpt: string, user: string}[] = []
-  let chapterConfig = {
-    bookTopic: this.currentSubject,
-    bookChapter: this.activeItem,
-    bookLanguage: 'English',
-    chapterId: this.activeChapterId
-  }
+    if (snapshot.exists()) {
+        currentCredit = snapshot.val()['credit'];
+      }
+    
+if(currentCredit>=0.01){
+  if(this.userQuery.trim().length>1){
+    this.isUserInput=true;
+    let chapterConversationByUser: {gpt: string, user: string}[] = []
+    let chapterConfig = {
+      bookTopic: this.currentSubject,
+      bookChapter: this.activeItem,
+      bookLanguage: 'English',
+      chapterId: this.activeChapterId
+    }
+    
+    let userQueryHtml = `<p>${this.userQuery.trim()}</p>`
+    this.chapterConversation[this.chapterConversation.length-1].user = this.renderingHtmlRes(userQueryHtml);
+    
+    this.chapterConversation.forEach(data => {
+      let gptData = data.gpt as { changingThisBreaksApplicationSecurity: string };
+      let userData = data.user as {changingThisBreaksApplicationSecurity: string};
+      chapterConversationByUser.push({
+        gpt : gptData['changingThisBreaksApplicationSecurity'],
+        user: userData['changingThisBreaksApplicationSecurity']
   
-  let userQueryHtml = `<p>${this.userQuery.trim()}</p>`
-  this.chapterConversation[this.chapterConversation.length-1].user = this.renderingHtmlRes(userQueryHtml);
+      })
+    });
+    this.scrolledToBottom = false;
+    let finalObject = {
+      chapterDetails: chapterConfig,
+      content: chapterConversationByUser
+    }
+    // console.log(chapterConfig)
   
-  this.chapterConversation.forEach(data => {
-    let gptData = data.gpt as { changingThisBreaksApplicationSecurity: string };
-    let userData = data.user as {changingThisBreaksApplicationSecurity: string};
-    chapterConversationByUser.push({
-      gpt : gptData['changingThisBreaksApplicationSecurity'],
-      user: userData['changingThisBreaksApplicationSecurity']
-
-    })
-  });
-  this.scrolledToBottom = false;
-  let finalObject = {
-    chapterDetails: chapterConfig,
-    content: chapterConversationByUser
+    this.userQuery = '';
+    let result = await this.syllabusService.handleUserInput(finalObject);
+    // console.log(result)
+    this.chapterConversation.push({gpt: this.renderingHtmlRes(result.msg.gpt)});
+    this.scrolledToBottom = false;
+    this.isUserInput=false;
+    localStorage.setItem(`${this.activeChapterId}`, JSON.stringify(this.chapterConversation))
+    await this.firebaseService.decreaseCreditPerConversation();
   }
-  // console.log(chapterConfig)
 
-  this.userQuery = '';
-  let result = await this.syllabusService.handleUserInput(finalObject);
-  // console.log(result)
-  this.chapterConversation.push({gpt: this.renderingHtmlRes(result.msg.gpt)});
-  this.scrolledToBottom = false;
-  this.isUserInput=false;
-  localStorage.setItem(`${this.activeChapterId}`, JSON.stringify(this.chapterConversation))
+
 }
+else{
+  alert('You don\'t have enough credits to continue.please add credits.')
+  this.userQuery='';
+}
+
+
 
   }
   
