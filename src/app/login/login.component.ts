@@ -92,6 +92,8 @@ export class LoginComponent {
     this.isLoginClicked = true;
     this.authService.GoogleAuth().then(async (result: firebase.auth.UserCredential) => {
       const user = result.user;
+      console.log('User:', user?.uid);  
+      if(user) localStorage.setItem('uid', user?.uid);
       if (result.additionalUserInfo?.isNewUser && user) {
         //assign three credits now.
         // // console.log('New user signed in');

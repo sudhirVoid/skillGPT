@@ -1,0 +1,79 @@
+<div class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="flex justify-between items-center px-4 sm:px-6 py-4  ">
+      <div class="flex items-center">
+        <div class="w-8 h-8 rounded-full">
+          <img src="../../assets/logo.png" alt="logo" class="w-full h-full object-contain">
+        </div>
+        <div class="text-2xl sm:text-3xl font-bold text-gray-800 ml-2">Skill</div>
+        <div class="text-2xl sm:text-3xl font-bold ml-1 text-green-500">GPT</div>
+        <sup class="text-xs sm:text-sm text-pink-800 font-bold">&nbsp;Beta</sup>
+      </div>
+      <nav>
+        <div class="user-panel">
+          <app-user-panel (buttonClick)="onClickLogout()" (credits)="handleChildEvent($event)"></app-user-panel>
+        </div>
+      </nav>
+    </header>
+
+
+
+    <div class="container mx-auto p-4">
+      <h1 class="text-2xl font-bold text-slate-800 mb-4">Your Topics</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div *ngFor="let topic of updatedTopics">
+
+          <div class="bg-white text-black rounded-2xl shadow-md p-4 relative" >
+            <h3 class="text-lg font-semibold mb-2">{{ topic.title }}</h3>
+            
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-1">
+              <div class="bg-slate-800 h-2.5 rounded-full" [style.width]="topic.percentOfBookRead + '%'"></div>
+            </div>
+            
+            <p class="text-sm text-gray-600 mb-4">{{ topic.percentOfBookRead }}% complete</p>
+            
+            <div class="flex justify-between space-x-2 mb-4 cursor-pointer">
+              <div class="bg-gray-100 rounded p-2 flex-1 flex flex-col items-center" (click)="navigateToFlashcard(topic)">
+                <p class="text-xs font-semibold">Flashcards</p>
+                <p class="text-sm font-bold"> {{ topic.flashCardCount || 0 }}</p>
+              </div>
+              <div class="bg-gray-100 rounded p-2 flex-1 flex flex-col items-center cursor-pointer">
+                <p class="text-xs font-semibold">Quizzes</p>
+                <p class="text-sm font-bold"> 0</p>
+              </div>
+            </div>
+
+            <!-- reversible flash cards -->
+      
+            <!-- <div class="flashcard-container" (click)="flipCard()" [class.flipped]="isFlipped">
+              <div class="flashcard">
+                <div class="front">
+                  <p class="text-sm font-semibold">Question:</p>
+                  <p class="text-sm">{{ currentFlashcard.question }}</p>
+                </div>
+                <div class="back">
+                  <p class="text-sm font-semibold">Answer:</p>
+                  <p class="text-sm">{{ currentFlashcard.answer }}</p>
+                </div>
+              </div>
+            </div> -->
+            
+            <div (click)="showToast()" *ngIf="topic.percentOfBookRead < 80" 
+                 class="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center rounded-2xl">
+                 <svg fill="#000000" width="20px" height="20px" viewBox="0 0 24 24" id="lock" data-name="Flat Color" xmlns="
+                 http://www.w3.org/2000/svg"
+                 class="h-12 w-12 icon flat-color"><path id="primary" d="M18,8H17V7A5,5,0,0,0,7,7V8H6a2,2,0,0,0-2,2V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V10A2,2,0,0,0,18,8ZM9,7a3,3,0,0,1,6,0V8H9Z" style="fill: rgb(0, 0, 0);"></path><path id="secondary" d="M12,12a2.5,2.5,0,0,0-1,4.79V18a1,1,0,0,0,2,0V16.79A2.5,2.5,0,0,0,12,12Z" style="fill: rgb(44, 169, 188);"></path></svg>
+            </div>
+            <app-toaster *ngIf="toastVisible" [message]="toastMessage"></app-toaster>
+          </div>
+        </div>
+        <div *ngIf="updatedTopics.length==0" class="flex flex-row gap-3  items-center justify-center w-screen h-[70vh]">
+          <div class="animate-spin inline-block w-8 h-8 sm:w-10 sm:h-10 border-4 border-current border-t-transparent text-slate-800 rounded-full" role="status" aria-label="loading">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <p class="font-bold text-lg sm:text-xl">Getting data...</p>
+        </div>
+      </div>
+    </div>
+
+</div>

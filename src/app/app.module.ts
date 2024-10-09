@@ -29,6 +29,8 @@ import { ElipsisPipe } from './pipes/elipsis.pipe';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToasterComponent } from './toaster/toaster.component';
+import { LibraryModalComponent } from './library-modal/library-modal.component';
+import { FlashcardComponent } from './flashcard/flashcard.component';
 
 
 
@@ -50,6 +52,8 @@ import { ToasterComponent } from './toaster/toaster.component';
     ElipsisPipe,
     ContactUsComponent,
     ToasterComponent,
+    LibraryModalComponent,
+    FlashcardComponent,
    
   ],
   imports: [

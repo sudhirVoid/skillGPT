@@ -69,6 +69,36 @@ export class FirebaseRealtimeDBService {
     }
   }
 
+async decreaseCreditPerConversation(){
+  const dbRef = ref(this.getDBInstance());
+    const creditPath = `users/${this.authService.user.uid}/credits`;
+
+    try {
+      const snapshot = await get(child(dbRef, creditPath));
+      let currentCredit = 1; // Default in case the data doesn't exist
+
+      if (snapshot.exists()) {
+        currentCredit = snapshot.val()['credit'];
+      }
+
+      // Decrease credit by 1
+      const newCredit = currentCredit - 0.01;
+
+      // Update the credit in the database
+      await update(ref(this.getDBInstance(), creditPath), {
+        credit: newCredit,
+      });
+
+      // // console.log(`Credit updated to: ${newCredit}`);
+      this.remainingCredit = newCredit;
+    } catch (error) {
+      console.error('Error updating credit:', error);
+      this.remainingCredit = 1; // TODO: make customer happy BUT we need error page here
+    }
+}
+
+
+
   //set 3 credits for new user
   async setCreditForNewUser(userId:string, credit:number) {
     const dbRef = ref(this.getDBInstance());

@@ -8,6 +8,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ComplianceComponent } from './compliance/compliance.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { LibraryModalComponent } from './library-modal/library-modal.component';
+import { FlashcardComponent } from './flashcard/flashcard.component';
 
 
 const routes: Routes = [
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'terms-of-service', component: ComplianceComponent, data: { route: 'terms-of-service' } },
   { path: 'shipping-policy', component: ComplianceComponent, data: { route: 'shipping-policy' } },
   {path:'contact',component:ContactUsComponent},
+  {path:'library',component: LibraryModalComponent,canActivate: [AuthGuard]},
+  { path: 'flashcard', component: FlashcardComponent },
   {
     path: "landingPage",
     component: LandingPageComponent,

@@ -9,7 +9,11 @@
       <div class="text-2xl sm:text-3xl font-bold ml-1 text-green-500">GPT</div>
       <sup class="text-xs sm:text-sm text-pink-800 font-bold">&nbsp;Beta</sup>
     </div>
-    <nav>
+    <nav class="mr-12 ">
+      <!-- <ul>
+        <li><a [routerLink]="['/library']">My Library</a></li>
+      </ul> -->
+      
       <div class="user-panel">
         <app-user-panel (buttonClick)="onClickLogout()" (credits)="handleChildEvent($event)"></app-user-panel>
       </div>
@@ -26,7 +30,7 @@
 
     <div class="flex mt-6 sm:mt-8">
       <input type="checkbox" id="drawer-toggle" class="relative sr-only hidden peer">
-      <label (click)="toggleSidebar()" [class.left-13rem]="isOpen" for="drawer-toggle" class="cursor-pointer fixed rotate-90 top-[45%] left-[-3.7rem] inline-block p-2 transition-all duration-500 bg-slate-800 rounded-lg peer-checked:left-[12.3rem] z-30">
+      <label (click)="toggleSidebar()" [class.left-13rem]="isOpen" for="drawer-toggle" class="cursor-pointer fixed rotate-90 top-[45%] left-[-3.7rem] inline-block p-2 transition-all duration-500 bg-slate-800 rounded-t-2xl peer-checked:left-[12.3rem] z-30">
         <div class="flex items-center justify-between w-full">
           <svg *ngIf="!isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white transform -rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -37,7 +41,7 @@
           <p class="text-emerald-400 px-3 font-bold text-sm sm:text-base">Your Books</p>
         </div>
       </label>
-      <div [@slideInOut]="isOpen ? 'open' : 'closed'" class="fixed top-0 left-0 z-20 w-64 h-full transition-all duration-500 transform -translate-x-full bg-slate-900 shadow-lg peer-checked:translate-x-0">
+      <div [@slideInOut]="isOpen ? 'open' : 'closed'" class="fixed top-0 left-0 z-20 w-64 h-full transition-all duration-500 transform -translate-x-full bg-slate-800 shadow-lg peer-checked:translate-x-0">
         <div class="px-4 sm:px-6 py-4 h-screen overflow-y-auto hide-scroll">
           <h2 class="text-lg font-semibold side-title text-white mb-4">Your Books</h2>
           <div
@@ -49,6 +53,9 @@
             </div>
             <p class="px-1 py-1 sm:py-2 text-sm sm:text-base z-10 text-white">{{ item.title | elipsis:17 }}</p>
           </div>
+          <!-- <div class="absolute bottom-0 left-0 w-full py-4 px-6 text-lg font-bold shadow-md rounded hover:cursor-pointer" style="background-color: rgba(27, 213, 160, 0.2);" [routerLink]="['/library']">
+            My Library
+          </div> -->
         </div>
       </div>
     </div>
@@ -61,7 +68,7 @@
     <!-- Suggested Topics -->
     <div class="mt-8 sm:mt-12 w-full px-4 sm:px-0">
       <div class="suggestedTopics grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 lg:px-48 md:px-8 sm:px-0">
-        <div [ngClass]="{'disabled-div': isTopicSelected || isGenerating}" *ngFor="let item of suggestedTopics" class="p-2 sm:p-3 m-1 sm:m-2 bg-slate-800 hover:bg-slate-500 hover:text-white rounded-xl cursor-pointer flex items-center justify-center" (click)="setSuggestedTopics($event)">
+        <div [ngClass]="{'disabled-div': isTopicSelected || isGenerating}" *ngFor="let item of suggestedTopics" class="p-2 sm:p-3 m-1 sm:m-2 bg-slate-800 hover:bg-slate-500 hover:text-white rounded-xl cursor-pointer flex items-center justify-center transition transform hover:scale-105 duration-300" (click)="setSuggestedTopics($event)">
           <p class="text-white text-xs sm:text-sm md:text-base">{{item|elipsis:22}}</p>
         </div>
       </div>
@@ -88,9 +95,9 @@
   </div>
 
   <app-credits-modal *ngIf="isUpgrade" (closeModalEvent)="closeUpgradeModal()" [remCredits]="receivedCredits"></app-credits-modal>
-
+  <!-- <LibraryModal [ngClass]="{'hidden': hideComponent}"  [topics]="userBooks"></LibraryModal> -->
   <!-- Footer -->
-  <footer class="mt-8 sm:mt-16 py-6 sm:py-8 px-4 sm:px-6 bg-gray-100">
+  <footer class="mt-8  sm:mt-16 py-6 sm:py-8 px-4 sm:px-6 bg-gray-100">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center">
       <div class="text-center sm:text-left mb-4 sm:mb-0">
         <h2 class="text-xl sm:text-2xl font-extrabold text-gray-800">Skill GPT</h2>

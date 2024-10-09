@@ -12,6 +12,7 @@ import { BookConfig } from '../chapter-ui/chapter-ui.component';
 import {  ViewChild, ElementRef ,HostListener, OnInit, OnDestroy } from '@angular/core';
 import { PdfServiceService } from '../pdf-service.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { DatashareService } from '../services/datashare.service';
 
 
 
@@ -103,11 +104,14 @@ export class LandingPageComponent {
   @ViewChild('main') main!: ElementRef;
   
   userBooks: BookConfig[] = [];
-  constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService, private authService : AuthServiceService, private sharedService: SharedService, private firebaseDB: FirebaseRealtimeDBService, private pdfService: PdfServiceService) { }
+  constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService,
+     private authService : AuthServiceService, private sharedService: SharedService, private firebaseDB: FirebaseRealtimeDBService,
+     private pdfService: PdfServiceService,private dataShareService: DatashareService) { }
 
 
 
   isModalOpen = false;
+  hideComponent = true;
   isUpgrade=false;
   receivedCredits: number=0;
   isTopicSelected:boolean=false;
@@ -175,6 +179,7 @@ export class LandingPageComponent {
 
     this.syllabusService.getUserBooks(this.userId).then(data=>{
       this.userBooks = data;
+      this.dataShareService.updateData(this.userBooks);
       console.log(this.userBooks)
     })
     .catch(error=>{
