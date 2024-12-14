@@ -10,9 +10,9 @@
       <sup class="text-xs sm:text-sm text-pink-800 font-bold">&nbsp;Beta</sup>
     </div>
     <nav class="mr-12 ">
-      <!-- <ul>
+      <ul>
         <li><a [routerLink]="['/library']">My Library</a></li>
-      </ul> -->
+      </ul>
       
       <div class="user-panel">
         <app-user-panel (buttonClick)="onClickLogout()" (credits)="handleChildEvent($event)"></app-user-panel>
@@ -95,7 +95,7 @@
   </div>
 
   <app-credits-modal *ngIf="isUpgrade" (closeModalEvent)="closeUpgradeModal()" [remCredits]="receivedCredits"></app-credits-modal>
-  <!-- <LibraryModal [ngClass]="{'hidden': hideComponent}"  [topics]="userBooks"></LibraryModal> -->
+  <LibraryModal [ngClass]="{'hidden': hideComponent}"  [topics]="userBooks"></LibraryModal>
   <!-- Footer -->
   <footer class="mt-8  sm:mt-16 py-6 sm:py-8 px-4 sm:px-6 bg-gray-100">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center">
