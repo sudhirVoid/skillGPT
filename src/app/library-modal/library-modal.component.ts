@@ -16,7 +16,7 @@ export class LibraryModalComponent {
   userId:string='';
   updatedTopics: any[]=[];
   constructor(private sharedService: SharedService,private router: Router,private authService : AuthServiceService,private syllabusService: SyllabusService,private dataShareService: DatashareService) {
-    
+
   }
   @Input() topics: any=[];
   toastVisible = false;
@@ -49,8 +49,8 @@ export class LibraryModalComponent {
   }
 
   // navigateToFlashcard(topic: any) {
-  //   this.router.navigate(['/flashcard'], { 
-  //     state: { bookId: topic.bookId }, 
+  //   this.router.navigate(['/flashcard'], {
+  //     state: { bookId: topic.bookId },
   //     queryParams: { bookId: topic.bookId }
   //   });
   // }
@@ -58,23 +58,27 @@ export class LibraryModalComponent {
     // Find the flashcards for the topic's book_id
     const matchingFlashcard = this.flashcards.find((flashCard: { bookId: any; }) => flashCard.bookId === topic.book_id);
     console.log(matchingFlashcard);
-  
+
     // Navigate to the flashcard route, passing flashcards and bookId through state
-    this.router.navigate(['/flashcard'], { 
-      state: { 
-        bookId: topic.book_id, 
+    this.router.navigate(['/flashcard'], {
+      state: {
+        bookId: topic.book_id,
         flashCards: matchingFlashcard ? matchingFlashcard.flashCards : [] // Pass the flashcards or an empty array
-      }, 
+      },
       queryParams: { bookId: topic.book_id }
     });
   }
-  
-  
+
+  navigateToQuiz(topic:any){
+    console.log(topic)
+    this.router.navigate(['/quiz'], { queryParams: { bookId: topic.book_id } });
+  }
 
    async ngOnInit() {
     this.dataShareService.currentData.subscribe((message) => {
       console.log(message)
       this.topics = message;
+      console.log('TOPICS')
       console.log(this.topics)
       this.topics.map((topic:any)=>{
         if(topic.percentOfBookRead>=80){
@@ -96,8 +100,8 @@ export class LibraryModalComponent {
     }
         }
       });
-      
-      
+
+
 
     });
   }
@@ -108,12 +112,12 @@ export class LibraryModalComponent {
       if (parseFloat(topic.percentOfBookRead) >= 80) {
         const matchingFlashcard = flashCards.find(flashCard => flashCard.bookId === topic.book_id);
         const flashCardCount = matchingFlashcard ? matchingFlashcard.flashCards.length : 0;
-  
-        return { 
+
+        return {
           ...topic, // Spread the topic object
           flashCardCount // Add flashCardCount only for these topics
         };
-      } 
+      }
       return topic; // Return the topic unchanged if percentOfBookRead < 80
     });
   }
@@ -121,7 +125,7 @@ export class LibraryModalComponent {
 
 
 
- 
+
   flipCard() {
     this.isFlipped = !this.isFlipped;
   }

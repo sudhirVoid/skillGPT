@@ -31,6 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ToasterComponent } from './toaster/toaster.component';
 import { LibraryModalComponent } from './library-modal/library-modal.component';
 import { FlashcardComponent } from './flashcard/flashcard.component';
+import { QuizModalComponent } from './quiz-modal/quiz-modal.component';
 
 
 
@@ -54,6 +55,7 @@ import { FlashcardComponent } from './flashcard/flashcard.component';
     ToasterComponent,
     LibraryModalComponent,
     FlashcardComponent,
+    QuizModalComponent,
    
   ],
   imports: [

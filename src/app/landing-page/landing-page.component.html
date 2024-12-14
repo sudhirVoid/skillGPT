@@ -13,7 +13,7 @@
       <ul>
         <li><a [routerLink]="['/library']">My Library</a></li>
       </ul>
-      
+
       <div class="user-panel">
         <app-user-panel (buttonClick)="onClickLogout()" (credits)="handleChildEvent($event)"></app-user-panel>
       </div>
@@ -48,7 +48,7 @@
             class="w-full px-2 sm:px-3 py-2 mt-2 custom-border hover:bg-slate-500 hover:text-white flex justify-between items-center cursor-pointer rounded-lg dark:text-white relative"
             *ngFor="let item of userBooks"
             (click)="alreadyGeneratedBookSelection(item)">
-            <div class="absolute top-0 left-0 h-full percent-bg-color rounded-lg" 
+            <div class="absolute top-0 left-0 h-full percent-bg-color rounded-lg"
                  [style.width.%]="item.percentOfBookRead">
             </div>
             <p class="px-1 py-1 sm:py-2 text-sm sm:text-base z-10 text-white">{{ item.title | elipsis:17 }}</p>
@@ -95,7 +95,7 @@
   </div>
 
   <app-credits-modal *ngIf="isUpgrade" (closeModalEvent)="closeUpgradeModal()" [remCredits]="receivedCredits"></app-credits-modal>
-  <LibraryModal [ngClass]="{'hidden': hideComponent}"  [topics]="userBooks"></LibraryModal>
+  <!-- <LibraryModal [ngClass]="{'hidden': hideComponent}"  [topics]="userBooks"></LibraryModal> -->
   <!-- Footer -->
   <footer class="mt-8  sm:mt-16 py-6 sm:py-8 px-4 sm:px-6 bg-gray-100">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center">

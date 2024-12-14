@@ -10,6 +10,7 @@ import { ComplianceComponent } from './compliance/compliance.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { LibraryModalComponent } from './library-modal/library-modal.component';
 import { FlashcardComponent } from './flashcard/flashcard.component';
+import { QuizModalComponent } from './quiz-modal/quiz-modal.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:'contact',component:ContactUsComponent},
   {path:'library',component: LibraryModalComponent,canActivate: [AuthGuard]},
   { path: 'flashcard', component: FlashcardComponent },
+  {path: 'quiz', component: QuizModalComponent,canActivate: [AuthGuard]},
   {
     path: "landingPage",
     component: LandingPageComponent,

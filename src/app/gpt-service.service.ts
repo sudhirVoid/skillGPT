@@ -121,4 +121,32 @@ getChapterContents(bookTopic: string, chapterConfig: ChapterConfig, language: st
     return this.http.post<any>(`${environment.apiURL}generate/flashCards`, body, { headers });
   }
 
+  generateQuiz(userId: string, bookId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'x-user-id': userId,
+      'Content-Type': 'application/json'
+    });
+
+    const body = {
+      userId: userId,
+      bookId: bookId
+    };
+
+    return this.http.post<any>(`${environment.apiURL}generate/quiz`, body, { headers });
+  }
+
+  submitQuiz(userId: string, bookId: number, quizPaper: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'x-user-id': userId,
+      'Content-Type': 'application/json'
+    });
+
+    const body = {
+      userId: userId,
+      bookId: bookId,
+      quizPaper: quizPaper
+    };
+
+    return this.http.post<any>(`${environment.apiURL}update/quiz`, body, { headers });
+  }
 }

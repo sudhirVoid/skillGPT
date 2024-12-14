@@ -19,28 +19,21 @@ export class FlashcardComponent implements OnInit {
   constructor(private route: ActivatedRoute,private sharedService: SharedService,private router: Router,private authService : AuthServiceService,private syllabusService: SyllabusService) { }
 
   ngOnInit(): void {
-   
-    //  const navigation = this.router.getCurrentNavigation();
-    //  if (navigation && navigation.extras.state) {
-    //    this.bookId = navigation.extras.state["bookId"];
-    //    this.flashcards = navigation.extras.state["flashCards"];
-    //    console.log(this.flashcards)
-    //  }
-  // Access the flashcards and bookId from navigation state
+
   const state = this.router.getCurrentNavigation()?.extras.state || history.state;
-  
+
   if (state) {
     this.bookId = state.bookId;
     this.flashcards = state.flashCards || [];
     console.log('Flashcards received:', this.flashcards); // Debugging
   } else {
     console.log('No flashcards found in state.');
-    
+
     // Optionally, handle case when no data is passed, for example load from API or localStorage
   }
-   
-    
-    
+
+
+
 
   }
 
@@ -71,8 +64,8 @@ export class FlashcardComponent implements OnInit {
   onClickLogout(): void{
     this.sharedService.logout();
   }
-  
-  
+
+
   handleChildEvent(data: any) {
     this.receivedCredits = data.credits;
     // // console.log('Data received from child:', data);
