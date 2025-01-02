@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class ProfileModalComponent {
   constructor(private authService: AuthServiceService,private sharedService: SharedService,private firestoreDB: FirebaseRealtimeDBService, private router: Router) { }
-  
+
   @Output() closeModalEvent = new EventEmitter<void>();
   remainingCredits!: number;
   closeModal() {
@@ -21,7 +21,7 @@ export class ProfileModalComponent {
 
   onClickLogout(): void{
     this.sharedService.logout();
-   
+
   }
   email:string='';
   name:string='';

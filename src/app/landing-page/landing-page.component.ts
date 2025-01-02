@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SyllabusService } from '../gpt-service.service';
 import { lastValueFrom } from 'rxjs';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { DataTransferService } from '../data-transfer.service';
 import { AuthServiceService } from '../auth-service.service';
 import { getAuth, signOut } from "firebase/auth";
@@ -13,9 +13,6 @@ import {  ViewChild, ElementRef ,HostListener, OnInit, OnDestroy } from '@angula
 import { PdfServiceService } from '../pdf-service.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { DatashareService } from '../services/datashare.service';
-
-
-
 
 @Component({
   selector: 'app-landing-page',
@@ -102,13 +99,11 @@ export class LandingPageComponent {
   ];
   @ViewChild('mySidebar') sidebar!: ElementRef;
   @ViewChild('main') main!: ElementRef;
-  
+
   userBooks: BookConfig[] = [];
   constructor(private syllabusService: SyllabusService, private router: Router, private dataTransferService:DataTransferService,
      private authService : AuthServiceService, private sharedService: SharedService, private firebaseDB: FirebaseRealtimeDBService,
      private pdfService: PdfServiceService,private dataShareService: DatashareService) { }
-
-
 
   isModalOpen = false;
   hideComponent = true;
@@ -118,7 +113,10 @@ export class LandingPageComponent {
 
 
   isOpen = false;
-
+  menuOpen = false;
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
   toggleSidebar() {
     this.isOpen = !this.isOpen;
   }
@@ -138,10 +136,9 @@ export class LandingPageComponent {
   closeUpgradeModal(){
     this.isUpgrade=false;
   }
- 
+
   handleChildEvent(data: any) {
     this.receivedCredits = data.credits;
-    // // console.log('Data received from child:', data);
   }
 
   ngOnDestroy() {
@@ -173,17 +170,14 @@ export class LandingPageComponent {
     this.setRandomPlaceholder();
     this.suggestedTopics.sort( ()=>Math.random()-0.5 );
     let res = this.authService.isAuthenticated();
-    // // console.log("isLoggedIn : ",res);
     document.addEventListener('click', this.onDocumentClick);
     this.userId = await this.authService.getCurrentUserId();
 
     this.syllabusService.getUserBooks(this.userId).then(data=>{
       this.userBooks = data;
       this.dataShareService.updateData(this.userBooks);
-      console.log(this.userBooks)
     })
     .catch(error=>{
-      // // console.log(error);
       alert('Failed to Fetch Books')
     })
   }
@@ -195,7 +189,6 @@ export class LandingPageComponent {
     this.router.navigate(['/results', {bookId:book.book_id, isOldBook:true}]);
   }
    async postInputTopic(topic:any){
-    // this.isTopicSelected=true;
     if(topic.trim().length>1){
 
       if(await this.firebaseDB.getCreditOfUser()>0){
@@ -206,38 +199,25 @@ export class LandingPageComponent {
               console.log('BOOK CHAPTERS: ',this.bookChapters)
               await this.firebaseDB.decreaseCredit();
                 this.dataTransferService.setChaptersData(this.bookChapters);
-                this.router.navigate(['/results']);  
-                // this.isTopicSelected=false;      
+                this.router.navigate(['/results']);
             },
             error => {
-              // Handle errors here
               console.error('Error:', error);
             }
           );
-         
-      
       }
       else{
-        // alert('You exceeded 3 free credits.')
         this.openModal()
       }
     }
-    
-   
-    
   }
 
 
   validateInput(event: any) {
     const value = event.target.value;
-  
-    // Regular expression to validate words with up to two spaces between them
-    // and up to two special characters anywhere in the input
     const isValid = /^(\w+(\s+)?){1,}[^A-Za-z0-9\s]*$/.test(value);
-  
-    // Check the count of special characters
     const specialCharCount = (value.match(/[^A-Za-z0-9\s]/g) || []).length;
-  
+
     // Allow up to two special characters anywhere
     if (!isValid || specialCharCount > 2) {
       // If input is invalid or has more than two special characters, remove the last character
@@ -247,17 +227,11 @@ export class LandingPageComponent {
       this.topic = value;
     }
   }
-  
-  
-  // markBookAsCompleted(item:BookConfig, $event: MouseEvent){
-  //   $event.stopPropagation();
-  //   console.log($event)
-  // }
+
   buyCredits(){
     this.isModalOpen = false;
     this.isUpgrade=true;
     console.log(this.receivedCredits)
-
   }
 
   setSuggestedTopics(event: any) {
@@ -266,19 +240,4 @@ export class LandingPageComponent {
     this.topic = event.target.innerText.trim();
     this.postInputTopic(this.topic);
   }
-  
-
-  // downloadPdf() {
-  //   this.pdfService.downloadPdf({}).subscribe(response => {
-  //     const blob = new Blob([response], { type: 'application/pdf' });
-  //     const url = window.URL.createObjectURL(blob);
-  //     const a = document.createElement('a');
-  //     a.href = url;
-  //     a.download = 'filename.pdf'; // Set the filename here
-  //     document.body.appendChild(a);
-  //     a.click();
-  //     document.body.removeChild(a);
-  //     window.URL.revokeObjectURL(url);
-  //   });
-  // }
 }
